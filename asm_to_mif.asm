@@ -37,7 +37,7 @@ add $s1, $s1, $t7	#salvar endereco do final do arquivo
 procura_ponto:
 lbu $t0, ($t7)			#carrega o caractere em $t7
 beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
-addi $t7, $t7, 1		#próximo byte/char
+addi $t7, $t7, 1		#proximo byte/char
 bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 j procura_ponto			#continua procurando o caractere '.'
 
@@ -90,9 +90,9 @@ jr $ra			#retorna a caller
 
 data_ou_text:
 jal getchar
-beq $v0, 'd', area_data	#se depois de '.' temos 'd', é data
-beq $v0, 't', area_text	#se depois de '.' temos 't', é text
-j erro_instrucao	#se depois de '.' nao temos 'd' nem 't', é erro
+beq $v0, 'd', area_data	#se depois de '.' temos 'd', eh data
+beq $v0, 't', area_text	#se depois de '.' temos 't', eh text
+j erro_instrucao	#se depois de '.' nao temos 'd' nem 't', eh erro
 
 area_data:
 jal getchar
@@ -210,7 +210,7 @@ loop_hex:
 lbu $t0, ($a0)
 blt $t0, '0', fim_numero	#menor valor possivel eh '0', se menor, acabou num
 ble $t0, '9', chars_0_ate_9	#caso '0' <= char <= '9'
-blt $t0, 'A', erro_instrucao	#senao é '0' a '9', 'A' eh o menor
+blt $t0, 'A', erro_instrucao	#senao eh '0' a '9', 'A' eh o menor
 ble $t0, 'F', chars_A_ate_F	#caso 'A' <= char <= 'F'
 blt $t0, 'a', erro_instrucao	#senao 'A' a 'F', 'a' eh o menor
 ble $t0, 'f', chars_a_ate_f	#caso 'a' <= char <= 'f'
