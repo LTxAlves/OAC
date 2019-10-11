@@ -17,7 +17,7 @@ MARS 4.5
 
 #### Instalando pré-requisitos em sistema operacional Windows
 
-* Primeiramente, instalar uma versão de Java, preferencialmente a mais recente disponível no _website_ <https://www.java.com/en/download/;>
+* Primeiramente, instalar uma versão de Java, preferencialmente a mais recente disponível no _website_ <https://www.java.com/en/download/>
   * Usando o instalador, siga as instruções para completar a instalação.
 
 * Baixar o executável do _software_ MARS, disponível no _website_ <http://courses.missouristate.edu/kenvollmar/mars/download.htm>
