@@ -316,6 +316,140 @@ move $s2, $zero
 nao_fecha_data:
 j fim_prog
 
+get_reg:		#a0 aponta p/ char atual (deve ser '$')
+#retorna v0 = num do registrador (-1 se erro) e v1 = ponteiro para char atualizado
+lbu $t0, ($a0)		#carrega char
+bne $t0, '$', not_reg	#se t0 != '$', erro
+lbu $t0, 1($a0)		#carrega proximo char
+blt $t0, '0', not_reg	#se t0 < '0', erro
+bgt $t0, '9', reg_letra	#se t0 > '9', $letra
+lbu $t1, 2($a0)		#carrega terceiro char
+beq $t1, ' ', reg_num	#se terceiro char eh espaco, eh $0 a $9
+beq $t1, ',', reg_num	#se terceiro char eh virgula, eh $0 a $9
+beq $t1, '\n', reg_num	#se terceiro char eh '\n', eh $0 a $9
+beq $t1, '\0', reg_num	#se terceiro char eh '\0', eh $0 a $9
+blt $t1, '0', erro_instrucao	#se terceiro char nao eh num, erro
+bgt $t1, '9', erro_instrucao	#se terceiro char nao eh num, erro
+
+reg_num_num:		#registradores $10 a $31
+addi $t0, $t0, -48	#t0 = atoi(t0)
+addi $t1, $t1, -48	#t1 = atoi(t1)
+sll $v0, $t0, 3		#v0 = 8*t0
+add $v0, $v0, $t0	#v0 = 9*t0
+add $v0, $v0, $t0	#v0 = 10*t0
+add $v0, $v0, $t1	#v0 = 10*t0 + t1
+bgt $v0, 31, erro_instrucao	#se $32 ou maior, erro
+add $v1, $a0, 3		#v1 = a0 + 3, ap
+jr $ra
+
+reg_num:		#registradores $0 a $9
+addi $v0, $t0, -48	#v0 = atoi(t0)
+addi $v1, $a0, 2	#v1 = a0 + 2
+jr $ra
+
+reg_letra:
+addi $a0, $a0, 2
+bge $a0, $s1, erro_instrucao
+lbu $t1, ($a0)
+beq $t0, 't', reg_t	#se t0 = 't', familia $t
+beq $t0, 's', reg_s	#se t0 = 's', familia $s ou $sp
+beq $t0, 'z', reg_z	#se t0 = 'z', $zero
+beq $t0, 'a', reg_a	#se t0 = 'a', familia $a ou $at
+beq $t0, 'v', reg_v	#se t0 = 'v', familia $v
+beq $t0, 'g', reg_g	#se t0 = 'g', $gp
+beq $t0, 'k', reg_k	#se t0 = 'k', familia $k
+beq $t0, 'r', reg_r	#se t0 = 'r', $ra
+beq $t0, 'f', reg_f	#se t0 = 'f', $fp
+j erro_instrucao	#se nada disso, erro
+
+reg_t:
+blt $t1, '0', erro_instrucao
+bgt $t1, '9', erro_instrucao
+addi $t1, $t1, -40	#t1 = atoi(t1)+8 pois $t0 = $8
+blt $t1, 15, reg_t0_t7	#$t8 e $t9 sao diferentes
+addi $v0, $t1, 8	#8 de diferenca entre $t7 e $t8
+addi $v1, $a0, 1	#prox char
+jr $ra
+
+reg_t0_t7:
+move $v0, $t1		#num do registrador
+addi $v1, $a0, 1	#prox char
+jr $ra
+
+reg_s:
+beq $t1, 'p', reg_sp
+blt $t1, '0', erro_instrucao
+bgt $t1, '7', erro_instrucao
+addi $v0, $t1, -32	#v0 = atoi(t1) + 16, pois $s0 = $16
+addi $v1, $a0, 1
+jr $ra
+
+reg_sp:
+li $v0, 29
+addi $v1, $a0, 1
+jr $ra
+
+reg_z:
+bne $t1, 'e', erro_instrucao
+addi $a0, $a0, 1	#proximo byte/char
+lbu $t1, ($a0)		#v0 recebe prox char
+bne $t1, 'r', erro_instrucao
+addi $a0, $a0, 1	#proximo byte/char
+lbu $t1, ($a0)		#t1 recebe prox char
+bne $t1, 'o', erro_instrucao
+move $v0, $zero
+addi $v1, $a0, 1	#proximo byte/char
+jr $ra
+
+reg_a:
+beq $t1, 't', reg_at
+blt $t1, '0', erro_instrucao
+bgt $t1, '3', erro_instrucao
+addi $v0, $t1, -44	#v0 = atoi(t1) + 4, pois $a0 = $4
+addi $v1, $a0, 1
+jr $ra
+
+reg_at:
+li $v0, 1
+addi $v1, $a0, 1
+jr $ra
+
+reg_v:
+blt $t1, '0', erro_instrucao
+bgt $t1, '1', erro_instrucao
+addi $v0, $t1, -46	#v0 = atoi(t1) + 2, pois $v0 = $2
+addi $v1, $a0, 1
+jr $ra
+
+reg_g:
+bne $t1, 'p', erro_instrucao
+li $v0, 28
+addi $v1, $a0, 1
+jr $ra
+
+reg_k:
+blt $t1, '0', erro_instrucao
+bgt $t1, '1', erro_instrucao
+addi $v0, $t1, -22	#v0 = atoi(t1) + 26, pois $k0 = $26
+addi $v1, $a0, 1
+jr $ra
+
+reg_r:
+bne $t1, 'a', erro_instrucao
+li $v0, 31
+addi $v1, $a0, 1
+jr $ra
+
+reg_f:
+bne $t1, 'p', erro_instrucao
+li $v0, 30
+addi $v1, $a0, 1
+jr $ra
+
+not_reg:
+li $v0, -1
+jr $ra
+
 set_ra:
 move $v0, $ra
 jr $ra
