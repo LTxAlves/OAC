@@ -38,7 +38,7 @@ procura_ponto:
 lbu $t0, ($t7)			#carrega o caractere em $t7
 beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
 addi $t7, $t7, 1		#próximo byte/char
-bge $t7, $s1, fim_prog		#se t7 == s1, acabaram os caracteres (e o programa)
+bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 j procura_ponto			#continua procurando o caractere '.'
 
 procura_dois_pontos:
@@ -134,6 +134,10 @@ jal uma_word
 move $t7, $v0
 bge $t7, $s1, fim_data
 move $a0, $v1
+
+lbu $t0, ($t7)
+bne $t0, '\n', pula_separadores
+addi $t7, $t7, -1
 
 pula_separadores:
 jal getchar			#prox char
