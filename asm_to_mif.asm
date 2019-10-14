@@ -9,8 +9,9 @@ erro_ao_ler: .asciiz "Erro ao ler do arquivo!\n"
 fim_do_arquivo: .asciiz "Fim do arquivo encontrado!\n"
 erro_de_instrucao: .asciiz "Erro de instrucao no arquivo"
 arq_data_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
-arq_text_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
+arq_text_comeco: .ascii "DEPTH\t\t= 4096;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arqs_end: .ascii "\n\nEND;\n"
+instrucao_hex: .space 8
 
 	.text
 main:
@@ -237,6 +238,23 @@ area_text:
 	jal getchar
 	bne $v0, '\n', erro_instrucao	#proximo char deve ser '\n'
 
+	li $v0, 13		#abrir arquivo
+	la $a0, arq_saida_text	#endereco da string com nome do arquivo
+	li $a1, 1		#abrir para escrita
+	li $a2, 0		#modo (ignorado no MARS)
+	syscall
+	blez $v0, erro_abertura	#se v0 <= 0, erro de abertura
+	move $s2, $v0		#salvar descritor
+
+	move $a0, $s2		#a0 com descritor
+	li $v0, 15		#escrever em arquivo
+	la $a1, arq_text_comeco	#o que escrever
+	li $a2, 82		#num de caracteres a escrever
+	syscall
+
+	move $a0, $s2
+	jal fecha_arquivo
+
 	j fim_prog
 
 fecha_arquivo:
@@ -301,7 +319,7 @@ erro_instrucao:
 		j fim_prog
 
 get_reg:	#a0 aponta p/ char atual (deve ser '$')
-			#retorna v0 = num do registrador (-1 se erro) e v1 = ponteiro para char atualizado
+		#retorna v0 = num do registrador (-1 se erro) e v1 = ponteiro para char atualizado
 	lbu $t0, ($a0)		#carrega char
 	bne $t0, '$', not_reg	#se t0 != '$', erro
 	lbu $t0, 1($a0)		#carrega proximo char
@@ -332,9 +350,8 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 		jr $ra
 
 	reg_letra:
-		addi $a0, $a0, 2
-		bge $a0, $s1, not_reg
-		lbu $t1, ($a0)
+		addi $a0, $a0, 2	#pula "$c" onde c eh char qualquer
+		lbu $t1, ($a0)		#carrega char depois de "$c"
 		beq $t0, 't', reg_t	#se t0 = 't', familia $t
 		beq $t0, 's', reg_s	#se t0 = 's', familia $s ou $sp
 		beq $t0, 'z', reg_z	#se t0 = 'z', $zero
@@ -433,6 +450,61 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 		not_reg:
 			li $v0, -1
 			jr $ra
+
+bin_para_ascii:	#recebe em a0 num para converter para ascii
+		#guarda em instrucao_hex a string resultante sem \0
+	move $t0, $a0		#t0 guarda a0
+	move $t1, $ra		#t1 guarda ra
+
+	andi $a0, $t0, 0x0000000F	#pega ultimo byte como argumento
+	jal hex_para_ascii		#converte para ascii
+	sb $v0, instrucao_hex + 7	#guarda no ultimo byte da variavel
+
+	andi $a0, $t0, 0x000000F0	#pega penultimo byte como argumento
+	srl $a0, $a0, 4			#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 6	#guarda no penultimo byte da variavel
+
+	andi $a0, $t0, 0x00000F00	#pega antepenultimo byte como argumento
+	srl $a0, $a0, 8			#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 5	#guarda no antepenultimo byte da variavel
+
+	andi $a0, $t0, 0x0000F000	#pega quinto byte como argumento
+	srl $a0, $a0, 12		#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 4	#guarda no quinto byte da variavel
+
+	andi $a0, $t0, 0x000F0000	#pega quarto byte como argumento
+	srl $a0, $a0, 16		#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 3	#guarda no quarto byte da variavel
+
+	andi $a0, $t0, 0x00F00000	#pega terceiro byte como argumento
+	srl $a0, $a0, 20		#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 2	#guarda no terceiro byte da variavel
+
+	andi $a0, $t0, 0x0F000000	#pega segundo byte como argumento
+	srl $a0, $a0, 24		#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 1	#guarda no segundo byte da variavel
+
+	andi $a0, $t0, 0xF0000000	#pega primeiro byte como argumento
+	srl $a0, $a0, 28		#leva o lsb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex		#guarda no primeiro byte da variavel
+
+	jr $t1				#retorna a caller
+
+	hex_para_ascii:			#recebe um unico byte em a0
+		bgt $a0, 9, letra_hex	#se a0 > 9, eh A ate F
+		addi $v0, $a0, 48	#senao, eh 0 ate 9 (v0 = itoa(a0)), '0' == 48
+		j salto_letra		#pula o passo de conversao 'A' ate 'F'
+		letra_hex:
+		addi $v0, $a0, 55	#['A', 'F'] == [65, 70], mas 10 <= a0, dai 10 de diferenca
+		salto_letra:
+		jr $ra			#retorna a caller
 
 set_ra:
 	move $v0, $ra

@@ -48,8 +48,8 @@ MARS 4.5
 
 ## Autores
 
-* **Fábio Rodrigues de Andrade Santos** - *16/0151783*
-* **Felipe Calassa de Albuquerque** - *16/0151805*
+* **Fábio Rodrigues de Andrade Santos** - *16/0151783* - [Santos-Fabio](https://github.com/Santos-Fabio "GitHub de Fábio")
+* **Felipe Calassa de Albuquerque** - *16/0151805* - [calasssa](https://github.com/calasssa "GitHub de Felipe")
 * **Leonardo Alves** - *16/0012007* - [LTxAlves](https://github.com/LTxAlves "GitHub de Leonardo")
 
 ## Reconhecimentos
