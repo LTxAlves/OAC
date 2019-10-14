@@ -11,6 +11,7 @@ erro_de_instrucao: .asciiz "Erro de instrucao no arquivo"
 arq_data_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arq_text_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arqs_end: .ascii "\n\nEND;\n"
+instrucao_hex: .space 8
 
 	.text
 main:
@@ -433,6 +434,62 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 		not_reg:
 			li $v0, -1
 			jr $ra
+
+dec_para_ascii:	#recebe em a0 num para converter para ascii
+		#guarda em instruca_hex string
+	move $t0, $a0		#t0 guarda a0
+	move $t1, $ra		#t1 guarda ra
+
+	andi $a0, $t0, 0x0000000F	#pega ultimo byte como argumento
+	jal hex_para_ascii		#converte para ascii
+	sb $v0, instrucao_hex + 7	#guarda no ultimo byte da variavel
+
+	andi $a0, $t0, 0x000000F0	#pega penultimo byte como argumento
+	srl $a0, $a0, 4			#leva o msb para a posicao 0
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 6	#guarda no antepenultimo byte da variavel
+	
+	andi $a0, $t0, 0x00000F00
+	srl $a0, $a0, 8
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 5
+	
+	andi $a0, $t0, 0x0000F000
+	srl $a0, $a0, 12
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 4
+	
+	andi $a0, $t0, 0x000F0000
+	srl $a0, $a0, 16
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 3
+	
+	andi $a0, $t0, 0x00F00000
+	srl $a0, $a0, 20
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 2
+
+	
+	andi $a0, $t0, 0x0F000000
+	srl $a0, $a0, 24
+	jal hex_para_ascii
+	sb $v0, instrucao_hex + 1
+	
+	andi $a0, $t0, 0xF0000000
+	srl $a0, $a0, 28
+	jal hex_para_ascii
+	sb $v0, instrucao_hex
+
+	jr $t1			#retorna a caller
+
+	hex_para_ascii:			#recebe um unico byte em a0
+		bgt $a0, 9, letra_hex	#se a0 > 9, eh A ate F
+		addi $v0, $a0, 48	#senao, eh 0 ate 9 (v0 = itoa(a0)), '0' == 48
+		j salto_letra		#pula o passo de conversao 'a' ate 'f'
+		letra_hex:
+			addi $v0, $a0, 55	#['A', 'F'] == [65, 70], mas 10 <= a0, dai 10 de diferenca
+		salto_letra:
+		jr $ra			#retorna a caller
 
 set_ra:
 	move $v0, $ra
