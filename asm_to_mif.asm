@@ -11,7 +11,7 @@ erro_de_instrucao: .asciiz "Erro de instrucao no arquivo"
 arq_data_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arq_text_comeco: .ascii "DEPTH\t\t= 4096;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arqs_end: .ascii "\n\nEND;\n"
-instrucao_hex: .space 8
+instrucao_ascii: .space 8
 
 	.text
 main:
@@ -154,79 +154,84 @@ area_data:
 				move $s2, $zero
 				j procura_ponto
 
-		uma_word:
-			move $t1, $zero			#zera para calcular num atual
-			lbu $t0, ($a0)			#carregar o caractere apontado
-			seq $t3, $t0, '-'		#flag de nums negativos
-			beqz $t3, num_positivo		#se eh '-', pula um char
-			addi $a0, $a0, 1
-			lbu $t0, ($a0)			#garante que '-' nao vai ser passado como num
-			num_positivo:
-				bne $t0, '0', testa_decimal	#se o char for != '0', nao eh hexadecimal
-				lbu $t0, 1($a0)			#2o char apontado
-				beq $t0, 'x', testa_hex		#se 2o char eh 'x'
-				beq $t0, 'X', testa_hex		#ou 'X', pula para hexadecimal
+uma_word:	#a0 com endereco do char atual
+		#retorna v0 com end do ultimo char lido e v1 com valor da word (-1 se erro)
+	move $t1, $zero			#zera para calcular num atual
+	lbu $t0, ($a0)			#carregar o caractere apontado
+	seq $t3, $t0, '-'		#flag de nums negativos
+	beqz $t3, num_positivo		#se eh '-', pula um char
+	addi $a0, $a0, 1
+	lbu $t0, ($a0)			#garante que '-' nao vai ser passado como num
+	num_positivo:
+		bne $t0, '0', testa_decimal	#se o char for != '0', nao eh hexadecimal
+		lbu $t0, 1($a0)			#2o char apontado
+		beq $t0, 'x', testa_hex		#se 2o char eh 'x'
+		beq $t0, 'X', testa_hex		#ou 'X', pula para hexadecimal
 
-			testa_decimal:
-				lbu $t0, ($a0)
-				bgt $t0, '9', erro_instrucao	#se $t0 > '9', erro
-				blt $t0, '0', fim_numero	#se $t0 < '0', testa fim
-				addi $t0, $t0, -48		#t0 = atoi(t0)
-				sll $t2, $t1, 3			#t2 = 8*t1
-				add $t2, $t2, $t1		#t2 = t2 + t1
-				add $t2, $t2, $t1		#t2 = t2 + t1
-				move $t1, $t2			#t1 = t2 (== 8*t1 + t1 + t1 == 10*t1)
-				add $t1, $t1, $t0		#t1 = t1 + t0
-				addi $a0, $a0, 1		#prox char
-				j testa_decimal
+	testa_decimal:
+		lbu $t0, ($a0)
+		bgt $t0, '9', erro_instrucao	#se $t0 > '9', erro
+		blt $t0, '0', fim_numero	#se $t0 < '0', testa fim
+		addi $t0, $t0, -48		#t0 = atoi(t0)
+		sll $t2, $t1, 3			#t2 = 8*t1
+		add $t2, $t2, $t1		#t2 = t2 + t1
+		add $t2, $t2, $t1		#t2 = t2 + t1
+		move $t1, $t2			#t1 = t2 (== 8*t1 + t1 + t1 == 10*t1)
+		add $t1, $t1, $t0		#t1 = t1 + t0
+		addi $a0, $a0, 1		#prox char
+		j testa_decimal
 
-				fim_numero:
-					beq $t0, ' ', sem_erro		#se ' ' depois do num, ok
-					beq $t0, ',', sem_erro		#se ',' depois do num, ok
-					beq $t0, '\n', sem_erro		#se '\n' depois do num, ok
-					beq $t0, '\0', sem_erro		#se '\0' depois do num, ok
-					beq $t0, '\t', sem_erro		#se '\t' depois do num, ok
-					j erro_instrucao		#se nada disso, erro
+		fim_numero:
+			beq $t0, ' ', sem_erro		#se ' ' depois do num, ok
+			beq $t0, ',', sem_erro		#se ',' depois do num, ok
+			beq $t0, '\n', sem_erro		#se '\n' depois do num, ok
+			beq $t0, '\0', sem_erro		#se '\0' depois do num, ok
+			beq $t0, '\t', sem_erro		#se '\t' depois do num, ok
+			beq $t0, '(', sem_erro		#se '(' depois do num, okay
+			j erro_instrucao		#se nada disso, erro
 
-					sem_erro:
-						move $v0, $a0			#retorna ponteiro do ultimo char lido
-						beq $t3, $zero, nao_negativo	#checa sinal
-						sub $t1, $zero, $t1		#t1 = -t1 se negativo
-					nao_negativo:
-						move $v1, $t1			#retorna valor da word
-						jr $ra
+			sem_erro:
+				move $v0, $a0			#retorna ponteiro do ultimo char lido
+				beq $t3, $zero, nao_negativo	#checa sinal
+				sub $t1, $zero, $t1		#t1 = -t1 se negativo
+			nao_negativo:
+				move $v1, $t1			#retorna valor da word
+				jr $ra
+	erro_word:
+		li $v0, -1
+		jr $ra
 
-			testa_hex:
-				addi $a0, $a0, 2		#pula "0x" ou "0X" do hexa
-				loop_hex:
-					lbu $t0, ($a0)
-					blt $t0, '0', fim_numero	#menor valor possivel eh '0', se menor, acabou num
-					ble $t0, '9', chars_0_ate_9	#caso '0' <= char <= '9'
-					blt $t0, 'A', erro_instrucao	#senao eh '0' a '9', 'A' eh o menor
-					ble $t0, 'F', chars_A_ate_F	#caso 'A' <= char <= 'F'
-					blt $t0, 'a', erro_instrucao	#senao 'A' a 'F', 'a' eh o menor
-					ble $t0, 'f', chars_a_ate_f	#caso 'a' <= char <= 'f'
-					j erro_instrucao		#se char > 'f', erro
+	testa_hex:
+		addi $a0, $a0, 2		#pula "0x" ou "0X" do hexa
+	loop_hex:
+		lbu $t0, ($a0)
+		blt $t0, '0', fim_numero	#menor valor possivel eh '0', se menor, acabou num
+		ble $t0, '9', chars_0_ate_9	#caso '0' <= char <= '9'
+		blt $t0, 'A', erro_instrucao	#senao eh '0' a '9', 'A' eh o menor
+		ble $t0, 'F', chars_A_ate_F	#caso 'A' <= char <= 'F'
+		blt $t0, 'a', erro_instrucao	#senao 'A' a 'F', 'a' eh o menor
+		ble $t0, 'f', chars_a_ate_f	#caso 'a' <= char <= 'f'
+		j erro_instrucao		#se char > 'f', erro
 
-					chars_0_ate_9:
-						sll $t1, $t1, 4		#se mais um char, mais um hexa (que representa 4 bits)
-						addi $t0, $t0, -48	#t0 = atoi(t0)
-						j fim_hexa
+		chars_0_ate_9:
+			sll $t1, $t1, 4		#se mais um char, mais um hexa (que representa 4 bits)
+			addi $t0, $t0, -48	#t0 = atoi(t0)
+			j fim_hexa
 
-					chars_A_ate_F:
-						sll $t1, $t1, 4
-						addi $t0, $t0, -55	#t0 = t0 - ('A' - 10), 'A' vale 10
-						j fim_hexa
+		chars_A_ate_F:
+			sll $t1, $t1, 4
+			addi $t0, $t0, -55	#t0 = t0 - ('A' - 10), 'A' passa a valer 10
+			j fim_hexa
 
-					chars_a_ate_f:
-						sll $t1, $t1, 4
-						addi $t0, $t0, -87	#t0 = t0 - ('a' - 10), 'a' vale 10
-						j fim_hexa
+		chars_a_ate_f:
+			sll $t1, $t1, 4
+			addi $t0, $t0, -87	#t0 = t0 - ('a' - 10), 'a' passa a valer 10
+			j fim_hexa
 
-				fim_hexa:
-					add $t1, $t1, $t0	#soma o novo num (com overflow, caso passe de 32 bits)
-					addi $a0, $a0, 1	#prox char
-					j loop_hex
+		fim_hexa:
+			addu $t1, $t1, $t0	#soma o novo num (sem overflow, caso represente um num negativo)
+			addi $a0, $a0, 1	#prox char
+			j loop_hex
 
 area_text:
 	jal getchar
@@ -452,48 +457,48 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 			jr $ra
 
 bin_para_ascii:	#recebe em a0 num para converter para ascii
-		#guarda em instrucao_hex a string resultante sem \0
+		#guarda em instrucao_ascii a string resultante sem \0
 	move $t0, $a0		#t0 guarda a0
 	move $t1, $ra		#t1 guarda ra
 
-	andi $a0, $t0, 0x0000000F	#pega ultimo byte como argumento
+	andi $a0, $t0, 0x0000000F	#pega ultimo half-byte como argumento
 	jal hex_para_ascii		#converte para ascii
-	sb $v0, instrucao_hex + 7	#guarda no ultimo byte da variavel
+	sb $v0, instrucao_ascii + 7	#guarda no ultimo byte da variavel
 
-	andi $a0, $t0, 0x000000F0	#pega penultimo byte como argumento
+	andi $a0, $t0, 0x000000F0	#pega penultimo half-byte como argumento
 	srl $a0, $a0, 4			#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 6	#guarda no penultimo byte da variavel
+	sb $v0, instrucao_ascii + 6	#guarda no penultimo byte da variavel
 
-	andi $a0, $t0, 0x00000F00	#pega antepenultimo byte como argumento
+	andi $a0, $t0, 0x00000F00	#pega antepenultimo half-byte como argumento
 	srl $a0, $a0, 8			#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 5	#guarda no antepenultimo byte da variavel
+	sb $v0, instrucao_ascii + 5	#guarda no antepenultimo byte da variavel
 
-	andi $a0, $t0, 0x0000F000	#pega quinto byte como argumento
+	andi $a0, $t0, 0x0000F000	#pega quinto half-byte como argumento
 	srl $a0, $a0, 12		#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 4	#guarda no quinto byte da variavel
+	sb $v0, instrucao_ascii + 4	#guarda no quinto byte da variavel
 
-	andi $a0, $t0, 0x000F0000	#pega quarto byte como argumento
+	andi $a0, $t0, 0x000F0000	#pega quarto half-byte como argumento
 	srl $a0, $a0, 16		#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 3	#guarda no quarto byte da variavel
+	sb $v0, instrucao_ascii + 3	#guarda no quarto byte da variavel
 
-	andi $a0, $t0, 0x00F00000	#pega terceiro byte como argumento
+	andi $a0, $t0, 0x00F00000	#pega terceiro half-byte como argumento
 	srl $a0, $a0, 20		#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 2	#guarda no terceiro byte da variavel
+	sb $v0, instrucao_ascii + 2	#guarda no terceiro byte da variavel
 
-	andi $a0, $t0, 0x0F000000	#pega segundo byte como argumento
+	andi $a0, $t0, 0x0F000000	#pega segundo half-byte como argumento
 	srl $a0, $a0, 24		#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex + 1	#guarda no segundo byte da variavel
+	sb $v0, instrucao_ascii + 1	#guarda no segundo byte da variavel
 
-	andi $a0, $t0, 0xF0000000	#pega primeiro byte como argumento
+	andi $a0, $t0, 0xF0000000	#pega primeiro half-byte como argumento
 	srl $a0, $a0, 28		#leva o lsb para a posicao 0
 	jal hex_para_ascii
-	sb $v0, instrucao_hex		#guarda no primeiro byte da variavel
+	sb $v0, instrucao_ascii		#guarda no primeiro byte da variavel
 
 	jr $t1				#retorna a caller
 
@@ -502,7 +507,7 @@ bin_para_ascii:	#recebe em a0 num para converter para ascii
 		addi $v0, $a0, 48	#senao, eh 0 ate 9 (v0 = itoa(a0)), '0' == 48
 		j salto_letra		#pula o passo de conversao 'A' ate 'F'
 		letra_hex:
-		addi $v0, $a0, 55	#['A', 'F'] == [65, 70], mas 10 <= a0, dai 10 de diferenca
+		addi $v0, $a0, 55	#['A', 'F'] == [65, 70], mas a0 >= 10, dai 10 de diferenca
 		salto_letra:
 		jr $ra			#retorna a caller
 
