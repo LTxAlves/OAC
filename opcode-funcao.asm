@@ -1,290 +1,533 @@
+.macro pega_registrador
+	jal getchar
+	move $a0, $t7			#copia t7 para a0, arg de get_reg
+	jal get_reg
+	bltz $v0, erro_instrucao	#se v0 < 0, erro, definido em get_reg
+	move $t7, $v1
+.end_macro
+
+.macro acha_cifrao
+	repeticao:
+		jal getchar
+		bne $v0, '$', repeticao
+	addi $t7, $t7, -1
+.end_macro
+
 .macro opcodes
 
-jal getchar
-bne $v0, 'a',	seraB1	#se nnao for 'a' pula
+	move $t9, $ra
 
-jal getchar
-bne $v0, 'd',	seraN2A	#se nnao for 'd' pula
+	jal getchar
+	bne $v0, 'a', comeca_com_b	#se char nao for 'a', testa 'b'
+	jal getchar
+	bne $v0, 'd', n_depois_de_a	#se segundo char nao for 'd', testa 'n'
+	jal getchar
+	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv,  erro
+	jal getchar
+	beq $v0, ' ', get_code_add	#se quarto char for ' ', eh add
+	beq $v0, 'u', get_code_addu	#se quarto char for 'u', eh addu
+	beq $v0, 'i', get_code_addi	#se quarto char for 'i', eh addi
+	j erro_instrucao		#senao, erro
 
-jal getchar
-bne $v0, 'd',	erro	#se nao for 'd', dnv,  pula
+	n_depois_de_a:
+		bne $v0, 'n', erro_instrucao	#se nao for 'n', erro
+		jal getchar
+		bne $v0, 'd', erro_instrucao	#se nao for 'd', erro
+		jal getchar
+		beq $v0, ' ', get_code_and	#se for ' ', eh and
+		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
+		jal getchar
+		beq $v0, ' ', get_code_andi	#se for ' ', eh andi
+		j erro_instrucao		#senao, erro
 
-jal getchar
-beq $v0, ' ',	print_add	#se for ' ' print ADD
-beq $v0, 'u',	print_addu	#se nao for 'u', dnv,  pula
-bne $v0, 'i',	print_addi	#se nao for 'i', dnv,  pula
-#(erro???)
+	comeca_com_b:
+		bne $v0, 'b', comeca_com_c	#se nao for 'b', testa 'c'
+		jal getchar
+		bne $v0, 'e', g_depois_de_b	#se nao for 'e', testa 'g'
+		jal getchar
+		bne $v0, 'q', erro_instrucao	#se nao for 'q', erro
+		jal getchar
+		beq $v0, ' ', get_code_beq	#se for ' ', eh beq
+		j erro_instrucao		#senao, erro
 
-seraN2A:
-bne $v0, 'n',	erro	#se nao for 'n' pula
-jal getchar
-bne $v0, 'd',	erro	#se nao for 'd', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_and	#se for ' ' print AND
-beq $v0, 'i',	print_andi	#se nao for 'i', dnv,  pula
-#(erro???)
+		g_depois_de_b:
+			bne $v0, 'g', n_depois_de_b	#se nao for 'g', testa 'n'
+			jal getchar 
+			bne $v0, 'e', erro_instrucao	#se nao for 'e', erro
+			jal getchar 
+			bne $v0, 'z', erro_instrucao	#se nao for 'z', erro
+			jal getchar
+			beq $v0, ' ', get_code_bgez	#se for ' ', eh bgez
+			j erro_instrucao		#senao, erro
 
+		n_depois_de_b:
+			bne $v0, 'n', erro_instrucao	#se nao for 'n'
+			jal getchar 
+			bne $v0, 'e', erro_instrucao	#se nao for 'e'
+			beq $v0, ' ', get_code_bne	#se for ' ', eh bne
+			j erro_instrucao		#senao, erro
 
-seraB1:
-bne $v0, 'b',	seraC1	#se nnao for 'b' pula
-jal getchar
-bne $v0, 'e',	seraG2	#se nnao for 'e' pula
+	comeca_com_c:
+		bne $v0, 'c', comeca_com_d	#se nao for 'c', testa 'd'
+		jal getchar 
+		bne $v0, 'l', erro_instrucao	#se nao for 'l', erro
+		jal getchar 
+		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
+		jal getchar 
+		beq $v0, ' ', get_code_clo	#se for ' ', eh clo
+		j erro_instrucao		#senao, erro
 
-jal getchar
-beq $v0, 'q',	print_beq	#se nao for 'q', dnv,  pula
-#(erro??)
+	comeca_com_d:
+		bne $v0, 'd', comeca_com_j	#se nao for 'd', testa 'j'
+		jal getchar 
+		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
+		jal getchar 
+		bne $v0, 'v', erro_instrucao	#se nao for 'v', erro
+		jal getchar 
+		beq $v0, ' ', get_code_div	#se for ' ' eh div
+		j erro_instrucao		#senao, erro
 
-seraG2B:
-bne $v0, 'g', seraN2B 		#se nao for 'g', dnv,  pula
+	comeca_com_j:
+		bne $v0, 'j', comeca_com_l	#se nao for 'j', testa 'l'
+		jal getchar 
+		beq $v0, ' ', get_code_j	#se for ' ' eh j
+		beq $v0, 'r', testa_jr		#se for 'r', deve ser jr
+		bne $v0, 'a', erro_instrucao	#se nao for 'a', erro
+		jal getchar 
+		bne $v0, 'l', erro_instrucao	#se nao for 'l', erro
+		jal getchar 
+		beq $v0, ' ', get_code_jal	#se for ' ' eh jal
+		j erro_instrucao		#senao, erro
 
-jal getchar 
-bne $v0, 'e', erro
-jal getchar 
-bne $v0, 'z', erro
-jal getchar
-beq $v0, ' ',	print_bgez	#se for ' ' print bgez
-#erro
+		testa_jr:
+			jal getchar
+			beq $v0, ' ', get_code_jr	#se for ' ', eh jr
+			j erro_instrucao		#senao, erro
 
-seraN2B:
-bne $v0, 'n', erro 		#se nao for 'n', dnv,  pula
-jal getchar 
-bne $v0, 'e', erro 		#se nao for 'e', dnv,  pula
-beq $v0, ' ',	print_bne	#se for ' ' print bgez
-#erro
+	comeca_com_l:
+		bne $v0, 'l', comeca_com_m	#se nao for 'l', testa 'm'
+		jal getchar
+		bne $v0, 'i', u_depois_de_l	#se nao for 'i', testa 'u'
+		jal getchar
+		beq $v0, ' ', get_code_li	#se for ' ', eh li
+		j erro_instrucao		#senao, erro
 
+		u_depois_de_l:
+			bne $v0, 'u', w_depois_de_l	#se nao for 'u', testa 'w'
+			jal getchar
+			bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
+			jal getchar
+			beq $v0, ' ', get_code_lui	#se for ' ', eh lui
+			j erro_instrucao		#senao, erro
 
-seraC1:
-bne $v0, 'c', seraD1 		#se nao for 'c', dnv,  pula
-jal getchar 
-bne $v0, 'l', erro 		#se nao for 'l', dnv,  pula
-jal getchar 
-bne $v0, 'o', erro 		#se nao for 'o', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_clo	#se for ' ' print bgez
-#erro
+		w_depois_de_l:
+			bne $v0, 'w', erro_instrucao	#se nao for 'w', erro
+			jal getchar
+			beq $v0, ' ', get_code_lw	#se for ' ', eh lw
+			j erro_instrucao		#senao, erro
+	
+	comeca_com_m:
+		bne $v0, 'm', comeca_com_n	#se nao for 'm', testa 'n'
+		jal getchar 
+		bne $v0, 'a', f_depois_de_m	#se nao for 'a', testa 'f'
+		jal getchar 
+		bne $v0, 'd', erro_instrucao	#se nao for 'd', erro
+		jal getchar 
+		bne $v0, 'd', erro_instrucao	#se nao for 'd', erro
+		jal getchar 
+		beq $v0, ' ', get_code_madd	#se for ' ', eh madd
+		j erro_instrucao		#senao, erro
 
-seraD1:
-bne $v0, 'd', seraJ1 		#se nao for 'd', dnv,  pula
-jal getchar 
-bne $v0, 'i', erro 		#se nao for 'i', dnv,  pula
-jal getchar 
-bne $v0, 'v', erro 		#se nao for 'v', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_div	#se for ' ' print bgez
-#erro
-   
+		f_depois_de_m:
+			bne $v0, 'f', u_depois_de_m	#se nao for 'f', testa 'u'
+			jal getchar 
+			bne $v0, 'h', l_depois_de_mf	#se nao for 'h'
+			jal getchar 
+			bne $v0, 'i', erro_instrucao	#se nao for 'i'
+			jal getchar 
+			beq $v0, ' ', get_code_mfhi	#se for ' ', eh mfhi
+			j erro_instrucao		#senao, erro
 
-seraJ1:
-bne $v0, 'd', seraL1 		#se nao for 'd', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_j		#se for ' ' print bgez
-beq $v0, 'r',	print_jr	#se for 'r' print bgez
-bne $v0, 'a', erro 		#se nao for 'a', dnv,  pula
-jal getchar 
-bne $v0, 'l', erro 		#se nao for 'l', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_jal	#se for ' ' print bgez
-#erro
+		l_depois_de_mf:
+			bne $v0, 'l', erro_instrucao	#se nao for 'l'
+			jal getchar 
+			bne $v0, 'o' u_depois_de_m	#se nao for 'o'
+			jal getchar 
+			beq $v0, ' ', get_code_mflo	#se for ' ', eh mflo
+			j erro_instrucao		#senao, erro
 
-seraL1:
-bne $v0, 'a', seraM1 		#se nao for 'l', dnv,  pula
-jal getchar
+		u_depois_de_m:
+			bne $v0, 'u', erro_instrucao	#se nao for 'u'
+			jal getchar
+			bne $v0, 'l', erro_instrucao	#se nao for 'l'
+			jal getchar 
+			bne $v0, 't', erro_instrucao	#se nao for 't'
+			jal getchar  
+			beq $v0, ' ', get_code_mult	#se for ' ', eh mult
+			j erro_instrucao		#senao, erro
 
-  
-seraM1:
-bne $v0, 'm', seraN1 		#se nao for 'm', dnv,  pula
-jal getchar 
-bne $v0, 'a', seraF2M 		#se nao for 'a', dnv,  pula
-jal getchar 
-bne $v0, 'd', erro 		#se nao for 'd', dnv,  pula
-jal getchar 
-bne $v0, 'd', erro 		#se nao for 'd', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_madd	#se for ' ' print bgez
-#erro
+	comeca_com_n: 
+		bne $v0, 'n', comeca_com_o	#se nao for 'n', testa 'o'
+		jal getchar
+		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
+		jal getchar 
+		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
+		jal getchar  
+		beq $v0, ' ', get_code_nor	#se for ' ', eh nor
+		j erro_instrucao		#senao, erro
 
-seraF2M:
-bne $v0, 'f', seraU2M 		#se nao for 'f', dnv,  pula
-jal getchar 
-bne $v0, 'h', seraL3F 		#se nao for 'h', dnv,  pula
-jal getchar 
-bne $v0, 'i', erro 		#se nao for 'i', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_mfhi	#se for ' ' print bgez
-#erro
+	comeca_com_o: 
+		bne $v0, 'o', comeca_com_s	#se nao for 'o', testa 's'
+		jal getchar
+		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
+		jal getchar  
+		beq $v0, ' ', get_code_or	#se for ' ', eh or
+		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
+		jal getchar  
+		beq $v0, ' ', get_code_ori	#se for ' ', eh ori
+		j erro_instrucao		#senao, erro
 
-seraL3F:
-bne $v0, 'l', erro 		#se nao for 'l', dnv,  pula
-jal getchar 
-bne $v0, 'o' seraU2M 		#se nao for 'o', dnv,  pula
-jal getchar 
-beq $v0, ' ',	print_mflo	#se for ' ' print bgez
-#erro
+	comeca_com_s:
+		bne $v0, 's', comeca_com_x	#se nao for 's', testa 'x'
+		jal getchar
+		bne $v0, 'l', r_depois_de_s	#se nao for 'l', testa 'r'
+		jal getchar
+		bne $v0, 'l', t_depois_de_sl	#se nao for 'l', testa 't'
+		jal getchar
+		beq $v0, ' ', get_code_sll	#se for ' ', eh sll
+		j erro_instrucao		#senao, erro
 
-seraU2M:
-bne $v0, 'u', erro 		#se nao for 'u', dnv,  pula
-jal getchar
-bne $v0, 'l', erro 		#se nao for 'l', dnv,  pula
-jal getchar 
-bne $v0, 't', erro 		#se nao for 't', dnv,  pula
-jal getchar  
-beq $v0, ' ',	print_mult	#se for ' ' print ADD
-#erro??
+		r_depois_de_s:
+			bne $v0, 'r', u_depois_de_s	#se nao for 'r', testa 'u'
+			jal getchar
+			bne $v0, 'a', l_depois_de_sr	#se nao for 'a', testa 'l'
+			jal getchar
+			beq $v0, ' ', get_code_sra	#se for ' ' eh ADD
+			bne $v0, 'v', erro_instrucao	#se nao for 'v'
+			jal getchar
+			beq $v0, ' ', get_code_srav	#se for ' ' eh ADD
+			j erro_instrucao		#senao, erro
 
-seraN1: 
-bne $v0, 'n', seraO1 		#se nao for 'n', dnv,  pula
-jal getchar
-bne $v0, 'o', erro 		#se nao for 'o', dnv,  pula
-jal getchar 
-bne $v0, 'a', erro 		#se nao for 'r', dnv,  pula
-jal getchar  
-beq $v0, ' ',	print_nor	#se for ' ' print ADD
-#erro
+			l_depois_de_sr:
+				bne $v0, 'l', erro_instrucao	#se nao for 'l'
+				jal getchar
+				beq $v0, ' ', get_code_srl	#se for ' ', eh srl
+				j erro_instrucao		#senao, erro
 
-seraO1: 
-bne $v0, 'o', seraO1 		#se nao for 'o', dnv,  pula
-jal getchar
-bne $v0, 'a', erro 		#se nao for 'r', dnv,  pula
-jal getchar  
-beq $v0, ' ',	print_or	#se for ' ' print ADD
-bne $v0, 'i', erro 		#se nao for 'i', dnv,  pula
-jal getchar  
-beq $v0, ' ',	print_nor	#se for ' ' print ADD
-#erro
+		t_depois_de_sl:
+			bne $v0, 't', erro_instrucao	#se nao for 't', erro
+			jal getchar
+			beq $v0, ' ', get_code_slt	#se for ' ', eh slt
+			j erro_instrucao		#senao, erro
 
-seraS1:
-bne $v0, 's', seraX1 		#se nao for 's', dnv,  pula
-jal getchar
-bne $v0, 'l', seraR2S 		#se nao for 'l', dnv,  pula
-jal getchar
-bne $v0, 'l', seraT3L 		#se nao for 'l', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_sll	#se for ' ' print ADD
-#erro
+		u_depois_de_s:
+			bne $v0, 'u', w_depois_de_s		#se nao for 'u'
+			jal getchar
+			bne $v0, 'b', erro_instrucao	#se nao for 'b'
+			jal getchar
+			beq $v0, ' ', get_code_sub	#se for ' ' eh sub
+			bne $v0, 'u', u_depois_de_s	#se nao for 'u'
+			jal getchar
+			beq $v0, ' ', get_code_subu	#se for ' ' eh subu
+			j erro_instrucao		#senao, erro
 
-seraT3L:
-bne $v0, 's', erro 		#se nao for 't', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_slt	#se for ' ' print ADD
-#erro
+		w_depois_de_s:
+			bne $v0, 'w', erro_instrucao	#se nao for 'w'
+			jal getchar
+			beq $v0, ' ', get_code_sw	#se for ' ', eh sw
+			j erro_instrucao		#senao, erro
 
-seraR2S:
-bne $v0, 's', seraU2S 		#se nao for 'r', dnv,  pula
-jal getchar
-bne $v0, 'l', seraL3S 		#se nao for 'a', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_sra	#se for ' ' print ADD
-bne $v0, 's', erro 		#se nao for 'v', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_srav	#se for ' ' print ADD
-#erro
+	comeca_com_x:
+		bne $v0, 'x', erro_instrucao	#se nao for 'x', erro
+		jal getchar
+		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
+		jal getchar
+		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
+		jal getchar
+		beq $v0, ' ', get_code_xor	#se for ' ', eh xor
+		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
+		jal getchar
+		beq $v0, ' ', get_code_xori	#se for ' ', eh xori
+		j erro_instrucao		#senao, erro
 
-seraL3S:
-bne $v0, 'l', erro 		#se nao for 'l', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_srl	#se for ' ' print ADD
-#erro
+	get_code_add:
+		li $t0, 0x00000020
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
 
-seraU2S:
-bne $v0, 'u', seraW2S 		#se nao for 'u', dnv,  pula
-jal getchar
-bne $v0, 'b', erro 		#se nao for 'b', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_sub	#se for ' ' print sub
-bne $v0, 'u', seraU2S 		#se nao for 'u, dnv,  pula
-jal getchar
-beq $v0, ' ',	print_subu	#se for ' ' print subu
-#erro
+	get_code_addu:
+		li $t0, 0x00000021
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
 
-seraW2S:
-bne $v0, 'w', erro 		#se nao for 'w', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_sw	#se for ' ' print ADD
-#erro
+	get_code_addi:
+		li $t0, 0x20000000
+		jr $t9
 
+	get_code_and:
+		li $t0, 0x00000024
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
 
-seraX1:
-bne $v0, 'x', erro 		#se nao for 'x', dnv,  pula
-jal getchar
-bne $v0, 'o', erro 		#se nao for 'o', dnv,  pula
-jal getchar
-bne $v0, 'r', erro 		#se nao for 'r', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_xor	#se for ' ' print xor
-bne $v0, 'i', erro 		#se nao for 'i', dnv,  pula
-jal getchar
-beq $v0, ' ',	print_xori	#se for ' ' print ADD
-#erro
+	get_code_andi:
+		li $t0, 0x10000000
+		jr $t9
 
+	get_code_beq:
+		li $t0, 0x10000000
+		jr $t9
 
-print_add:
-addiu $s6, $zero, 0x00000020
+	get_code_bgez:
+		li $t0, 0x04010000
+		jr $t9
 
+	get_code_bne:
+		li $t0, 0x14000000
+		jr $t9
 
-print_addu:
-addiu $s6, $zero, 0x00000021
-print_addi:
-addiu $s6, $zero, 0x20000000
-print_and:
-addiu $s6, $zero, 0x00000024
-aprint_andi:
-addiu $s6, $zero, 0x10000000
-print_beq:
-addiu $s6, $zero, 0x10000000
-print_bgez:
-addiu $s6, $zero, 0x04010000
-print_bne:
-addiu $s6, $zero, 0x14000000
-print_clo:
-addiu $s6, $zero, 0x70000021
-print_div:
-addiu $s6, $zero, 0x0000001A
-print_j:
-addiu $s6, $zero, 0x08000000
-print_jr:
-addiu $s6, $zero, 0x00000008
-print_jal:
-addiu $s6, $zero, 0x0C000000
+	get_code_clo:
+		li $t0, 0x70000021
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $v0, $t0, $v0
+		jr $t9
 
-print_madd:
-addiu $s6, $zero, 0x70000000
+	get_code_div:
+		li $t0, 0x0000001A
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
 
-print_mfhi:
-addiu $s6, $zero, 0x00000010
-print_mflo:
-addiu $s6, $zero, 0x00000012
-print_mult:
-addiu $s6, $zero, 0x00000018
+	get_code_j:
+		li $t0, 0x08000000
+		jr $t9
 
-print_nor:
-addiu $s6, $zero, 0x00000027
+	get_code_jr:
+		li $t0, 0x00000008
+		pega_registrador
+		sll $v0, $v0, 21
+		or $v0, $t0, $v0
+		jr $t9
 
-print_or:
-addiu $s6, $zero, 0x00000025
-print_ori:
-addiu $s5, $zero, 0x34000000
+	get_code_jal:
+		li $t0, 0x0C000000
+		jr $t9
 
-print_sll:
-addiu $s6, $zero, $zero
-print_slt:
-addiu $s6, $zero, 0x0000002A
+	get_code_li:
+		li $t0, 0x24000000
+		jr $t9
 
-print_sra:
-addiu $s6, $zero, 0x00000003
-print_srav:
-addiu $s6, $zero, 0x00000007
-print_srl:
-addiu $s6, $zero, 0x00000002
-print_sub:
-addiu $s6, $zero, 0x00000022
-print_subu:
-addiu $s6, $zero, 0x00000023
-print_sw:
-addiu $s6, $zero, 0xAC000000
-print_xor:
+	get_code_lui:
+		li $t0, 0x3C000000
+		jr $t9
 
-addiu $s6, $zero, 0x00000026
-print_xori:
-addiu $s6, $zero, 0x38000000
+	get_code_lw:
+		li $t0, 0x8C000000
+		jr $t9
+
+	get_code_madd:
+		li $t0, 0x70000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_mfhi:
+		li $t0, 0x00000010
+		pega_registrador
+		sll $v0, $v0, 11
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_mflo:
+		li $t0, 0x00000012
+		pega_registrador
+		sll $v0, $v0, 11
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_mult:
+		li $t0, 0x00000018
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_nor:
+		li $t0, 0x00000027
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_or:
+		li $t0, 0x00000025
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_ori:
+		li $t0, 0x34000000
+		jr $t9
+
+	get_code_sll:
+		li $t0, 0
+		jr $t9
+
+	get_code_slt:
+		li $t0, 0x0000002A
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_sra:
+		li $t0, 0x00000003
+		jr $t9
+
+	get_code_srav:
+		li $t0, 0x00000007
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_srl:
+		li $t0, 0x00000002
+		jr $t9
+
+	get_code_sub:
+		li $t0, 0x00000022
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_subu:
+		li $t0, 0x00000023
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_sw:
+		li $t0, 0xAC000000
+		jr $t9
+
+	get_code_xor:
+		li $t0, 0x00000026
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $v0, $t0, $v0
+		jr $t9
+
+	get_code_xori:
+		li $t0, 0x38000000
+		jr $t9
+
 
 .end_macro

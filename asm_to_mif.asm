@@ -1,3 +1,5 @@
+.include "opcode-funcao.asm"
+
 	.data
 path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho relativo ao executavel do MARS
 arq_saida_text: .asciiz "saida_text.mif"
