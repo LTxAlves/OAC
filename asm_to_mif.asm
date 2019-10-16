@@ -341,16 +341,16 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 		addi $t0, $t0, -48	#t0 = atoi(t0)
 		addi $t1, $t1, -48	#t1 = atoi(t1)
 		sll $v0, $t0, 3		#v0 = 8*t0
-		add $v0, $v0, $t0	#v0 = 9*t0
-		add $v0, $v0, $t0	#v0 = 10*t0
-		add $v0, $v0, $t1	#v0 = 10*t0 + t1
+		addu $v0, $v0, $t0	#v0 = 9*t0
+		addu $v0, $v0, $t0	#v0 = 10*t0
+		addu $v0, $v0, $t1	#v0 = 10*t0 + t1
 		bgt $v0, 31, not_reg	#se $32 ou maior, erro
-		add $v1, $a0, 3		#v1 = a0 + 3, ap
+		add $v1, $a0, 3		#v1 = a0 + 3, aponta para char depois de "$xx"
 		jr $ra
 
-	reg_num:		#registradores $0 a $9
+	reg_num:			#registradores $0 a $9
 		addi $v0, $t0, -48	#v0 = atoi(t0)
-		addi $v1, $a0, 2	#v1 = a0 + 2
+		addi $v1, $a0, 2	#v1 = a0 + 2, aponta para char depois de "$x"
 		jr $ra
 
 	reg_letra:

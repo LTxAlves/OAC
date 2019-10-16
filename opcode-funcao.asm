@@ -33,8 +33,14 @@
 	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv,  erro
 	jal getchar
 	beq $v0, ' ', get_code_add	#se quarto char for ' ', eh add
-	beq $v0, 'u', get_code_addu	#se quarto char for 'u', eh addu
-	beq $v0, 'i', get_code_addi	#se quarto char for 'i', eh addi
+	bne $v0, 'u', testa_addi	#se quarto char nao for 'u', deve ser addi
+	jal getchar
+	beq $v0, ' ', get_code_addu	#se ' ' depois de addu, eh addu
+	j erro_instrucao
+	testa_addi:
+	bne $v0, 'i', erro_instrucao	#se quarto char nao for 'i', erro
+	jal getchar
+	beq $v0, ' ', get_code_addi	#se ' ' depois de addi, eh addi
 	j erro_instrucao		#senao, erro
 
 	n_depois_de_a:
@@ -60,9 +66,9 @@
 
 		g_depois_de_b:
 			bne $v0, 'g', n_depois_de_b	#se nao for 'g', testa 'n'
-			jal getchar 
+			jal getchar
 			bne $v0, 'e', erro_instrucao	#se nao for 'e', erro
-			jal getchar 
+			jal getchar
 			bne $v0, 'z', erro_instrucao	#se nao for 'z', erro
 			jal getchar
 			beq $v0, ' ', get_code_bgez	#se for ' ', eh bgez
@@ -70,40 +76,40 @@
 
 		n_depois_de_b:
 			bne $v0, 'n', erro_instrucao	#se nao for 'n'
-			jal getchar 
+			jal getchar
 			bne $v0, 'e', erro_instrucao	#se nao for 'e'
 			beq $v0, ' ', get_code_bne	#se for ' ', eh bne
 			j erro_instrucao		#senao, erro
 
 	comeca_com_c:
 		bne $v0, 'c', comeca_com_d	#se nao for 'c', testa 'd'
-		jal getchar 
+		jal getchar
 		bne $v0, 'l', erro_instrucao	#se nao for 'l', erro
-		jal getchar 
+		jal getchar
 		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_clo	#se for ' ', eh clo
 		j erro_instrucao		#senao, erro
 
 	comeca_com_d:
 		bne $v0, 'd', comeca_com_j	#se nao for 'd', testa 'j'
-		jal getchar 
+		jal getchar
 		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
-		jal getchar 
+		jal getchar
 		bne $v0, 'v', erro_instrucao	#se nao for 'v', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_div	#se for ' ' eh div
 		j erro_instrucao		#senao, erro
 
 	comeca_com_j:
 		bne $v0, 'j', comeca_com_l	#se nao for 'j', testa 'l'
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_j	#se for ' ' eh j
 		beq $v0, 'r', testa_jr		#se for 'r', deve ser jr
 		bne $v0, 'a', erro_instrucao	#se nao for 'a', erro
-		jal getchar 
+		jal getchar
 		bne $v0, 'l', erro_instrucao	#se nao for 'l', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_jal	#se for ' ' eh jal
 		j erro_instrucao		#senao, erro
 
@@ -136,31 +142,31 @@
 	
 	comeca_com_m:
 		bne $v0, 'm', comeca_com_n	#se nao for 'm', testa 'n'
-		jal getchar 
+		jal getchar
 		bne $v0, 'a', f_depois_de_m	#se nao for 'a', testa 'f'
-		jal getchar 
+		jal getchar
 		bne $v0, 'd', erro_instrucao	#se nao for 'd', erro
-		jal getchar 
+		jal getchar
 		bne $v0, 'd', erro_instrucao	#se nao for 'd', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_madd	#se for ' ', eh madd
 		j erro_instrucao		#senao, erro
 
 		f_depois_de_m:
 			bne $v0, 'f', u_depois_de_m	#se nao for 'f', testa 'u'
-			jal getchar 
+			jal getchar
 			bne $v0, 'h', l_depois_de_mf	#se nao for 'h'
-			jal getchar 
+			jal getchar
 			bne $v0, 'i', erro_instrucao	#se nao for 'i'
-			jal getchar 
+			jal getchar
 			beq $v0, ' ', get_code_mfhi	#se for ' ', eh mfhi
 			j erro_instrucao		#senao, erro
 
 		l_depois_de_mf:
 			bne $v0, 'l', erro_instrucao	#se nao for 'l'
-			jal getchar 
+			jal getchar
 			bne $v0, 'o' u_depois_de_m	#se nao for 'o'
-			jal getchar 
+			jal getchar
 			beq $v0, ' ', get_code_mflo	#se for ' ', eh mflo
 			j erro_instrucao		#senao, erro
 
@@ -168,30 +174,30 @@
 			bne $v0, 'u', erro_instrucao	#se nao for 'u'
 			jal getchar
 			bne $v0, 'l', erro_instrucao	#se nao for 'l'
-			jal getchar 
+			jal getchar
 			bne $v0, 't', erro_instrucao	#se nao for 't'
-			jal getchar  
+			jal getchar 
 			beq $v0, ' ', get_code_mult	#se for ' ', eh mult
 			j erro_instrucao		#senao, erro
 
-	comeca_com_n: 
+	comeca_com_n:
 		bne $v0, 'n', comeca_com_o	#se nao for 'n', testa 'o'
 		jal getchar
 		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
-		jal getchar 
+		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar  
+		jal getchar 
 		beq $v0, ' ', get_code_nor	#se for ' ', eh nor
 		j erro_instrucao		#senao, erro
 
-	comeca_com_o: 
+	comeca_com_o:
 		bne $v0, 'o', comeca_com_s	#se nao for 'o', testa 's'
 		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar  
+		jal getchar 
 		beq $v0, ' ', get_code_or	#se for ' ', eh or
 		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
-		jal getchar  
+		jal getchar 
 		beq $v0, ' ', get_code_ori	#se for ' ', eh ori
 		j erro_instrucao		#senao, erro
 
@@ -259,423 +265,435 @@
 		j erro_instrucao		#senao, erro
 
 	get_code_add:
-		li $t0, 0x00000020
+		li $t4, 0x00000020
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_addu:
-		li $t0, 0x00000021
+		li $t4, 0x00000021
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_addi:
-		li $t0, 0x20000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t0, $t0, $v0
-		acha_cifrao
+		li $t4, 0x20000000
 		pega_registrador
 		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v1
+		bge $t7, $s1, end
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_and:
-		li $t0, 0x00000024
+		li $t4, 0x00000024
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_andi:
-		li $t0, 0x10000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t0, $t0, $v0
-		acha_cifrao
+		li $t4, 0x30000000
 		pega_registrador
 		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v1
+		bge $t7, $s1, end
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_beq:
-		li $t0, 0x10000000
+		li $t4, 0x10000000
 		jr $t9
 
 	get_code_bgez:
-		li $t0, 0x04010000
+		li $t4, 0x04010000
 		jr $t9
 
 	get_code_bne:
-		li $t0, 0x14000000
+		li $t4, 0x14000000
 		jr $t9
 
 	get_code_clo:
-		li $t0, 0x70000021
+		li $t4, 0x70000021
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_div:
-		li $t0, 0x0000001A
+		li $t4, 0x0000001A
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_j:
-		li $t0, 0x08000000
+		li $t4, 0x08000000
 		jr $t9
 
 	get_code_jr:
-		li $t0, 0x00000008
+		li $t4, 0x00000008
 		pega_registrador
 		sll $v0, $v0, 21
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_jal:
-		li $t0, 0x0C000000
+		li $t4, 0x0C000000
 		jr $t9
 
 	get_code_li:
-		li $t0, 0x24000000
+		li $t4, 0x24000000
 		jr $t9
 
 	get_code_lui:
-		li $t0, 0x3C000000
+		li $t4, 0x3C000000
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v1
+		bge $t7, $s1, end
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_lw:
-		li $t0, 0x8C000000
+		li $t4, 0x8C000000
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
+		bge $t7, $s1, end
+		or $t4, $t4, $v1
 		lbu $t1, ($t7)
 		bne $t1, '(', erro_instrucao
 		pega_registrador
-		or $v0, $t0, $v0 
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
+		jal getchar
+		move $v0, $t4
 		jr $t9
 
 	get_code_madd:
-		li $t0, 0x70000000
+		li $t4, 0x70000000
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_mfhi:
-		li $t0, 0x00000010
+		li $t4, 0x00000010
 		pega_registrador
 		sll $v0, $v0, 11
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_mflo:
-		li $t0, 0x00000012
+		li $t4, 0x00000012
 		pega_registrador
 		sll $v0, $v0, 11
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_mult:
-		li $t0, 0x00000018
+		li $t4, 0x00000018
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_nor:
-		li $t0, 0x00000027
+		li $t4, 0x00000027
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_or:
-		li $t0, 0x00000025
+		li $t4, 0x00000025
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_ori:
-		li $t0, 0x34000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t0, $t0, $v0
-		acha_cifrao
+		li $t4, 0x34000000
 		pega_registrador
 		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v1
+		bge $t7, $s1, end
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_sll:
-		li $t0, 0
 		pega_registrador
-		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		sll $t4, $v0, 11
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
-		acha_cifrao
+		or $t4, $t4, $v0
+		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v0
+		bge $t7, $s1, end
+		sll $v1, $v1, 6
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_slt:
-		li $t0, 0x0000002A
+		li $t4, 0x0000002A
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_sra:
-		li $t0, 0x00000003
+		li $t4, 0x00000003
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
-		acha_cifrao
+		or $t4, $t4, $v0
+		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v0
+		bge $t7, $s1, end
+		sll $v1, $v1, 6
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_srav:
-		li $t0, 0x00000007
+		li $t4, 0x00000007
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_srl:
-		li $t0, 0x00000002
+		li $t4, 0x00000002
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
-		acha_cifrao
+		or $t4, $t4, $v0
+		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v0
+		bge $t7, $s1, end
+		sll $v1, $v1, 6
+		or $v0, $t4, $v1
 		jr $t9
 
 	get_code_sub:
-		li $t0, 0x00000022
+		li $t4, 0x00000022
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_subu:
-		li $t0, 0x00000023
+		li $t4, 0x00000023
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_sw:
-		li $t0, 0xAC000000
+		li $t4, 0xAC000000
 		pega_registrador
 		sll $v0, $v0, 16
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
+		bge $t7, $s1, end
+		or $t4, $t4, $v1
 		lbu $t1, ($t7)
 		bne $t1, '(', erro_instrucao
 		pega_registrador
-		or $v0, $t0, $v0 
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
+		jal getchar
+		move $v0, $t4
 		jr $t9
 
 	get_code_xor:
-		li $t0, 0x00000026
+		li $t4, 0x00000026
 		pega_registrador
 		sll $v0, $v0, 11
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 21
-		or $t0, $t0, $v0
+		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
 		sll $v0, $v0, 16
-		or $v0, $t0, $v0
+		or $v0, $t4, $v0
 		jr $t9
 
 	get_code_xori:
-		li $t0, 0x38000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t0, $t0, $v0
-		acha_cifrao
+		li $t4, 0x38000000
 		pega_registrador
 		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
 		acha_imm
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, fim_data
-		or $v0, $t0, $v1
+		bge $t7, $s1, end
+		or $v0, $t4, $v1
 		jr $t9
-
 
 .end_macro
