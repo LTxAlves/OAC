@@ -9,8 +9,16 @@
 .macro acha_cifrao
 	repeticao:
 		jal getchar
+		beq $v0, '\n', erro_instrucao
 		bne $v0, '$', repeticao
 	addi $t7, $t7, -1
+.end_macro
+
+.macro acha_imm
+	loop:
+		jal getchar
+		blt $v0, '0', loop
+		bgt $v0, '9', erro_instrucao
 .end_macro
 
 .macro opcodes
@@ -225,10 +233,10 @@
 			jal getchar
 			bne $v0, 'b', erro_instrucao	#se nao for 'b'
 			jal getchar
-			beq $v0, ' ', get_code_sub	#se for ' ' eh sub
+			beq $v0, ' ', get_code_sub	#se for ' ', eh sub
 			bne $v0, 'u', u_depois_de_s	#se nao for 'u'
 			jal getchar
-			beq $v0, ' ', get_code_subu	#se for ' ' eh subu
+			beq $v0, ' ', get_code_subu	#se for ' ', eh subu
 			j erro_instrucao		#senao, erro
 
 		w_depois_de_s:
@@ -282,6 +290,20 @@
 
 	get_code_addi:
 		li $t0, 0x20000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 65535, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v1
 		jr $t9
 
 	get_code_and:
@@ -301,6 +323,20 @@
 
 	get_code_andi:
 		li $t0, 0x10000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 65535, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v1
 		jr $t9
 
 	get_code_beq:
@@ -358,10 +394,35 @@
 
 	get_code_lui:
 		li $t0, 0x3C000000
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 65535, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v1
 		jr $t9
 
 	get_code_lw:
 		li $t0, 0x8C000000
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 32767, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		lbu $t1, ($t7)
+		bne $t1, '(', erro_instrucao
+		pega_registrador
+		or $v0, $t0, $v0 
 		jr $t9
 
 	get_code_madd:
@@ -432,10 +493,39 @@
 
 	get_code_ori:
 		li $t0, 0x34000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 65535, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v1
 		jr $t9
 
 	get_code_sll:
 		li $t0, 0
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_cifrao
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 31, erro_instrucao
+		bltz $v1, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v0
 		jr $t9
 
 	get_code_slt:
@@ -455,6 +545,21 @@
 
 	get_code_sra:
 		li $t0, 0x00000003
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_cifrao
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 31, erro_instrucao
+		bltz $v1, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v0
 		jr $t9
 
 	get_code_srav:
@@ -474,6 +579,21 @@
 
 	get_code_srl:
 		li $t0, 0x00000002
+		pega_registrador
+		sll $v0, $v0, 11
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_cifrao
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 31, erro_instrucao
+		bltz $v1, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v0
 		jr $t9
 
 	get_code_sub:
@@ -508,6 +628,20 @@
 
 	get_code_sw:
 		li $t0, 0xAC000000
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t0, $t0, $v0
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 32767, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		lbu $t1, ($t7)
+		bne $t1, '(', erro_instrucao
+		pega_registrador
+		or $v0, $t0, $v0 
 		jr $t9
 
 	get_code_xor:
@@ -527,6 +661,20 @@
 
 	get_code_xori:
 		li $t0, 0x38000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t0, $t0, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		bgt $v1, 65535, erro_instrucao
+		blt $v1, -32768, erro_instrucao
+		move $t7, $v0
+		bge $t7, $s1, fim_data
+		or $v0, $t0, $v1
 		jr $t9
 
 

@@ -1,7 +1,7 @@
 .include "opcode-funcao.asm"
 
 	.data
-path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho relativo ao executavel do MARS
+path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho absoluto ou relativo ao executavel do MARS
 arq_saida_text: .asciiz "saida_text.mif"
 arq_saida_data: .asciiz "saida_data.mif"
 arq_in: .space 1024
@@ -157,7 +157,7 @@ area_data:
 				j procura_ponto
 
 uma_word:	#a0 com endereco do char atual
-		#retorna v0 com end do ultimo char lido e v1 com valor da word (-1 se erro)
+		#retorna v0 com end do ultimo char lido e v1 com valor da word
 	move $t1, $zero			#zera para calcular num atual
 	lbu $t0, ($a0)			#carregar o caractere apontado
 	seq $t3, $t0, '-'		#flag de nums negativos
@@ -199,9 +199,6 @@ uma_word:	#a0 com endereco do char atual
 			nao_negativo:
 				move $v1, $t1			#retorna valor da word
 				jr $ra
-	erro_word:
-		li $v0, -1
-		jr $ra
 
 	testa_hex:
 		addi $a0, $a0, 2		#pula "0x" ou "0X" do hexa
