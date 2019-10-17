@@ -1,5 +1,7 @@
+.include "opcode-funcao.asm"
+
 	.data
-path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho relativo ao executavel do MARS
+path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho absoluto ou relativo ao executavel do MARS
 arq_saida_text: .asciiz "saida_text.mif"
 arq_saida_data: .asciiz "saida_data.mif"
 arq_in: .space 1024
@@ -10,8 +12,10 @@ fim_do_arquivo: .asciiz "Fim do arquivo encontrado!\n"
 erro_de_instrucao: .asciiz "Erro de instrucao no arquivo"
 arq_data_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arq_text_comeco: .ascii "DEPTH\t\t= 4096;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
-arqs_end: .ascii "\n\nEND;\n"
+arqs_end: .ascii "\nEND;\n"
 instrucao_ascii: .space 8
+meio_hexadecimais: .ascii " : "
+fim_de_linha: .ascii ";\n"
 
 	.text
 main:
@@ -40,7 +44,7 @@ procura_ponto:
 	lbu $t0, ($t7)			#carrega o caractere em t7
 	beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
 	addi $t7, $t7, 1		#proximo byte/char
-	bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 	j procura_ponto			#continua procurando o caractere '.'
 
 procura_dois_pontos:
@@ -76,7 +80,7 @@ procura_word:
 
 getchar:
 	addi $t7, $t7, 1	#proximo byte/char
-	bge $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
 	lbu $v0, ($t7)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
@@ -110,6 +114,9 @@ area_data:
 	li $a2, 83		#num de caracteres a escrever
 	syscall
 
+	move $s3, $zero
+	la $s4, instrucao_ascii
+
 	data:
 		addi $t7, $t7, -1	#retorna o ponteiro pro char anterior (ultimo '\n')
 		jal pula_nova_linha	#pula todos '\n' encontrados (precisa de ao menos 1)
@@ -121,11 +128,36 @@ area_data:
 		jal getchar
 
 		get_word:
-			move $a0, $t7		#ponteiro para char atual como argumento
+			move $a0, $s3
+			jal bin_para_ascii
+
+			move $a0, $s2	#a0 com descritor
+			li $v0, 15	#escrever em arquivo
+			move $a1, $s4	#o que escrever
+			li $a2, 11 	#num de caracteres a escrever
+			syscall
+
+			move $a0, $t7	#ponteiro para char atual como argumento
 			jal uma_word
 			move $t7, $v0
-			bge $t7, $s1, fim_data
+			bgt $t7, $s1, fim_data
+
 			move $a0, $v1
+			jal bin_para_ascii
+
+			move $a0, $s2	#a0 com descritor
+			li $v0, 15	#escrever em arquivo
+			#move $a1, $s4	#a1 nao eh alterado desde o ultimo syscall
+			li $a2, 8	#num de caracteres a escrever
+			syscall
+
+			move $a0, $s2		#a0 com descritor
+			li $v0, 15		#escrever em arquivo
+			la $a1, fim_de_linha	#o que escrever
+			li $a2, 2		#num de caracteres a escrever
+			syscall
+
+			addi $s3, $s3, 4
 
 			lbu $t0, ($t7)
 			bne $t0, '\n', pula_separadores
@@ -148,14 +180,14 @@ area_data:
 				li $v0, 15		#escrever em arq
 				move $a0, $s2		#descritor do arq
 				la $a1, arqs_end	#o que escrever
-				li $a2, 7		#quant de caracteres
+				li $a2, 6		#quant de caracteres
 				syscall
 				jal fecha_arquivo
 				move $s2, $zero
 				j procura_ponto
 
 uma_word:	#a0 com endereco do char atual
-		#retorna v0 com end do ultimo char lido e v1 com valor da word (-1 se erro)
+		#retorna v0 com end do ultimo char lido e v1 com valor da word
 	move $t1, $zero			#zera para calcular num atual
 	lbu $t0, ($a0)			#carregar o caractere apontado
 	seq $t3, $t0, '-'		#flag de nums negativos
@@ -197,9 +229,6 @@ uma_word:	#a0 com endereco do char atual
 			nao_negativo:
 				move $v1, $t1			#retorna valor da word
 				jr $ra
-	erro_word:
-		li $v0, -1
-		jr $ra
 
 	testa_hex:
 		addi $a0, $a0, 2		#pula "0x" ou "0X" do hexa
@@ -342,16 +371,16 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 		addi $t0, $t0, -48	#t0 = atoi(t0)
 		addi $t1, $t1, -48	#t1 = atoi(t1)
 		sll $v0, $t0, 3		#v0 = 8*t0
-		add $v0, $v0, $t0	#v0 = 9*t0
-		add $v0, $v0, $t0	#v0 = 10*t0
-		add $v0, $v0, $t1	#v0 = 10*t0 + t1
+		addu $v0, $v0, $t0	#v0 = 9*t0
+		addu $v0, $v0, $t0	#v0 = 10*t0
+		addu $v0, $v0, $t1	#v0 = 10*t0 + t1
 		bgt $v0, 31, not_reg	#se $32 ou maior, erro
-		add $v1, $a0, 3		#v1 = a0 + 3, ap
+		add $v1, $a0, 3		#v1 = a0 + 3, aponta para char depois de "$xx"
 		jr $ra
 
-	reg_num:		#registradores $0 a $9
+	reg_num:			#registradores $0 a $9
 		addi $v0, $t0, -48	#v0 = atoi(t0)
-		addi $v1, $a0, 2	#v1 = a0 + 2
+		addi $v1, $a0, 2	#v1 = a0 + 2, aponta para char depois de "$x"
 		jr $ra
 
 	reg_letra:
