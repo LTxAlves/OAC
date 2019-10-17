@@ -51,8 +51,11 @@ procura_dois_pontos:
 	move $t1, $ra		#t1 recebe ra
 	jal getchar		#prox char
 	move $ra, $t1		#ra recebe seu valor anterior
+	bge $t7, $s1, fim_loop  	#se t7 == s1, acabaram os caracteres (e o programa)
 	bne $v0, ':', procura_dois_pontos	#se v0 != ':', continua procura
+	fim_loop: 
 	jr $ra			#se encontrou ':', retorna a caller
+	
 
 pula_nova_linha:
 	move $t1, $ra		#t1 recebe ra
@@ -286,10 +289,68 @@ area_text:
 	li $a2, 82		#num de caracteres a escrever
 	syscall
 
-	move $a0, $s2
+	move $s5, $zero
+	jal funcao_label #percorre ate final do arquivo
+	la $a0, arq_in
+	jal procura_ponto_text
+	
+	percorrer_text_denovo:
+	jal getchar
+	bne $v0, 'e', erro_instrucao	#proximo char deve ser 'e'
+	jal getchar
+	bne $v0, 'x', erro_instrucao	#proximo char deve ser 'x'
+	jal getchar
+	bne $v0, 't', erro_instrucao	#proximo char deve ser 't'
+	jal getchar
+	bne $v0, '\n', erro_instrucao	#proximo char deve ser '\n'
+	
+	
+	
 	jal fecha_arquivo
 
 	j fim_prog
+
+
+
+
+procura_ponto_text:
+	jal getchar		
+	bne $v0, '.', procura_ponto_text	#se t0 == '.', deve ser data ou text 
+	jal getchar
+	bne $v0, 't', procura_ponto_text
+	j percorrer_text_denovo
+	
+
+funcao_label: #procurando dois pontos e guardando as labels na pilha
+	move $t0, $ra
+	jal procura_dois_pontos
+	blt $t7, $s1, volta_barra_n	#se t7 == s1, acabaram os caracteres (e o programa)
+	jr $t0
+
+getchar_2:
+	addi $t6, $t6, 1	#proximo byte/char
+	bgt $t6, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
+	lbu $v0, ($t6)		#v0 recebe char para retorno
+	jr $ra			#retorna a caller
+
+volta_barra_n: 		#
+	addi $t6, $t6, -2
+	jal getchar_2		#prox char
+	addi $s5, $s5, 1
+	subi $sp, $sp, 1
+	sb $v0, ($sp)
+	
+	beq $v0, '\n', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, '\0', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, '\t', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, ' ', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	j volta_barra_n
+	
+	fim_retorna_barra_n: 
+	sb $zero, ($sp) 	
+	jr $ra			#se encontrou ':', retorna a caller
+
+
 
 fecha_arquivo:
 	li $v0, 16		#fechar arquivo
