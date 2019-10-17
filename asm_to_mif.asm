@@ -12,8 +12,10 @@ fim_do_arquivo: .asciiz "Fim do arquivo encontrado!\n"
 erro_de_instrucao: .asciiz "Erro de instrucao no arquivo"
 arq_data_comeco: .ascii "DEPTH\t\t= 16384;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
 arq_text_comeco: .ascii "DEPTH\t\t= 4096;\nWIDTH\t\t= 32;\nADDRESS_RADIX\t= HEX;\nDATA_RADIX\t= HEX;\nCONTENT\nBEGIN\n\n"
-arqs_end: .ascii "\n\nEND;\n"
+arqs_end: .ascii "\nEND;\n"
 instrucao_ascii: .space 8
+meio_hexadecimais: .ascii " : "
+fim_de_linha: .ascii ";\n"
 
 	.text
 main:
@@ -42,7 +44,7 @@ procura_ponto:
 	lbu $t0, ($t7)			#carrega o caractere em t7
 	beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
 	addi $t7, $t7, 1		#proximo byte/char
-	bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 	j procura_ponto			#continua procurando o caractere '.'
 
 procura_dois_pontos:
@@ -78,7 +80,7 @@ procura_word:
 
 getchar:
 	addi $t7, $t7, 1	#proximo byte/char
-	bge $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
 	lbu $v0, ($t7)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
@@ -112,6 +114,9 @@ area_data:
 	li $a2, 83		#num de caracteres a escrever
 	syscall
 
+	move $s3, $zero
+	la $s4, instrucao_ascii
+
 	data:
 		addi $t7, $t7, -1	#retorna o ponteiro pro char anterior (ultimo '\n')
 		jal pula_nova_linha	#pula todos '\n' encontrados (precisa de ao menos 1)
@@ -123,11 +128,36 @@ area_data:
 		jal getchar
 
 		get_word:
-			move $a0, $t7		#ponteiro para char atual como argumento
+			move $a0, $s3
+			jal bin_para_ascii
+
+			move $a0, $s2	#a0 com descritor
+			li $v0, 15	#escrever em arquivo
+			move $a1, $s4	#o que escrever
+			li $a2, 11 	#num de caracteres a escrever
+			syscall
+
+			move $a0, $t7	#ponteiro para char atual como argumento
 			jal uma_word
 			move $t7, $v0
-			bge $t7, $s1, fim_data
+			bgt $t7, $s1, fim_data
+
 			move $a0, $v1
+			jal bin_para_ascii
+
+			move $a0, $s2	#a0 com descritor
+			li $v0, 15	#escrever em arquivo
+			#move $a1, $s4	#a1 nao eh alterado desde o ultimo syscall
+			li $a2, 8	#num de caracteres a escrever
+			syscall
+
+			move $a0, $s2		#a0 com descritor
+			li $v0, 15		#escrever em arquivo
+			la $a1, fim_de_linha	#o que escrever
+			li $a2, 2		#num de caracteres a escrever
+			syscall
+
+			addi $s3, $s3, 4
 
 			lbu $t0, ($t7)
 			bne $t0, '\n', pula_separadores
@@ -150,7 +180,7 @@ area_data:
 				li $v0, 15		#escrever em arq
 				move $a0, $s2		#descritor do arq
 				la $a1, arqs_end	#o que escrever
-				li $a2, 7		#quant de caracteres
+				li $a2, 6		#quant de caracteres
 				syscall
 				jal fecha_arquivo
 				move $s2, $zero

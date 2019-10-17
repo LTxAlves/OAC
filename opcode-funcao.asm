@@ -352,14 +352,37 @@
 
 	get_code_beq:
 		li $t4, 0x10000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		#lidar com label
+		move $v0, $t4
 		jr $t9
 
 	get_code_bgez:
 		li $t4, 0x04010000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
+		#lidar com label
+		move $v0, $t4
 		jr $t9
 
 	get_code_bne:
 		li $t4, 0x14000000
+		pega_registrador
+		sll $v0, $v0, 21
+		or $t4, $t4, $v0
+		acha_cifrao
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		#lidar com label
+		move $v0, $t4
 		jr $t9
 
 	get_code_clo:
