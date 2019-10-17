@@ -80,6 +80,7 @@
 			bne $v0, 'n', erro_instrucao	#se nao for 'n'
 			jal getchar
 			bne $v0, 'e', erro_instrucao	#se nao for 'e'
+			jal getchar
 			beq $v0, ' ', get_code_bne	#se for ' ', eh bne
 			j erro_instrucao		#senao, erro
 
@@ -364,7 +365,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		#lidar com label
+		jal procura_nova_linha
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -374,7 +375,7 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $t4, $t4, $v0
-		#lidar com label
+		jal procura_nova_linha
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -388,7 +389,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		#lidar com label
+		jal procura_nova_linha
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -419,8 +420,8 @@
 
 	get_code_j:
 		li $t4, 0x08000000
-		move $v0, $t4
 		jal procura_nova_linha
+		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -434,8 +435,8 @@
 
 	get_code_jal:
 		li $t4, 0x0C000000
-		move $v0, $t4
 		jal procura_nova_linha
+		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -451,15 +452,14 @@
 		bgt $t7, $s1, fim_prog
 		bgt $v1, 32767, eh_pseudo
 		blt $v1, -32768, eh_pseudo
-		continua:
+		j nao_pseudo
+		eh_pseudo:
+		addi $s3, $s3, 4
+		nao_pseudo:
 		andi $v1, $v1, 0x0000FFFF
 		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
-
-		eh_pseudo:
-			addi $s3, $s3, 4
-			j continua
 
 	get_code_lui:
 		li $t4, 0x3C000000

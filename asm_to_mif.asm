@@ -39,12 +39,13 @@ main:
 	move $s0, $zero
 	la $t7, arq_in		#salvar ponteiro para o primeiro byte/char
 	add $s1, $s1, $t7	#salvar endereco do final do arquivo
+	addi $s1, $s1, 1
 
 procura_ponto:
 	lbu $t0, ($t7)			#carrega o caractere em t7
 	beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
 	addi $t7, $t7, 1		#proximo byte/char
-	bgt $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
+	bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 	j procura_ponto			#continua procurando o caractere '.'
 
 procura_dois_pontos:
@@ -79,7 +80,7 @@ procura_nova_linha:
 	move $t1, $ra		#t1 recebe ra
 	procura_nova_linha_1:
 		jal getchar	#prox char
-		bne $v0, '\n', pula_nova_linha_1	#se v0 == '\n', continua pulando chars
+		bne $v0, '\n', procura_nova_linha_1	#se v0 == '\n', continua pulando chars
 	addi $t7, $t7, -1	#retorna ponteiro ao ultimo '\n' encontrado
 	jr $t1			#retorna a caller
 
@@ -101,7 +102,7 @@ procura_word:
 
 getchar:
 	addi $t7, $t7, 1	#proximo byte/char
-	bgt $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
+	bge $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
 	lbu $v0, ($t7)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
@@ -161,7 +162,7 @@ area_data:
 			move $a0, $t7	#ponteiro para char atual como argumento
 			jal uma_word
 			move $t7, $v0
-			bgt $t7, $s1, fim_prog
+			bge $t7, $s1, fim_prog
 
 			move $a0, $v1
 			jal bin_para_ascii
@@ -186,7 +187,7 @@ area_data:
 
 			pula_separadores:
 				addi $t7, $t7, 1	#proximo byte/char
-				bgt $t7, $s1, fim_data	#se t7 == s1, acabaram os caracteres (e o programa)
+				bge $t7, $s1, fim_arq_saida	#se t7 == s1, acabaram os caracteres (e o programa)
 				lbu $v0, ($t7)		#v0 recebe char para retorno
 				beq $v0, ' ', pula_separadores	#se char eh ' ', pula mais
 				beq $v0, ',', pula_separadores	#se char eh ',', pula mais
@@ -195,20 +196,10 @@ area_data:
 
 			fim_word:			#se nao eh nenhum, continua
 				jal getchar		#prox char
-				beq $v0, '.', fim_data	#se '.', deve ser ".text"
+				beq $v0, '.', fim_arq_saida	#se '.', deve ser ".text"
 				bne $v0, '\n', data	#depois de pular separadores e '.', se nao eh '\n', eh mais um numero
 				j fim_word
 
-			fim_data:
-				addi $t7, $t7, -1
-				li $v0, 15		#escrever em arq
-				move $a0, $s2		#descritor do arq
-				la $a1, arqs_end	#o que escrever
-				li $a2, 6		#quant de caracteres
-				syscall
-				jal fecha_arquivo
-				move $s2, $zero
-				j procura_ponto
 
 uma_word:	#a0 com endereco do char atual
 		#retorna v0 com end do ultimo char lido e v1 com valor da word
@@ -322,16 +313,16 @@ area_text:
 		jal get_code_instrucao
 		pula_lixo:
 			addi $t7, $t7, 1	#proximo byte/char
-			bgt $t7, $s1, fim_text	#se t7 == s1, acabaram os caracteres (e o programa)
+			bge $t7, $s1, fim_arq_saida	#se t7 == s1, acabaram os caracteres (e o programa)
 			lbu $v0, ($t7)		#v0 recebe char para retorno
 			beq $v0, '\n', pula_lixo
 			beq $v0, '\t', pula_lixo
-			beq $v0, '\0', fim_text
-			beq $v0, '.', fim_text
+			beq $v0, '\0', fim_arq_saida
+			beq $v0, '.', fim_arq_saida
 			addi $t7, $t7, -1
 			j percorre_arquivo
 
-		fim_text:
+		fim_arq_saida:
 			li $v0, 15		#escrever em arq
 			move $a0, $s2		#descritor do arq
 			la $a1, arqs_end	#o que escrever
