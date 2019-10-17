@@ -48,19 +48,40 @@ procura_ponto:
 	j procura_ponto			#continua procurando o caractere '.'
 
 procura_dois_pontos:
-	move $t1, $ra		#t1 recebe ra
-	jal getchar		#prox char
-	move $ra, $t1		#ra recebe seu valor anterior
-	bne $v0, ':', procura_dois_pontos	#se v0 != ':', continua procura
-	jr $ra			#se encontrou ':', retorna a caller
+	move $t1, $ra	#t1 recebe ra
+	procura_dois_pontos_1:
+		jal getchar		#prox char
+		bne $v0, ':', procura_dois_pontos_1	#se v0 != ':', continua procura
+	jr $t1		#se encontrou ':', retorna a caller
+
+ha_label_na_linha:
+	addi $a0, $a0, 1		#proximo byte/char
+	bgt $a0, $s1, sem_label		#se a0 > s1, acabaram os caracteres
+	lbu $t0, ($a0)			#v0 recebe char para retorno
+	beq $t0, '\n', sem_label	#se acabou a linha, nao tem 
+	bne $t0, ':', ha_label_na_linha	#se v0 == ':', tem label
+	li $v0, 1			#flag de label
+	addi $v1, $a0, 1		#aponta p/ char depois de ':'
+	jr $ra				#retorna a caller
+	sem_label:
+		li $v0, -1		#flag de sem label
+		jr $ra			#retorna a caller
 
 pula_nova_linha:
 	move $t1, $ra		#t1 recebe ra
-	jal getchar		#prox char
-	move $ra, $t1		#ra recebe seu valor anterior
-	beq $v0, '\n', pula_nova_linha	#se v0 == '\n', continua pulando chars
+	pula_nova_linha_1:
+		jal getchar	#prox char
+		beq $v0, '\n', pula_nova_linha_1	#se v0 == '\n', continua pulando chars
 	addi $t7, $t7, -1	#retorna ponteiro ao ultimo '\n' encontrado
-	jr $ra			#retorna a caller
+	jr $t1			#retorna a caller
+
+procura_nova_linha:
+	move $t1, $ra		#t1 recebe ra
+	procura_nova_linha_1:
+		jal getchar	#prox char
+		bne $v0, '\n', pula_nova_linha_1	#se v0 == '\n', continua pulando chars
+	addi $t7, $t7, -1	#retorna ponteiro ao ultimo '\n' encontrado
+	jr $t1			#retorna a caller
 
 procura_word:
 	move $t1, $ra			#t1 recebe ra
@@ -140,7 +161,7 @@ area_data:
 			move $a0, $t7	#ponteiro para char atual como argumento
 			jal uma_word
 			move $t7, $v0
-			bgt $t7, $s1, fim_data
+			bgt $t7, $s1, fim_prog
 
 			move $a0, $v1
 			jal bin_para_ascii
@@ -164,7 +185,9 @@ area_data:
 			addi $t7, $t7, -1
 
 			pula_separadores:
-				jal getchar			#prox char
+				addi $t7, $t7, 1	#proximo byte/char
+				bgt $t7, $s1, fim_data	#se t7 == s1, acabaram os caracteres (e o programa)
+				lbu $v0, ($t7)		#v0 recebe char para retorno
 				beq $v0, ' ', pula_separadores	#se char eh ' ', pula mais
 				beq $v0, ',', pula_separadores	#se char eh ',', pula mais
 				beq $v0, '\t', pula_separadores	#se char eh '\t', pula mais
@@ -177,6 +200,7 @@ area_data:
 				j fim_word
 
 			fim_data:
+				addi $t7, $t7, -1
 				li $v0, 15		#escrever em arq
 				move $a0, $s2		#descritor do arq
 				la $a1, arqs_end	#o que escrever
@@ -269,8 +293,7 @@ area_text:
 	bne $v0, 'x', erro_instrucao	#proximo char deve ser 'x'
 	jal getchar
 	bne $v0, 't', erro_instrucao	#proximo char deve ser 't'
-	jal getchar
-	bne $v0, '\n', erro_instrucao	#proximo char deve ser '\n'
+	jal pula_nova_linha
 
 	li $v0, 13		#abrir arquivo
 	la $a0, arq_saida_text	#endereco da string com nome do arquivo
@@ -286,10 +309,37 @@ area_text:
 	li $a2, 82		#num de caracteres a escrever
 	syscall
 
-	move $a0, $s2
-	jal fecha_arquivo
+	li $s3, -4
+	la $s4, instrucao_ascii
 
-	j fim_prog
+	percorre_arquivo:
+
+		move $a0, $t7
+		jal ha_label_na_linha
+		bltz $v0, nao_tem_label
+		move $t7, $v1
+		nao_tem_label:
+		jal get_code_instrucao
+		pula_lixo:
+			addi $t7, $t7, 1	#proximo byte/char
+			bgt $t7, $s1, fim_text	#se t7 == s1, acabaram os caracteres (e o programa)
+			lbu $v0, ($t7)		#v0 recebe char para retorno
+			beq $v0, '\n', pula_lixo
+			beq $v0, '\t', pula_lixo
+			beq $v0, '\0', fim_text
+			beq $v0, '.', fim_text
+			addi $t7, $t7, -1
+			j percorre_arquivo
+
+		fim_text:
+			li $v0, 15		#escrever em arq
+			move $a0, $s2		#descritor do arq
+			la $a1, arqs_end	#o que escrever
+			li $a2, 6		#quant de caracteres
+			syscall
+			jal fecha_arquivo
+			move $s2, $zero
+			j procura_ponto
 
 fecha_arquivo:
 	li $v0, 16		#fechar arquivo
@@ -543,3 +593,6 @@ bin_para_ascii:	#recebe em a0 num para converter para ascii
 set_ra:
 	move $v0, $ra
 	jr $ra
+
+get_code_instrucao:
+	codes

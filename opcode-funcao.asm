@@ -23,7 +23,7 @@
 	okay:
 .end_macro
 
-.macro opcodes
+.macro codes
 
 	move $t9, $ra
 
@@ -279,6 +279,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_addu:
@@ -294,6 +295,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_addi:
@@ -311,9 +313,10 @@
 		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		andi $v1, $v1, 0x0000FFFF
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_and:
@@ -329,6 +332,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_andi:
@@ -346,8 +350,9 @@
 		bgt $v1, 65535, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_beq:
@@ -361,6 +366,7 @@
 		or $t4, $t4, $v0
 		#lidar com label
 		move $v0, $t4
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_bgez:
@@ -370,6 +376,7 @@
 		or $t4, $t4, $v0
 		#lidar com label
 		move $v0, $t4
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_bne:
@@ -383,6 +390,7 @@
 		or $t4, $t4, $v0
 		#lidar com label
 		move $v0, $t4
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_clo:
@@ -394,6 +402,7 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_div:
@@ -405,10 +414,14 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_j:
 		li $t4, 0x08000000
+		move $v0, $t4
+		jal procura_nova_linha
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_jr:
@@ -416,15 +429,37 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_jal:
 		li $t4, 0x0C000000
+		move $v0, $t4
+		jal procura_nova_linha
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_li:
 		li $t4, 0x24000000
+		pega_registrador
+		sll $v0, $v0, 16
+		or $t4, $t4, $v0
+		acha_imm
+		move $a0, $t7
+		jal uma_word
+		move $t7, $v0
+		bgt $t7, $s1, fim_prog
+		bgt $v1, 32767, eh_pseudo
+		blt $v1, -32768, eh_pseudo
+		continua:
+		andi $v1, $v1, 0x0000FFFF
+		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
+
+		eh_pseudo:
+			addi $s3, $s3, 4
+			j continua
 
 	get_code_lui:
 		li $t4, 0x3C000000
@@ -437,8 +472,9 @@
 		bgt $v1, 65535, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_lw:
@@ -452,7 +488,7 @@
 		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		andi $v1, $v1, 0x0000FFFF
 		or $t4, $t4, $v1
 		lbu $t1, ($t7)
@@ -462,6 +498,7 @@
 		or $t4, $t4, $v0
 		jal getchar
 		move $v0, $t4
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_madd:
@@ -473,6 +510,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_mfhi:
@@ -480,6 +518,7 @@
 		pega_registrador
 		sll $v0, $v0, 11
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_mflo:
@@ -487,6 +526,7 @@
 		pega_registrador
 		sll $v0, $v0, 11
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_mult:
@@ -498,6 +538,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_nor:
@@ -513,6 +554,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_or:
@@ -528,6 +570,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_ori:
@@ -545,8 +588,9 @@
 		bgt $v1, 65535, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_sll:
@@ -562,9 +606,10 @@
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		sll $v1, $v1, 6
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_slt:
@@ -580,6 +625,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_sra:
@@ -597,9 +643,10 @@
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		sll $v1, $v1, 6
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_srav:
@@ -615,6 +662,7 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_srl:
@@ -632,9 +680,10 @@
 		bgt $v1, 31, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		sll $v1, $v1, 6
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_sub:
@@ -650,6 +699,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_subu:
@@ -665,6 +715,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_sw:
@@ -678,7 +729,7 @@
 		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		andi $v1, $v1, 0x0000FFFF
 		or $t4, $t4, $v1
 		lbu $t1, ($t7)
@@ -688,6 +739,7 @@
 		or $t4, $t4, $v0
 		jal getchar
 		move $v0, $t4
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_xor:
@@ -703,6 +755,7 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $v0, $t4, $v0
+		jal escrever_no_arquivo
 		jr $t9
 
 	get_code_xori:
@@ -720,8 +773,44 @@
 		bgt $v1, 65535, erro_instrucao
 		bltz $v1, erro_instrucao
 		move $t7, $v0
-		bge $t7, $s1, end
+		bgt $t7, $s1, fim_prog
 		or $v0, $t4, $v1
+		jal escrever_no_arquivo
 		jr $t9
+
+
+	escrever_no_arquivo:
+		move $t5, $ra
+		move $t6, $v0
+
+		addi $s3, $s3, 4
+		
+		move $a0, $s3
+		jal bin_para_ascii
+
+		move $a0, $s2	#a0 com descritor
+		li $v0, 15	#escrever em arquivo
+		move $a1, $s4	#o que escrever
+		li $a2, 11 	#num de caracteres a escrever
+		syscall
+
+		move $v0, $t6
+
+		move $a0, $v0
+		jal bin_para_ascii
+
+		move $a0, $s2	#a0 com descritor
+		li $v0, 15	#escrever em arquivo
+		move $a1, $s4	#o que escrever
+		li $a2, 8	#num de caracteres a escrever
+		syscall
+
+		move $a0, $s2		#a0 com descritor
+		li $v0, 15		#escrever em arquivo
+		la $a1, fim_de_linha	#o que escrever
+		li $a2, 2		#num de caracteres a escrever
+		syscall
+
+		jr $t5
 
 .end_macro
