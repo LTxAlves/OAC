@@ -17,8 +17,10 @@
 .macro acha_imm
 	loop:
 		jal getchar
+		beq $v0, '-', okay
 		blt $v0, '0', loop
 		bgt $v0, '9', erro_instrucao
+	okay:
 .end_macro
 
 .macro opcodes
@@ -306,10 +308,11 @@
 		acha_imm
 		move $a0, $t7
 		jal uma_word
-		bgt $v1, 65535, erro_instrucao
+		bgt $v1, 32767, erro_instrucao
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
+		andi $v1, $v1, 0x0000FFFF
 		or $v0, $t4, $v1
 		jr $t9
 
@@ -341,7 +344,7 @@
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
-		blt $v1, -32768, erro_instrucao
+		bltz $v1, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
 		or $v0, $t4, $v1
@@ -409,7 +412,7 @@
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
-		blt $v1, -32768, erro_instrucao
+		bltz $v1, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
 		or $v0, $t4, $v1
@@ -427,6 +430,7 @@
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
+		andi $v1, $v1, 0x0000FFFF
 		or $t4, $t4, $v1
 		lbu $t1, ($t7)
 		bne $t1, '(', erro_instrucao
@@ -516,7 +520,7 @@
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
-		blt $v1, -32768, erro_instrucao
+		bltz $v1, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
 		or $v0, $t4, $v1
@@ -652,6 +656,7 @@
 		blt $v1, -32768, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
+		andi $v1, $v1, 0x0000FFFF
 		or $t4, $t4, $v1
 		lbu $t1, ($t7)
 		bne $t1, '(', erro_instrucao
@@ -690,7 +695,7 @@
 		move $a0, $t7
 		jal uma_word
 		bgt $v1, 65535, erro_instrucao
-		blt $v1, -32768, erro_instrucao
+		bltz $v1, erro_instrucao
 		move $t7, $v0
 		bge $t7, $s1, end
 		or $v0, $t4, $v1
