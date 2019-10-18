@@ -4,7 +4,7 @@
 path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho absoluto ou relativo ao executavel do MARS
 arq_saida_text: .asciiz "saida_text.mif"
 arq_saida_data: .asciiz "saida_data.mif"
-arq_in: .space 1024
+arq_in: .space 2048
 erro_ao_abrir: .asciiz "Erro ao abrir arquivo!\n"
 aberto_sucesso: .asciiz "Arquivo aberto com sucesso!\n"
 erro_ao_ler: .asciiz "Erro ao ler do arquivo!\n"
@@ -340,7 +340,7 @@ fecha_arquivo:
 le_arq:
 	li $v0, 14		#ler de arquivo
 	la $a1, arq_in		#endereco para guardar bytes lidos
-	li $a2, 1024		#numero de bytes a ler
+	li $a2, 2048		#numero de bytes a ler
 	syscall
 	bltz $v0, erro_leitura	#se v0 < 0, erro
 	jr $ra
