@@ -441,10 +441,8 @@
 		jr $t9
 
 	get_code_li:
-		li $t4, 0x24000000
 		pega_registrador
-		sll $v0, $v0, 16
-		or $t4, $t4, $v0
+		sll $t4, $v0, 16
 		acha_imm
 		move $a0, $t7
 		jal uma_word
@@ -454,7 +452,15 @@
 		blt $v1, -32768, eh_pseudo
 		j nao_pseudo
 		eh_pseudo:
-		addi $s3, $s3, 4
+		srl $v0, $v1, 16
+		ori $v0, $v0, 0x3C010000
+		jal escrever_no_arquivo
+		li $v0, 0x34200000
+		or $v0, $v0, $t4
+		andi $t4, $v1, 0x0000FFFF
+		or $v0, $v0, $t4
+		jal escrever_no_arquivo
+		jr $t9
 		nao_pseudo:
 		andi $v1, $v1, 0x0000FFFF
 		or $v0, $t4, $v1
