@@ -288,8 +288,9 @@ area_text:
 	bne $v0, 'x', erro_instrucao	#proximo char deve ser 'x'
 	jal getchar
 	bne $v0, 't', erro_instrucao	#proximo char deve ser 't'
-	jal pula_nova_linha
-
+	jal getchar
+	bne $v0, '\n', erro_instrucao	#proximo char deve ser 't
+	
 	li $v0, 13		#abrir arquivo
 	la $a0, arq_saida_text	#endereco da string com nome do arquivo
 	li $a1, 1		#abrir para escrita
@@ -309,8 +310,10 @@ area_text:
 	move $s5, $zero
 	move $t5, $t7
 	move $t6, $t7
+	
 	jal funcao_label #percorre ate final do arquivo
 	blt $t7, $s1, funcao_label #se ele n terminou de procurar ':' volta pra fun�ao
+	fim_percorrer_primeira_vez:
 	move $t7, $t5 #volta pro inicio de .text
 
 	percorre_arquivo:
@@ -344,20 +347,23 @@ area_text:
 funcao_label: #procurando dois pontos e guardando as labels na pilha
 	move $t0, $ra
 	find_label:
-		addi $t7, $t7, 1	#proximo byte/char
 		bge $t7, $s1, fim_find	#se t7 == s1, acabaram os caracteres (e o programa)
+		addi $t7, $t7, 1	#proximo byte/char
 		lbu $v0, ($t7)		#v0 recebe char para retorno
 		bne $v0, ':', find_label
+		bge $t7, $s1, fim_percorrer_primeira_vez	#se t7 == s1, acabaram os caracteres (e o programa)		
 	addi $s3, $s3, 4
 	move $t6, $t7
-	move $s5, $zero
-	
 	blt $t7, $s1, volta_barra_n	#se t7 == s1, acabaram os caracteres (e o programa)
+	
+	
+	
 	fim_find:
 	jr $t0
 	
 getchar_2:
 	addi $t6, $t6, 1	#proximo byte/char
+	bge $t7, $s1, fim_find	#se t7 == s1, acabaram os caracteres (e o programa)	
 	lbu $v0, ($t6)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
@@ -368,40 +374,29 @@ volta_barra_n: 		#
 	beq $v0, '\0', fim_retorna_barra_n 	#se v0 != ':', continua procura
 	beq $v0, '\t', fim_retorna_barra_n 	#se v0 != ':', continua procura
 	beq $v0, ' ', fim_retorna_barra_n 	#se v0 != ':', continua procura
-	addi $s5, $s5, 1 #pra q esse contador msm?
+			
 	j volta_barra_n
 	
 	fim_retorna_barra_n:
 		add_label_pilha:
-			jal getchar_2
+			addi $t6, $t6, 1	#proximo byte/char
+			lbu $v0, ($t6)		#v0 recebe char para retorno
 			beq $v0, ':', fim_add_label
+			bge $t6, $s1, fim_percorrer_primeira_vez	#se t7 == s1, acabaram os caracteres (e o programa)			
+			addi $s5, $s5, 1 #pra q esse contador msm?
 			addi $sp, $sp, -1
 			sb $v0, ($sp)
 			j add_label_pilha
-		fim_add_label:
-
-	subi $sp, $sp, 1
-	addi $s5, $s5, 1
-	li $t1, '@'
-	sb $t1, ($sp) #separador '@' de label do endereco na pilha
-
-	andi $t2, $s5, 0x3
-	addi $t2, $t2, -4
-	abs $t2, $t2
-	beq $t2, 4, fim_completa_word
-	completa_word:
-		beqz $t2, fim_completa_word
-		addi $sp, $sp, -1
-		sb $zero, ($sp)
-		addi $t2, $t2, -1
-		j completa_word
-	fim_completa_word:
-	subi $sp, $sp, 4 #achho q isso pode ser feito em oura funcao
+	fim_add_label:
+	addi $t2, $s5, -28
+	move $s5, $zero
+	sub $t2, $zero, $t2
+	bltz $t2, erro_instrucao
+	sub $sp, $sp, $t2
+	addi $sp, $sp, -4 #acho q isso pode ser feito em oura funcao
 	sw $s3, ($sp)	#coloca o endereco da primeira letra da label na pilha
-	subi $sp, $sp, 4
-	add $t1, $zero, '%'
-	sb $t1, ($sp) #separador '%' do endereco para fim da pilha
 
+	bge $t7, $s1, fim_percorrer_primeira_vez	#se t7 == s1, acabaram os caracteres (e o programa)			
 	jr $t0	#voltando pro loop funcao-label
 
 fecha_arquivo:

@@ -47,8 +47,6 @@ procura_ponto:
 	bgt $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 	j procura_ponto			#continua procurando o caractere '.'
 
-
-
 pula_nova_linha:
 	move $t1, $ra		#t1 recebe ra
 	jal getchar		#prox char
