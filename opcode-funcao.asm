@@ -334,7 +334,7 @@
 	get_code_andi:
 		li $t4, 0x30000000
 		pega_registrador
-		sll $v0, $v0, 16
+		sll  $v0, $v0, 16
 		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
@@ -352,37 +352,14 @@
 
 	get_code_beq:
 		li $t4, 0x10000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t4, $t4, $v0
-		acha_cifrao
-		pega_registrador
-		sll $v0, $v0, 16
-		or $t4, $t4, $v0
-		#lidar com label
-		move $v0, $t4
 		jr $t9
 
 	get_code_bgez:
 		li $t4, 0x04010000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t4, $t4, $v0
-		#lidar com label
-		move $v0, $t4
 		jr $t9
 
 	get_code_bne:
 		li $t4, 0x14000000
-		pega_registrador
-		sll $v0, $v0, 21
-		or $t4, $t4, $v0
-		acha_cifrao
-		pega_registrador
-		sll $v0, $v0, 16
-		or $t4, $t4, $v0
-		#lidar com label
-		move $v0, $t4
 		jr $t9
 
 	get_code_clo:
@@ -424,8 +401,13 @@
 
 	get_code_li:
 		li $t4, 0x24000000
-		jr $t9
+		pega_registrador
+		sll $t4, $t4, 32 
+		jr $t9		
+		li 
 
+	verifica_tamanho_numero:
+	
 	get_code_lui:
 		li $t4, 0x3C000000
 		pega_registrador
