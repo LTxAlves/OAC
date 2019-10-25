@@ -39,6 +39,8 @@ main:
 	move $s0, $zero
 	la $t7, arq_in		#salvar ponteiro para o primeiro byte/char
 	add $s1, $s1, $t7	#salvar endereco do final do arquivo
+	li $t0, '\n'
+	sb $t0, ($s1)
 	addi $s1, $s1, 1
 
 procura_ponto:
