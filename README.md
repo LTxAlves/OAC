@@ -39,6 +39,7 @@ MARS 4.5
 1. Inincie a plataforma MARS
 2. Abra (<kbd>Ctrl</kbd> + <kbd>O</kbd> ou <kbd>&#8984;</kbd> + <kbd>O</kbd>) o arquivo `asm_to_mif.asm`
 3. Na linha 4, altere o valor da _string_ "example_saida.asm" para o caminho para o arquivo com o código assembly a ser utilizado
+    * Em sistema operacional Linux (testado em Ubuntu 18.04.3 LTS), o caminho é sempre absoluto, isto é, o progrma MARS sempre é executado no diretório "/home/"
 4. Garanta que o caminho digitado seja um caminho absoluto (p. ex.: "C:/Users/jose/Documents/arquivo.asm") ou relativo ao diretório que contém o executável MARS4_5.jar (p. ex.: "../aqruivo.asm" se o arquivo está um diretório acima de diretório de MARS4_5.jar)
 
 ## Feito com
