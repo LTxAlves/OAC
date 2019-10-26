@@ -6,6 +6,70 @@
 	move $t7, $v1
 .end_macro
 
+.macro identifica_label
+	move $t8, $s6		#Nao perde a referencia do inicio da pilha
+	beq $t8, $sp,	erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
+	move $t9,$zero
+	addi $t8, $t8, -1
+	lbu $a0, ($t8)
+	#inserir instrucao de s6 apontar pro comeco da pilha
+	
+	
+	prox_letra:
+	bne $v0, '\n', continua #se a letra na instrucao nao for um '\n' continua 
+	bgtz $a0, continua	#se tiver algo na pilha (>0) continua
+	j label_encontrada
+	
+	continua:
+	bne $a0, $v0, verificar_prox
+	addi $t8, $t8, -4	#s6 percorre para prox letra da pila
+	addi $t9, $t9, 1	#contador de letra 
+	lbu $a0, ($t8)		#move o conteudo da prox letra para a0... eh isso(?)
+	#getchar
+	addi $t7, $t7, 1	#proximo byte/char
+	lbu $v0, ($t7)		#v0 recebe char para retorno
+	#fim getchar	
+	j prox_letra
+	
+	verificar_prox:
+	subu $t7, $t7, $t9	#volta pro comeco da palavra no arquivo
+	lbu $v0, ($t7)		#v0 recebe char para retorno
+	
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	move $t9,$zero
+	addi $t8, $t8, -31	#moveu pra verificar a proxima label armazenada na pilha
+	beq $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim 
+	addi $t8, $t8, -1
+	lbu $a0, ($t8)
+	j continua
+	
+	label_encontrada:
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	add $t8, $t8, $t9	
+	addi $t8, $t8, -28	#moveu pra onde fica o registrador do endereco na pilha
+	lbu $v1, ($t8)		#move para v1 o conteudo do endereco
+	
+	erro_label_nao_encontrada:
+	move $v1, $zero
+	
+.end_macro
+
+
+.macro	verifica_label_pilha
+	label:
+	lbu $t9, ($a3)
+	bne $t9, $a0, 
+	jal getchar
+	move $a0, $v0
+	addi $a3, $a3, -4	
+	jal label
+.end_macro
+
 .macro acha_cifrao
 	repeticao:
 		jal getchar
@@ -420,7 +484,9 @@
 
 	get_code_j:
 		li $t4, 0x08000000
-		jal procura_nova_linha
+		jal getchar
+		identifica_label	#pega o endereco da label na pilha
+		or $t4, $t4, $v1
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -467,8 +533,6 @@
 		jal escrever_no_arquivo
 		jr $t9
 
-	verifica_tamanho_numero:
-	
 	get_code_lui:
 		li $t4, 0x3C000000
 		pega_registrador
@@ -791,11 +855,11 @@
 		move $t5, $ra
 		move $t6, $v0
 
-		addi $s3, $s3, 4
 		
 		move $a0, $s3
 		jal bin_para_ascii
 
+		addi $s3, $s3, 4
 		move $a0, $s2	#a0 com descritor
 		li $v0, 15	#escrever em arquivo
 		move $a1, $s4	#o que escrever

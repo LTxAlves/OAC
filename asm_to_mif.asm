@@ -282,6 +282,7 @@ uma_word:	#a0 com endereco do char atual
 			j loop_hex
 
 area_text:
+	move $s6, $sp
 	jal getchar
 	bne $v0, 'e', erro_instrucao	#proximo char deve ser 'e'
 	jal getchar
