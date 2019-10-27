@@ -4,7 +4,7 @@
 path_arq: .asciiz "example_saida.asm" #trocar nome/colocar caminho absoluto ou relativo ao executavel do MARS
 arq_saida_text: .asciiz "saida_text.mif"
 arq_saida_data: .asciiz "saida_data.mif"
-arq_in: .space 2048
+arq_in: .space 1024
 erro_ao_abrir: .asciiz "Erro ao abrir arquivo!\n"
 aberto_sucesso: .asciiz "Arquivo aberto com sucesso!\n"
 erro_ao_ler: .asciiz "Erro ao ler do arquivo!\n"
@@ -39,54 +39,21 @@ main:
 	move $s0, $zero
 	la $t7, arq_in		#salvar ponteiro para o primeiro byte/char
 	add $s1, $s1, $t7	#salvar endereco do final do arquivo
-	li $t0, '\n'
-	sb $t0, ($s1)
-	addi $s1, $s1, 1
 
 procura_ponto:
 	lbu $t0, ($t7)			#carrega o caractere em t7
-	beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text
+	beq $t0, '.', data_ou_text	#se t0 == '.', deve ser data ou text 
 	addi $t7, $t7, 1		#proximo byte/char
-	bge $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog		#se t7 >= s1, acabaram os caracteres (e o programa)
 	j procura_ponto			#continua procurando o caractere '.'
-
-procura_dois_pontos:
-	move $t1, $ra		#t1 recebe ra
-	jal getchar		#prox char
-	move $ra, $t1		#ra recebe seu valor anterior
-	bge $t7, $s1, fim_loop  	#se t7 == s1, acabaram os caracteres (e o programa)
-	bne $v0, ':', procura_dois_pontos	#se v0 != ':', continua procura
-	fim_loop:
-	jr $ra			#se encontrou ':', retorna a caller
 
 pula_nova_linha:
 	move $t1, $ra		#t1 recebe ra
-	pula_nova_linha_1:
-		jal getchar	#prox char
-		beq $v0, '\n', pula_nova_linha_1	#se v0 == '\n', continua pulando chars
+	jal getchar		#prox char
+	move $ra, $t1		#ra recebe seu valor anterior
+	beq $v0, '\n', pula_nova_linha	#se v0 == '\n', continua pulando chars
 	addi $t7, $t7, -1	#retorna ponteiro ao ultimo '\n' encontrado
-	jr $t1			#retorna a caller
-
-ha_label_na_linha:
-	addi $a0, $a0, 1		#proximo byte/char
-	bgt $a0, $s1, sem_label		#se a0 > s1, acabaram os caracteres
-	lbu $t0, ($a0)			#v0 recebe char para retorno
-	beq $t0, '\n', sem_label	#se acabou a linha, nao tem
-	bne $t0, ':', ha_label_na_linha	#se v0 == ':', tem label
-	li $v0, 1			#flag de label
-	addi $v1, $a0, 1		#aponta p/ char depois de ':'
-	jr $ra				#retorna a caller
-	sem_label:
-		li $v0, -1		#flag de sem label
-		jr $ra			#retorna a caller
-
-procura_nova_linha:
-	move $t1, $ra		#t1 recebe ra
-	procura_nova_linha_1:
-		jal getchar	#prox char
-		bne $v0, '\n', procura_nova_linha_1	#se v0 == '\n', continua pulando chars
-	addi $t7, $t7, -1	#retorna ponteiro ao ultimo '\n' encontrado
-	jr $t1			#retorna a caller
+	jr $ra			#retorna a caller
 
 procura_word:
 	move $t1, $ra			#t1 recebe ra
@@ -106,7 +73,7 @@ procura_word:
 
 getchar:
 	addi $t7, $t7, 1	#proximo byte/char
-	bge $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
+	bgt $t7, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
 	lbu $v0, ($t7)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
@@ -140,7 +107,7 @@ area_data:
 	li $a2, 83		#num de caracteres a escrever
 	syscall
 
-	move $s7, $zero
+	move $s3, $zero
 	la $s4, instrucao_ascii
 
 	data:
@@ -154,7 +121,7 @@ area_data:
 		jal getchar
 
 		get_word:
-			move $a0, $s7
+			move $a0, $s3
 			jal bin_para_ascii
 
 			move $a0, $s2	#a0 com descritor
@@ -166,11 +133,11 @@ area_data:
 			move $a0, $t7	#ponteiro para char atual como argumento
 			jal uma_word
 			move $t7, $v0
-			bge $t7, $s1, fim_prog
+			bgt $t7, $s1, fim_data
 
 			move $a0, $v1
 			jal bin_para_ascii
-
+			
 			move $a0, $s2	#a0 com descritor
 			li $v0, 15	#escrever em arquivo
 			#move $a1, $s4	#a1 nao eh alterado desde o ultimo syscall
@@ -183,16 +150,14 @@ area_data:
 			li $a2, 2		#num de caracteres a escrever
 			syscall
 
-			addi $s7, $s7, 4
+			addi $s3, $s3, 4
 
 			lbu $t0, ($t7)
 			bne $t0, '\n', pula_separadores
 			addi $t7, $t7, -1
 
 			pula_separadores:
-				addi $t7, $t7, 1	#proximo byte/char
-				bge $t7, $s1, fim_arq_saida	#se t7 == s1, acabaram os caracteres (e o programa)
-				lbu $v0, ($t7)		#v0 recebe char para retorno
+				jal getchar			#prox char
 				beq $v0, ' ', pula_separadores	#se char eh ' ', pula mais
 				beq $v0, ',', pula_separadores	#se char eh ',', pula mais
 				beq $v0, '\t', pula_separadores	#se char eh '\t', pula mais
@@ -200,10 +165,19 @@ area_data:
 
 			fim_word:			#se nao eh nenhum, continua
 				jal getchar		#prox char
-				beq $v0, '.', fim_arq_saida	#se '.', deve ser ".text"
+				beq $v0, '.', fim_data	#se '.', deve ser ".text"
 				bne $v0, '\n', data	#depois de pular separadores e '.', se nao eh '\n', eh mais um numero
 				j fim_word
 
+			fim_data:
+				li $v0, 15		#escrever em arq
+				move $a0, $s2		#descritor do arq
+				la $a1, arqs_end	#o que escrever
+				li $a2, 6		#quant de caracteres
+				syscall
+				jal fecha_arquivo
+				move $s2, $zero
+				j procura_ponto
 
 uma_word:	#a0 com endereco do char atual
 		#retorna v0 com end do ultimo char lido e v1 com valor da word
@@ -282,7 +256,6 @@ uma_word:	#a0 com endereco do char atual
 			j loop_hex
 
 area_text:
-	move $s6, $sp
 	jal getchar
 	bne $v0, 'e', erro_instrucao	#proximo char deve ser 'e'
 	jal getchar
@@ -290,7 +263,7 @@ area_text:
 	jal getchar
 	bne $v0, 't', erro_instrucao	#proximo char deve ser 't'
 	jal getchar
-	bne $v0, '\n', erro_instrucao	#proximo char deve ser 't
+	bne $v0, '\n', erro_instrucao	#proximo char deve ser '\n'
 
 	li $v0, 13		#abrir arquivo
 	la $a0, arq_saida_text	#endereco da string com nome do arquivo
@@ -306,153 +279,88 @@ area_text:
 	li $a2, 82		#num de caracteres a escrever
 	syscall
 
-	move $s7, $zero
-	la $s4, instrucao_ascii
 	move $s5, $zero
 	move $t5, $t7
 	move $t6, $t7
+	jal funcao_label #percorre ate final do arquivo
+	blt $t7, $s1, funcao_label #se ele n terminou de procurar ':' volta pra funçao
+	move $t7, $t5 #volta pro inicio de .text
+	
+	
+	jal fecha_arquivo
 
-	volta_funcao_label:
-		jal getchar
-		addi $t7, $t7, -1
-		jal funcao_label #percorre ate final do arquivo
-		blt $t7, $s1, volta_funcao_label #se ele n terminou de procurar ':' volta pra funcao
-	fim_percorrer_primeira_vez:
-		move $t7, $t5 #volta pro inicio de .text
+	j fim_prog
 
-	percorre_arquivo:
-		move $a0, $t7
-		jal ha_label_na_linha
-		bltz $v0, nao_tem_label
-		move $t7, $v1
-		nao_tem_label:
-			jal get_code_instrucao
-		pula_lixo:
-			addi $t7, $t7, 1	#proximo byte/char
-			bge $t7, $s1, fim_arq_saida	#se t7 >= s1, acabaram os caracteres (e o programa)
-			lbu $v0, ($t7)		#v0 recebe char para retorno
-			beq $v0, '\n', pula_lixo
-			beq $v0, '\t', pula_lixo
-			beq $v0, '\0', fim_arq_saida
-			beq $v0, '.', fim_arq_saida
-			addi $t7, $t7, -1
-			j percorre_arquivo
-
-		fim_arq_saida:
-			li $v0, 15		#escrever em arq
-			move $a0, $s2		#descritor do arq
-			la $a1, arqs_end	#o que escrever
-			li $a2, 6		#quant de caracteres
-			syscall
-			jal fecha_arquivo
-			move $s2, $zero
-			j procura_ponto
+procura_dois_pontos:
+	move $t1, $ra		#t1 recebe ra
+	jal getchar		#prox char
+	move $ra, $t1		#ra recebe seu valor anterior
+	bge $t7, $s1, fim_loop  	#se t7 == s1, acabaram os caracteres (e o programa)
+	bne $v0, ':', procura_dois_pontos	#se v0 != ':', continua procura
+	fim_loop: 
+	jr $ra			#se encontrou ':', retorna a caller
 
 funcao_label: #procurando dois pontos e guardando as labels na pilha
-	move $t8, $ra
-
-	find_label:
-		beq $v0, '\n', checar_inst_1
-		bge $t7, $s1, fim_find	#se t7 >= s1, acabaram os caracteres
-		lbu $v0, ($t7)		#v0 recebe char para retorno
-		addi $t7, $t7, 1	#proximo byte/char
-		bne $v0, ':', find_label
-		bge $t7, $s1, fim_percorrer_primeira_vez	#se t7 >= s1, acabaram os caracteres
-		fim_checar_inst:
-			addi $t7, $t7, -1
-			move $t6, $t7
-			blt $t7, $s1, volta_barra_n	#se t7 >= s1, acabaram os caracteres
-			j checar_inst_1
-	checar_inst:
-		addi $t7, $t7, 1
-	checar_inst_1:
-		move $a0, $t7
-		jal ha_label_na_linha
-		bgtz $v0, find_label				#continuar caso nao for label
-		bge $t7, $s1, fim_percorrer_primeira_vez	#se t7 >= s1, acabaram os caracteres
-		lbu $v0, ($t7)					#v0 recebe char para retorno
-		beq $v0, '\n', checar_inst
-		beq $v0, '\t', checar_inst
-		beq $v0, ' ', checar_inst
-		beq $v0, '\0', fim_percorrer_primeira_vez
-
-		addi $s7, $s7, 4
-
-		verificar_inst_li:
-			bge $t7, $s1, fim_find	#se t7 >= s1, acabaram os caracteres
-			lbu $v0, ($t7)		#v0 recebe char para retorno
-			bne $v0, 'l', find_label
-			addi $t7, $t7, 1	#proximo byte/char
-			bge $t7, $s1, fim_find	#se t7 >= s1, acabaram os caracteres
-			lbu $v0, ($t7)		#v0 recebe char para retorno
-			bne $v0, 'i', find_label
-			addi $t7, $t7, 1	#proximo byte/char
-			bge $t7, $s1, fim_find	#se t7 >= s1, acabaram os caracteres
-			lbu $v0, ($t7)		#v0 recebe char para retorno
-			beq $v0, ' ', verificar_li
-			j erro_instrucao
-	verificar_li:
-		acha_cifrao
-		pega_registrador
-		acha_imm
-		move $a0, $t7
-		jal uma_word
-		move $t7, $v0
-		bgt $t7, $s1, fim_percorrer_primeira_vez
-		bgt $v1, 32767, eh_grande
-		blt $v1, -32768, eh_grande
-		j find_label
-		eh_grande:
-			addi $s7, $s7, 4
-			j find_label
-
-	fim_find:
-	jr $t8
-
+	move $t0, $ra
+	jal procura_dois_pontos
+	addi $s3, $s3, 4
+	move $t6, $t7
+	move $s5, $zero
+	blt $t6, $s1, volta_barra_n	#se t7 == s1, acabaram os caracteres (e o programa)
+	jr $t0
+	
 getchar_2:
 	addi $t6, $t6, 1	#proximo byte/char
-	bge $t7, $s1, fim_find	#se t7 == s1, acabaram os caracteres (e o programa)
+	bge  $t6, $s1, fim_prog	#se t7 == s1, acabaram os caracteres (e o programa)
 	lbu $v0, ($t6)		#v0 recebe char para retorno
 	jr $ra			#retorna a caller
 
-volta_barra_n:
+volta_barra_n: 		#
 	addi $t6, $t6, -2
 	jal getchar_2		#prox char
-	beq $v0, '\n', fim_retorna_barra_n 	#se v0 == '\n', acabou label
-	beq $v0, '\0', fim_retorna_barra_n 	#se v0 == '\0', acabou label
-	beq $v0, '\t', fim_retorna_barra_n 	#se v0 == '\t', acabou label
-	beq $v0, ' ', fim_retorna_barra_n 	#se v0 == ' ', acabou label
-
-	j volta_barra_n				#se nada disso, ainda eh label
-
+	beq $v0, '\n', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, '\0', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, '\t', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, ' ', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	addi $s5, $s5, 1 #pra q esse contador msm?
+	j volta_barra_n
+	
 	fim_retorna_barra_n:
 		add_label_pilha:
-			addi $t6, $t6, 1	#proximo byte/char
-			lbu $v0, ($t6)		#v0 recebe char para retorno
+			jal getchar_2
 			beq $v0, ':', fim_add_label
-			bge $t6, $s1, fim_percorrer_primeira_vez	#se t7 == s1, acabaram os caracteres (e o programa)
-			addi $s5, $s5, 1
 			addi $sp, $sp, -1
 			sb $v0, ($sp)
 			j add_label_pilha
-	fim_add_label:
-	addi $t2, $s5, -28
-	move $s5, $zero
-	sub $t2, $zero, $t2
-	bltz $t2, erro_instrucao
-	sub $sp, $sp, $t2
-	addi $sp, $sp, -4 #acho q isso pode ser feito em oura funcao
-	sw $s7, ($sp)	#coloca o endereco da primeira letra da label na pilha
+		fim_add_label:
 
-	bge $t6, $s1, fim_percorrer_primeira_vez	#se t6 >= s1, acabaram os caracteres (e o programa)
 
-	addi $t7, $t6, 1
-	lbu $v0, ($t7)		#v0 recebe char para retorno
-	beq $v0, ' ', checar_inst
-	beq $v0, '\n', checar_inst
-	beq $v0, '\t', checar_inst
-	j erro_instrucao
+	subi $sp, $sp, 1
+	addi $s5, $s5, 1
+	li $t1, '@'
+	sb $t1, ($sp) #separador '@' de label do endereço na pilha
 
+	andi $t2, $s5, 0x3
+	addi $t2, $t2, -4
+	abs $t2, $t2
+	beq $t2, 4, fim_completa_word
+	completa_word:
+		beqz $t2, fim_completa_word
+		addi $sp, $sp, -1
+		sb $zero, ($sp)
+		addi $t2, $t2, -1
+		j completa_word
+	fim_completa_word:
+	subi $sp, $sp, 4 #achho q isso pode ser feito em oura funcao
+	sw $s3, ($sp)	#coloca o endereço da primeira letra da label na pilha
+	subi $sp, $sp, 4
+	add $t1, $zero, '%'
+	sb $t1, ($sp) #separador '%' do endereco para fim da pilha
+
+	move $ra, $t0
+	jr $ra	#voltando pro loop funcao-label
+	
+	 
 fecha_arquivo:
 	li $v0, 16		#fechar arquivo
 	syscall
@@ -461,7 +369,7 @@ fecha_arquivo:
 le_arq:
 	li $v0, 14		#ler de arquivo
 	la $a1, arq_in		#endereco para guardar bytes lidos
-	li $a2, 2048		#numero de bytes a ler
+	li $a2, 1024		#numero de bytes a ler
 	syscall
 	bltz $v0, erro_leitura	#se v0 < 0, erro
 	jr $ra
@@ -563,7 +471,7 @@ get_reg:	#a0 aponta p/ char atual (deve ser '$')
 			blt $t1, '0', not_reg
 			bgt $t1, '9', not_reg
 			addi $t1, $t1, -40	#t1 = atoi(t1)+8 pois $t0 = $8
-			blt $t1, 16, reg_t0_t7	#$t8 e $t9 sao diferentes
+			blt $t1, 15, reg_t0_t7	#$t8 e $t9 sao diferentes
 			addi $v0, $t1, 8	#8 de diferenca entre $t7 e $t8
 			addi $v1, $a0, 1	#prox char
 			jr $ra
@@ -693,7 +601,7 @@ bin_para_ascii:	#recebe em a0 num para converter para ascii
 
 	jr $t1				#retorna a caller
 
-	hex_para_ascii:			#recebe um unico half-byte em a0
+	hex_para_ascii:			#recebe um unico byte em a0
 		bgt $a0, 9, letra_hex	#se a0 > 9, eh A ate F
 		addi $v0, $a0, 48	#senao, eh 0 ate 9 (v0 = itoa(a0)), '0' == 48
 		j salto_letra		#pula o passo de conversao 'A' ate 'F'
@@ -701,10 +609,8 @@ bin_para_ascii:	#recebe em a0 num para converter para ascii
 		addi $v0, $a0, 55	#['A', 'F'] == [65, 70], mas a0 >= 10, dai 10 de diferenca
 		salto_letra:
 		jr $ra			#retorna a caller
+	
 
 set_ra:
 	move $v0, $ra
 	jr $ra
-
-get_code_instrucao:
-	codes

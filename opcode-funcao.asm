@@ -6,6 +6,69 @@
 	move $t7, $v1
 .end_macro
 
+.macro pula_desnecessario
+	pula:
+		jal getchar
+		beq $v0, ' ', pula
+		beq $v0, ',', pula
+		beq $v0, '\t', pula
+.end_macro
+
+.macro identifica_label
+	move $t8, $s6		#Nao perde a referencia do inicio da pilha
+	blt $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
+	move $t3, $zero
+	addi $t8, $t8, -1
+	lbu $a0, ($t8)
+
+	prox_letra:
+	bne $v0, '\n', continua #se a letra na instrucao nao for um '\n' continua
+	bgtz $a0, continua	#se tiver algo na pilha (>0) continua
+	j label_encontrada
+
+	continua:
+	bne $a0, $v0, verificar_prox
+	addi $t8, $t8, -1	#s6 percorre para prox letra da pila
+	addi $t3, $t3, 1	#contador de letra
+	lbu $a0, ($t8)		#move o conteudo da prox letra para a0... eh isso(?)
+
+	#getchar
+	addi $t7, $t7, 1	#proximo byte/char
+	lbu $v0, ($t7)		#v0 recebe char para retorno
+	#fim getchar
+	j prox_letra
+
+	verificar_prox:
+	subu $t7, $t7, $t3	#volta pro comeco da palavra no arquivo
+	lbu $v0, ($t7)		#v0 recebe char para retorno
+	add $t8, $t8, $t3
+	move $t3, $zero
+	addi $t8, $t8, -32	#moveu pra verificar a proxima label armazenada na pilha
+	lbu $a0, ($t8)
+	blt $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim
+	lbu $a0, ($t8)
+	j continua
+
+	erro_label_nao_encontrada:
+	j erro_instrucao
+
+	label_encontrada:
+	add $t8, $t8, $t3
+	addi $t8, $t8, -31	#moveu pra onde fica o registrador do endereco na pilha
+	lw $v1, ($t8)		#move para v1 o conteudo do endereco
+.end_macro
+
+
+.macro	verifica_label_pilha
+	label:
+	lbu $t9, ($a3)
+	bne $t9, $a0,
+	jal getchar
+	move $a0, $v0
+	addi $a3, $a3, -4
+	jal label
+.end_macro
+
 .macro acha_cifrao
 	repeticao:
 		jal getchar
@@ -32,7 +95,7 @@
 	jal getchar
 	bne $v0, 'd', n_depois_de_a	#se segundo char nao for 'd', testa 'n'
 	jal getchar
-	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv,  erro
+	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv, erro
 	jal getchar
 	beq $v0, ' ', get_code_add	#se quarto char for ' ', eh add
 	bne $v0, 'u', testa_addi	#se quarto char nao for 'u', deve ser addi
@@ -142,7 +205,7 @@
 			jal getchar
 			beq $v0, ' ', get_code_lw	#se for ' ', eh lw
 			j erro_instrucao		#senao, erro
-	
+
 	comeca_com_m:
 		bne $v0, 'm', comeca_com_n	#se nao for 'm', testa 'n'
 		jal getchar
@@ -179,7 +242,7 @@
 			bne $v0, 'l', erro_instrucao	#se nao for 'l'
 			jal getchar
 			bne $v0, 't', erro_instrucao	#se nao for 't'
-			jal getchar 
+			jal getchar
 			beq $v0, ' ', get_code_mult	#se for ' ', eh mult
 			j erro_instrucao		#senao, erro
 
@@ -189,7 +252,7 @@
 		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
 		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_nor	#se for ' ', eh nor
 		j erro_instrucao		#senao, erro
 
@@ -197,10 +260,10 @@
 		bne $v0, 'o', comeca_com_s	#se nao for 'o', testa 's'
 		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_or	#se for ' ', eh or
 		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_ori	#se for ' ', eh ori
 		j erro_instrucao		#senao, erro
 
@@ -365,8 +428,13 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		jal procura_nova_linha
-		move $v0, $t4
+		pula_desnecessario
+		identifica_label
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -375,8 +443,13 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $t4, $t4, $v0
-		jal procura_nova_linha
-		move $v0, $t4
+		pula_desnecessario
+		identifica_label
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -389,8 +462,13 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		jal procura_nova_linha
-		move $v0, $t4
+		pula_desnecessario
+		identifica_label
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -420,8 +498,10 @@
 
 	get_code_j:
 		li $t4, 0x08000000
-		jal procura_nova_linha
-		move $v0, $t4
+		jal getchar
+		identifica_label	#pega o endereco da label na pilha
+		srl $v1, $v1, 2
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -435,8 +515,10 @@
 
 	get_code_jal:
 		li $t4, 0x0C000000
-		jal procura_nova_linha
-		move $v0, $t4
+		jal getchar
+		identifica_label	#pega o endereco da label na pilha
+		srl $v1, $v1, 2
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -450,7 +532,12 @@
 		bgt $t7, $s1, fim_prog
 		bgt $v1, 32767, eh_pseudo
 		blt $v1, -32768, eh_pseudo
-		j nao_pseudo
+		nao_pseudo:
+		andi $v1, $v1, 0x0000FFFF
+		or $t4, $t4, $v1
+		ori $v0, $t4, 0x24000000
+		jal escrever_no_arquivo
+		jr $t9
 		eh_pseudo:
 		srl $v0, $v1, 16
 		ori $v0, $v0, 0x3C010000
@@ -459,11 +546,6 @@
 		or $v0, $v0, $t4
 		andi $t4, $v1, 0x0000FFFF
 		or $v0, $v0, $t4
-		jal escrever_no_arquivo
-		jr $t9
-		nao_pseudo:
-		andi $v1, $v1, 0x0000FFFF
-		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -789,11 +871,10 @@
 		move $t5, $ra
 		move $t6, $v0
 
-		addi $s3, $s3, 4
-		
 		move $a0, $s3
 		jal bin_para_ascii
 
+		addi $s3, $s3, 4
 		move $a0, $s2	#a0 com descritor
 		li $v0, 15	#escrever em arquivo
 		move $a1, $s4	#o que escrever
