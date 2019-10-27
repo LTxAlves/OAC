@@ -190,18 +190,20 @@ area_data:
 			addi $t7, $t7, -1
 
 			pula_separadores:
-				addi $t7, $t7, 1	#proximo byte/char
+				addi $t7, $t7, 1		#proximo byte/char
 				bge $t7, $s1, fim_arq_saida	#se t7 == s1, acabaram os caracteres (e o programa)
-				lbu $v0, ($t7)		#v0 recebe char para retorno
+				lbu $v0, ($t7)			#v0 recebe char para retorno
 				beq $v0, ' ', pula_separadores	#se char eh ' ', pula mais
 				beq $v0, ',', pula_separadores	#se char eh ',', pula mais
 				beq $v0, '\t', pula_separadores	#se char eh '\t', pula mais
 				bne $v0, '\n', get_word		#se char nao eh '\n' nem separador, deve ser num
 
 			fim_word:			#se nao eh nenhum, continua
-				jal getchar		#prox char
+				addi $t7, $t7, 1	#proximo byte/char
+				bge $t7, $s1, fim_arq_saida	#se t7 == s1, acabaram os caracteres (e o programa)
+				lbu $v0, ($t7)		#v0 recebe char para retorno
 				beq $v0, '.', fim_arq_saida	#se '.', deve ser ".text"
-				bne $v0, '\n', data	#depois de pular separadores e '.', se nao eh '\n', eh mais um numero
+				bne $v0, '\n', data	#depois de pular separadores, '\0' e '.', se nao eh '\n', eh mais um numero
 				j fim_word
 
 
