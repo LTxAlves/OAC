@@ -8,12 +8,10 @@
 
 .macro identifica_label
 	move $t8, $s6		#Nao perde a referencia do inicio da pilha
-	beq $t8, $sp,	erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
-	move $t9,$zero
+	blt  $t8, $sp,	erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
+	move $t3,$zero
 	addi $t8, $t8, -1
 	lbu $a0, ($t8)
-	#inserir instrucao de s6 apontar pro comeco da pilha
-	
 	
 	prox_letra:
 	bne $v0, '\n', continua #se a letra na instrucao nao for um '\n' continua 
@@ -22,9 +20,10 @@
 	
 	continua:
 	bne $a0, $v0, verificar_prox
-	addi $t8, $t8, -4	#s6 percorre para prox letra da pila
-	addi $t9, $t9, 1	#contador de letra 
+	addi $t8, $t8, -1	#s6 percorre para prox letra da pila
+	addi $t3, $t3, 1	#contador de letra 
 	lbu $a0, ($t8)		#move o conteudo da prox letra para a0... eh isso(?)
+	
 	#getchar
 	addi $t7, $t7, 1	#proximo byte/char
 	lbu $v0, ($t7)		#v0 recebe char para retorno
@@ -32,31 +31,24 @@
 	j prox_letra
 	
 	verificar_prox:
-	subu $t7, $t7, $t9	#volta pro comeco da palavra no arquivo
+	subu $t7, $t7, $t3	#volta pro comeco da palavra no arquivo
 	lbu $v0, ($t7)		#v0 recebe char para retorno
-	
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	move $t9,$zero
-	addi $t8, $t8, -31	#moveu pra verificar a proxima label armazenada na pilha
-	beq $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim 
-	addi $t8, $t8, -1
+	add $t8, $t8, $t3
+	move $t3,$zero
+	addi $t8, $t8, -64	#moveu pra verificar a proxima label armazenada na pilha
+	lbu $a0, ($t8)
+	blt $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim 
 	lbu $a0, ($t8)
 	j continua
 	
-	label_encontrada:
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	add $t8, $t8, $t9	
-	addi $t8, $t8, -28	#moveu pra onde fica o registrador do endereco na pilha
-	lbu $v1, ($t8)		#move para v1 o conteudo do endereco
-	
 	erro_label_nao_encontrada:
-	move $v1, $zero
+	move $v1, $zero	
+	j erro_instrucao
 	
+	label_encontrada:
+	add $t8, $t8, $t3	
+	addi $t8, $t8, -31	#moveu pra onde fica o registrador do endereco na pilha
+	lw $v1, ($t8)		#move para v1 o conteudo do endereco
 .end_macro
 
 
@@ -429,7 +421,16 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		jal procura_nova_linha
+		jal getchar 	# pegar o ' ' depois da virgula
+		jal getchar	 #esse é pra pegar a primeira letra da label
+		identifica_label
+		sub $t8, $v1, $s3
+		beqz $t8, branch_positivo
+		add $t8, $zero, $zero
+		branch_positivo:
+		add $t8, $zero, $zero
+		
+		
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -486,7 +487,7 @@
 		li $t4, 0x08000000
 		jal getchar
 		identifica_label	#pega o endereco da label na pilha
-		or $t4, $t4, $v1
+		add  $t4, $t4, $v1
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -501,7 +502,9 @@
 
 	get_code_jal:
 		li $t4, 0x0C000000
-		jal procura_nova_linha
+		jal getchar
+		identifica_label	#pega o endereco da label na pilha
+		add  $t4, $t4, $v1
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
