@@ -8,7 +8,7 @@
 
 .macro identifica_label
 	move $t8, $s6		#Nao perde a referencia do inicio da pilha
-	blt  $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
+	blt $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
 	move $t3,$zero
 	addi $t8, $t8, -1
 	lbu $a0, ($t8)
@@ -88,7 +88,7 @@
 	jal getchar
 	bne $v0, 'd', n_depois_de_a	#se segundo char nao for 'd', testa 'n'
 	jal getchar
-	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv,  erro
+	bne $v0, 'd', erro_instrucao	#se terceiro char nao for 'd' dnv, erro
 	jal getchar
 	beq $v0, ' ', get_code_add	#se quarto char for ' ', eh add
 	bne $v0, 'u', testa_addi	#se quarto char nao for 'u', deve ser addi
@@ -395,7 +395,7 @@
 	get_code_andi:
 		li $t4, 0x30000000
 		pega_registrador
-		sll  $v0, $v0, 16
+		sll $v0, $v0, 16
 		or $t4, $t4, $v0
 		acha_cifrao
 		pega_registrador
@@ -487,8 +487,8 @@
 		li $t4, 0x08000000
 		jal getchar
 		identifica_label	#pega o endereco da label na pilha
-		add  $t4, $t4, $v1
-		move $v0, $t4
+		srl $v1, $v1, 2
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -504,8 +504,8 @@
 		li $t4, 0x0C000000
 		jal getchar
 		identifica_label	#pega o endereco da label na pilha
-		add  $t4, $t4, $v1
-		move $v0, $t4
+		srl $v1, $v1, 2
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -519,7 +519,12 @@
 		bgt $t7, $s1, fim_prog
 		bgt $v1, 32767, eh_pseudo
 		blt $v1, -32768, eh_pseudo
-		j nao_pseudo
+		nao_pseudo:
+		andi $v1, $v1, 0x0000FFFF
+		or $t4, $t4, $v1
+		ori $v0, $t4, 0x24000000
+		jal escrever_no_arquivo
+		jr $t9
 		eh_pseudo:
 		srl $v0, $v1, 16
 		ori $v0, $v0, 0x3C010000
@@ -528,11 +533,6 @@
 		or $v0, $v0, $t4
 		andi $t4, $v1, 0x0000FFFF
 		or $v0, $v0, $t4
-		jal escrever_no_arquivo
-		jr $t9
-		nao_pseudo:
-		andi $v1, $v1, 0x0000FFFF
-		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
