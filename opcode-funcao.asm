@@ -6,6 +6,14 @@
 	move $t7, $v1
 .end_macro
 
+.macro pula_desnecessario
+	pula:
+		jal getchar
+		beq $v0, ' ', pula
+		beq $v0, ',', pula
+		beq $v0, '\t', pula
+.end_macro
+
 .macro identifica_label
 	move $t8, $s6		#Nao perde a referencia do inicio da pilha
 	blt $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
@@ -42,7 +50,6 @@
 	j continua
 
 	erro_label_nao_encontrada:
-	move $v1, $zero
 	j erro_instrucao
 
 	label_encontrada:
@@ -421,17 +428,13 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		jal getchar 	# pegar o ' ' depois da virgula
-		jal getchar	 #esse eh pra pegar a primeira letra da label
+		pula_desnecessario
 		identifica_label
-		sub $t8, $v1, $s3
-		beqz $t8, branch_positivo
-		add $t8, $zero, $zero
-		branch_positivo:
-		add $t8, $zero, $zero
-
-
-		move $v0, $t4
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -440,8 +443,13 @@
 		pega_registrador
 		sll $v0, $v0, 21
 		or $t4, $t4, $v0
-		jal procura_nova_linha
-		move $v0, $t4
+		pula_desnecessario
+		identifica_label
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
@@ -454,8 +462,13 @@
 		pega_registrador
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
-		jal procura_nova_linha
-		move $v0, $t4
+		pula_desnecessario
+		identifica_label
+		subu $v1, $v1, $s3
+		srl $v1, $v1, 2
+		addi $v1, $v1, -1
+		andi $v1, 0x0000FFFF
+		or $v0, $t4, $v1
 		jal escrever_no_arquivo
 		jr $t9
 
