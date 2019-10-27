@@ -311,10 +311,10 @@ area_text:
 	move $s5, $zero
 	move $t5, $t7
 	move $t6, $t7
-	jal getchar
-	addi $t7, $t7, -1
 
 	volta_funcao_label:
+		jal getchar
+		addi $t7, $t7, -1
 		jal funcao_label #percorre ate final do arquivo
 		blt $t7, $s1, volta_funcao_label #se ele n terminou de procurar ':' volta pra funcao
 	fim_percorrer_primeira_vez:
@@ -418,12 +418,12 @@ getchar_2:
 volta_barra_n:
 	addi $t6, $t6, -2
 	jal getchar_2		#prox char
-	beq $v0, '\n', fim_retorna_barra_n 	#se v0 != ':', continua procura
-	beq $v0, '\0', fim_retorna_barra_n 	#se v0 != ':', continua procura
-	beq $v0, '\t', fim_retorna_barra_n 	#se v0 != ':', continua procura
-	beq $v0, ' ', fim_retorna_barra_n 	#se v0 != ':', continua procura
+	beq $v0, '\n', fim_retorna_barra_n 	#se v0 == '\n', acabou label
+	beq $v0, '\0', fim_retorna_barra_n 	#se v0 == '\0', acabou label
+	beq $v0, '\t', fim_retorna_barra_n 	#se v0 == '\t', acabou label
+	beq $v0, ' ', fim_retorna_barra_n 	#se v0 == ' ', acabou label
 
-	j volta_barra_n
+	j volta_barra_n				#se nada disso, ainda eh label
 
 	fim_retorna_barra_n:
 		add_label_pilha:
@@ -444,13 +444,14 @@ volta_barra_n:
 	addi $sp, $sp, -4 #acho q isso pode ser feito em oura funcao
 	sw $s7, ($sp)	#coloca o endereco da primeira letra da label na pilha
 
-	bge $t6, $s1, fim_percorrer_primeira_vez	#se t7 == s1, acabaram os caracteres (e o programa)
+	bge $t6, $s1, fim_percorrer_primeira_vez	#se t6 >= s1, acabaram os caracteres (e o programa)
 
-	addi $t6, $t6, 1
-	move $t7, $t6
+	addi $t7, $t6, 1
 	lbu $v0, ($t7)		#v0 recebe char para retorno
-	beq $v0, ' ', verificar_inst_li
-	jr $t8	#voltando pro loop funcao-label
+	beq $v0, ' ', checar_inst
+	beq $v0, '\n', checar_inst
+	beq $v0, '\t', checar_inst
+	j erro_instrucao
 
 fecha_arquivo:
 	li $v0, 16		#fechar arquivo

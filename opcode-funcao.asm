@@ -9,7 +9,7 @@
 .macro identifica_label
 	move $t8, $s6		#Nao perde a referencia do inicio da pilha
 	blt $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
-	move $t3,$zero
+	move $t3, $zero
 	addi $t8, $t8, -1
 	lbu $a0, ($t8)
 
@@ -34,8 +34,8 @@
 	subu $t7, $t7, $t3	#volta pro comeco da palavra no arquivo
 	lbu $v0, ($t7)		#v0 recebe char para retorno
 	add $t8, $t8, $t3
-	move $t3,$zero
-	addi $t8, $t8, -64	#moveu pra verificar a proxima label armazenada na pilha
+	move $t3, $zero
+	addi $t8, $t8, -32	#moveu pra verificar a proxima label armazenada na pilha
 	lbu $a0, ($t8)
 	blt $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim
 	lbu $a0, ($t8)
