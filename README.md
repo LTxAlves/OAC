@@ -56,6 +56,7 @@ MARS 4.5
         * Imediatos com mais de 16 bits não suportados
     * Instruções tipo J suportadas: j, jal
     * Pseudo-instruções suportadas: li (com imediato de até 16 bits), li (com imediato de 17 a 32 bits)
+4. Ao menos uma das áreas `.data` e `.text` deve ser especificada. Arquivos com a área `.text` implícita não são aceitos.
 
 ## Feito com
 
