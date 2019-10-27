@@ -41,6 +41,21 @@ MARS 4.5
 3. Na linha 4, altere o valor da _string_ "example_saida.asm" para o caminho para o arquivo com o código assembly a ser utilizado
     * Em sistema operacional Linux (testado em Ubuntu 18.04.3 LTS), o caminho é sempre absoluto, isto é, o progrma MARS sempre é executado no diretório "/home/"
 4. Garanta que o caminho digitado seja um caminho absoluto (p. ex.: "C:/Users/jose/Documents/arquivo.asm") ou relativo ao diretório que contém o executável MARS4_5.jar (p. ex.: "../aqruivo.asm" se o arquivo está um diretório acima de diretório de MARS4_5.jar)
+5. Utilize a IDE do MARS mara montar e executar o programa
+6. Os arquivos resultantes estarão no diretório do MARS ou no diretório "/home/" dependendo de seu sistema operacional
+
+### Limitações
+
+1. O arquivo de entrada deve estar limitado a 2048 bytes para o funcionamento correto do programa
+2. O arquivo de entrada deve estar corretamente formatado para garantir o funcionamento correto do programa
+    * Isso significa que caracteres como espaço e tabulação logo antes de quebra de linha devem ser evitados
+    * Instruções devem seguir o formato: "inst reg1, reg2, reg3", "inst reg1, reg2, imediato" etc, separados corretamente por vírgula e um único espaço
+3. O arquivo de entrada é limitado às instruções da especificação do projeto. Instruções não requisitadas na especificação resulatarão em terminação imediata do programa.
+    * Instruções tipo R suportadas: add, addu, and, clo, div, jr, madd, mfhi, mflo, mult, nor, or, sll, slt, sra, srav, srl, sub, subu, xor
+    * Instruções tipo I suportadas: addi, andi, beq, bgez, bne, lui, lw, ori, sw, xori
+        * Imediatos com mais de 16 bits não suportados
+    * Instruções tipo J suportadas: j, jal
+    * Pseudo-instruções suportadas: li (com imediato de até 16 bits), li (com imediato de 17 a 32 bits)
 
 ## Feito com
 
