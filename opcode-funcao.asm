@@ -8,28 +8,28 @@
 
 .macro identifica_label
 	move $t8, $s6		#Nao perde a referencia do inicio da pilha
-	blt  $t8, $sp,	erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
+	blt  $t8, $sp, erro_label_nao_encontrada	#se for o fim da pilha, n tem label identificada
 	move $t3,$zero
 	addi $t8, $t8, -1
 	lbu $a0, ($t8)
-	
+
 	prox_letra:
-	bne $v0, '\n', continua #se a letra na instrucao nao for um '\n' continua 
+	bne $v0, '\n', continua #se a letra na instrucao nao for um '\n' continua
 	bgtz $a0, continua	#se tiver algo na pilha (>0) continua
 	j label_encontrada
-	
+
 	continua:
 	bne $a0, $v0, verificar_prox
 	addi $t8, $t8, -1	#s6 percorre para prox letra da pila
-	addi $t3, $t3, 1	#contador de letra 
+	addi $t3, $t3, 1	#contador de letra
 	lbu $a0, ($t8)		#move o conteudo da prox letra para a0... eh isso(?)
-	
+
 	#getchar
 	addi $t7, $t7, 1	#proximo byte/char
 	lbu $v0, ($t7)		#v0 recebe char para retorno
-	#fim getchar	
+	#fim getchar
 	j prox_letra
-	
+
 	verificar_prox:
 	subu $t7, $t7, $t3	#volta pro comeco da palavra no arquivo
 	lbu $v0, ($t7)		#v0 recebe char para retorno
@@ -37,16 +37,16 @@
 	move $t3,$zero
 	addi $t8, $t8, -64	#moveu pra verificar a proxima label armazenada na pilha
 	lbu $a0, ($t8)
-	blt $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim 
+	blt $t8, $sp, erro_label_nao_encontrada	 #se dps de pular 32 for o 'topo' d pilha, erro, fim
 	lbu $a0, ($t8)
 	j continua
-	
+
 	erro_label_nao_encontrada:
-	move $v1, $zero	
+	move $v1, $zero
 	j erro_instrucao
-	
+
 	label_encontrada:
-	add $t8, $t8, $t3	
+	add $t8, $t8, $t3
 	addi $t8, $t8, -31	#moveu pra onde fica o registrador do endereco na pilha
 	lw $v1, ($t8)		#move para v1 o conteudo do endereco
 .end_macro
@@ -55,10 +55,10 @@
 .macro	verifica_label_pilha
 	label:
 	lbu $t9, ($a3)
-	bne $t9, $a0, 
+	bne $t9, $a0,
 	jal getchar
 	move $a0, $v0
-	addi $a3, $a3, -4	
+	addi $a3, $a3, -4
 	jal label
 .end_macro
 
@@ -198,7 +198,7 @@
 			jal getchar
 			beq $v0, ' ', get_code_lw	#se for ' ', eh lw
 			j erro_instrucao		#senao, erro
-	
+
 	comeca_com_m:
 		bne $v0, 'm', comeca_com_n	#se nao for 'm', testa 'n'
 		jal getchar
@@ -235,7 +235,7 @@
 			bne $v0, 'l', erro_instrucao	#se nao for 'l'
 			jal getchar
 			bne $v0, 't', erro_instrucao	#se nao for 't'
-			jal getchar 
+			jal getchar
 			beq $v0, ' ', get_code_mult	#se for ' ', eh mult
 			j erro_instrucao		#senao, erro
 
@@ -245,7 +245,7 @@
 		bne $v0, 'o', erro_instrucao	#se nao for 'o', erro
 		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_nor	#se for ' ', eh nor
 		j erro_instrucao		#senao, erro
 
@@ -253,10 +253,10 @@
 		bne $v0, 'o', comeca_com_s	#se nao for 'o', testa 's'
 		jal getchar
 		bne $v0, 'r', erro_instrucao	#se nao for 'r', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_or	#se for ' ', eh or
 		bne $v0, 'i', erro_instrucao	#se nao for 'i', erro
-		jal getchar 
+		jal getchar
 		beq $v0, ' ', get_code_ori	#se for ' ', eh ori
 		j erro_instrucao		#senao, erro
 
@@ -422,15 +422,15 @@
 		sll $v0, $v0, 16
 		or $t4, $t4, $v0
 		jal getchar 	# pegar o ' ' depois da virgula
-		jal getchar	 #esse é pra pegar a primeira letra da label
+		jal getchar	 #esse eh pra pegar a primeira letra da label
 		identifica_label
 		sub $t8, $v1, $s3
 		beqz $t8, branch_positivo
 		add $t8, $zero, $zero
 		branch_positivo:
 		add $t8, $zero, $zero
-		
-		
+
+
 		move $v0, $t4
 		jal escrever_no_arquivo
 		jr $t9
@@ -858,7 +858,6 @@
 		move $t5, $ra
 		move $t6, $v0
 
-		
 		move $a0, $s3
 		jal bin_para_ascii
 
