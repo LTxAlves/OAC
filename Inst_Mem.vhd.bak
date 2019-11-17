@@ -4,7 +4,7 @@
 -- MODULE: altsyncram 
 
 -- ============================================================
--- File Name: Ist_Mem.vhd
+-- File Name: Inst_Mem.vhd
 -- Megafunction Name(s):
 -- 			altsyncram
 --
@@ -39,14 +39,14 @@ USE ieee.std_logic_1164.all;
 LIBRARY altera_mf;
 USE altera_mf.altera_mf_components.all;
 
-ENTITY Ist_Mem IS
+ENTITY Inst_Mem IS
 	PORT
 	(
 		address		: IN STD_LOGIC_VECTOR (12 DOWNTO 0);
 		clock		: IN STD_LOGIC  := '1';
 		q		: OUT STD_LOGIC_VECTOR (31 DOWNTO 0)
 	);
-END Ist_Mem;
+END Inst_Mem;
 
 
 ARCHITECTURE SYN OF ist_mem IS
