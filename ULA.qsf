@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone III"
 set_global_assignment -name DEVICE EP3C120F780C7
-set_global_assignment -name TOP_LEVEL_ENTITY freq_div
+set_global_assignment -name TOP_LEVEL_ENTITY Banco_Reg
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:50:28  OCTOBER 14, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION 13.1
@@ -56,16 +56,22 @@ set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST ON -section_id eda_s
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name BDF_FILE Banco_Reg.bdf
 set_global_assignment -name BDF_FILE Barrel_shifter.bdf
 set_global_assignment -name BDF_FILE Barrel_shifter_right.bdf
 set_global_assignment -name BDF_FILE CLA.bdf
 set_global_assignment -name QIP_FILE Data_Mem.qip
 set_global_assignment -name BDF_FILE Detector_Overflow.bdf
+set_global_assignment -name BDF_FILE Decoder.bdf
 set_global_assignment -name BDF_FILE freq_div.bdf
 set_global_assignment -name BDF_FILE FullAdder.bdf
 set_global_assignment -name QIP_FILE Inst_Mem.qip
+set_global_assignment -name QIP_FILE lpm_decode0.qip
+set_global_assignment -name QIP_FILE lpm_mux0.qip
 set_global_assignment -name BDF_FILE Mux2p1.bdf
 set_global_assignment -name BDF_FILE Mux4p1.bdf
+set_global_assignment -name BDF_FILE Registradores.bdf
+set_global_assignment -name BDF_FILE Reg32.bdf
 set_global_assignment -name BDF_FILE UES.bdf
 set_global_assignment -name BDF_FILE UEZ.bdf
 set_global_assignment -name BDF_FILE ULA.bdf

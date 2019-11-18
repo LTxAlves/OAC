@@ -4,26 +4,26 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2018  Intel Corporation. All rights reserved.
-Your use of Intel Corporation's design tools, logic functions 
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
-to the terms and conditions of the Intel Program License 
-Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel FPGA IP License Agreement, or other applicable license
-agreement, including, without limitation, that your use is for
-the sole purpose of programming logic devices manufactured by
-Intel and sold by Intel or its authorized distributors.  Please
-refer to the applicable agreement for further details.
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
 */
 (header "graphic" (version "1.4"))
 (pin
 	(input)
 	(rect 416 96 432 264)
 	(text "INPUT" (rect 6 125 16 153)(font "Arial" (font_size 6))(vertical))
-	(text "P[3..0]" (rect 4 5 16 39)(font "Arial" )(vertical))
+	(text "P[3..0]" (rect 4 5 16 38)(font "Arial" )(vertical))
 	(pt 8 168)
 	(drawing
 		(line (pt 4 84)(pt 4 109))
@@ -40,7 +40,7 @@ refer to the applicable agreement for further details.
 	(input)
 	(rect 360 96 376 264)
 	(text "INPUT" (rect 6 125 16 153)(font "Arial" (font_size 6))(vertical))
-	(text "G[3..0]" (rect -1 5 16 35)(font "Intel Clear" )(vertical))
+	(text "G[3..0]" (rect -1 5 10 39)(font "Intel Clear" )(vertical))
 	(pt 8 168)
 	(drawing
 		(line (pt 4 84)(pt 4 109))
@@ -57,7 +57,7 @@ refer to the applicable agreement for further details.
 	(input)
 	(rect 296 96 312 264)
 	(text "INPUT" (rect 6 125 16 153)(font "Arial" (font_size 6))(vertical))
-	(text "Cin" (rect 4 5 16 22)(font "Arial" )(vertical))
+	(text "Cin" (rect 4 5 16 21)(font "Arial" )(vertical))
 	(pt 8 168)
 	(drawing
 		(line (pt 4 84)(pt 4 109))
@@ -122,7 +122,7 @@ refer to the applicable agreement for further details.
 (symbol
 	(rect 496 280 560 328)
 	(text "AND2" (rect 1 0 25 10)(font "Arial" (font_size 6)))
-	(text "inst7" (rect 3 37 25 54)(font "Intel Clear" ))
+	(text "inst7" (rect 3 37 25 48)(font "Intel Clear" ))
 	(port
 		(pt 0 16)
 		(input)
@@ -194,7 +194,7 @@ refer to the applicable agreement for further details.
 (symbol
 	(rect 496 360 560 408)
 	(text "AND2" (rect 1 0 25 10)(font "Arial" (font_size 6)))
-	(text "inst8" (rect 3 37 25 54)(font "Intel Clear" ))
+	(text "inst8" (rect 3 37 25 48)(font "Intel Clear" ))
 	(port
 		(pt 0 16)
 		(input)
@@ -226,7 +226,7 @@ refer to the applicable agreement for further details.
 (symbol
 	(rect 496 424 560 472)
 	(text "AND3" (rect 1 0 25 10)(font "Arial" (font_size 6)))
-	(text "inst9" (rect 3 37 25 54)(font "Intel Clear" ))
+	(text "inst9" (rect 3 37 25 48)(font "Intel Clear" ))
 	(port
 		(pt 0 16)
 		(input)
@@ -346,7 +346,7 @@ refer to the applicable agreement for further details.
 (symbol
 	(rect 496 592 560 640)
 	(text "AND3" (rect 1 0 25 10)(font "Arial" (font_size 6)))
-	(text "inst11" (rect 3 37 31 54)(font "Intel Clear" ))
+	(text "inst11" (rect 3 37 31 48)(font "Intel Clear" ))
 	(port
 		(pt 0 16)
 		(input)
@@ -654,7 +654,7 @@ refer to the applicable agreement for further details.
 	)
 )
 (connector
-	(text "P[3..0]" (rect 398 276 415 306)(font "Intel Clear" )(vertical))
+	(text "P[3..0]" (rect 398 276 409 309)(font "Intel Clear" )(vertical))
 	(pt 424 264)
 	(pt 424 296)
 	(bus)
@@ -664,23 +664,23 @@ refer to the applicable agreement for further details.
 	(pt 304 312)
 )
 (connector
-	(text "Cin" (rect 280 275 297 290)(font "Intel Clear" )(vertical))
+	(text "Cin" (rect 280 275 291 291)(font "Intel Clear" )(vertical))
 	(pt 304 264)
 	(pt 304 312)
 )
 (connector
-	(text "P[0]" (rect 466 280 486 297)(font "Intel Clear" ))
+	(text "P[0]" (rect 466 280 486 291)(font "Intel Clear" ))
 	(pt 496 296)
 	(pt 424 296)
 )
 (connector
-	(text "G[3..0]" (rect 344 270 361 300)(font "Intel Clear" )(vertical))
+	(text "G[3..0]" (rect 344 270 355 304)(font "Intel Clear" )(vertical))
 	(pt 368 264)
 	(pt 368 336)
 	(bus)
 )
 (connector
-	(text "G[0]" (rect 617 320 637 337)(font "Intel Clear" ))
+	(text "G[0]" (rect 617 320 638 331)(font "Intel Clear" ))
 	(pt 368 336)
 	(pt 688 336)
 )
@@ -697,7 +697,7 @@ refer to the applicable agreement for further details.
 	(pt 640 304)
 )
 (connector
-	(text "G[1]" (rect 565 488 585 505)(font "Intel Clear" ))
+	(text "G[1]" (rect 565 488 586 499)(font "Intel Clear" ))
 	(pt 696 504)
 	(pt 368 504)
 )
@@ -710,17 +710,17 @@ refer to the applicable agreement for further details.
 	(pt 696 496)
 )
 (connector
-	(text "G[2]" (rect 632 720 652 737)(font "Intel Clear" ))
+	(text "G[2]" (rect 632 720 653 731)(font "Intel Clear" ))
 	(pt 712 736)
 	(pt 368 736)
 )
 (connector
-	(text "P[1]" (rect 456 360 476 377)(font "Intel Clear" ))
+	(text "P[1]" (rect 456 360 476 371)(font "Intel Clear" ))
 	(pt 424 376)
 	(pt 496 376)
 )
 (connector
-	(text "G[0]" (rect 464 376 484 393)(font "Intel Clear" ))
+	(text "G[0]" (rect 464 376 485 387)(font "Intel Clear" ))
 	(pt 368 392)
 	(pt 496 392)
 )
@@ -770,12 +770,12 @@ refer to the applicable agreement for further details.
 	(pt 304 456)
 )
 (connector
-	(text "P[0]" (rect 476 424 496 441)(font "Intel Clear" ))
+	(text "P[0]" (rect 476 424 496 435)(font "Intel Clear" ))
 	(pt 424 440)
 	(pt 496 440)
 )
 (connector
-	(text "P[1]" (rect 456 432 476 449)(font "Intel Clear" ))
+	(text "P[1]" (rect 456 432 476 443)(font "Intel Clear" ))
 	(pt 424 448)
 	(pt 496 448)
 )
@@ -789,7 +789,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "P[2]" (rect 467 528 487 545)(font "Intel Clear" ))
+	(text "P[2]" (rect 467 528 487 539)(font "Intel Clear" ))
 	(pt 496 544)
 	(pt 424 544)
 )
@@ -799,7 +799,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "G[1]" (rect 464 544 484 561)(font "Intel Clear" ))
+	(text "G[1]" (rect 464 544 485 555)(font "Intel Clear" ))
 	(pt 496 560)
 	(pt 368 560)
 )
@@ -819,17 +819,17 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "P[2]" (rect 460 592 480 609)(font "Intel Clear" ))
+	(text "P[2]" (rect 460 592 480 603)(font "Intel Clear" ))
 	(pt 496 608)
 	(pt 424 608)
 )
 (connector
-	(text "P[1]" (rect 476 600 496 617)(font "Intel Clear" ))
+	(text "P[1]" (rect 476 600 496 611)(font "Intel Clear" ))
 	(pt 496 616)
 	(pt 424 616)
 )
 (connector
-	(text "G[0]" (rect 388 608 408 625)(font "Intel Clear" ))
+	(text "G[0]" (rect 388 608 409 619)(font "Intel Clear" ))
 	(pt 496 624)
 	(pt 368 624)
 )
@@ -848,17 +848,17 @@ refer to the applicable agreement for further details.
 	(pt 304 712)
 )
 (connector
-	(text "P[2]" (rect 458 648 478 665)(font "Intel Clear" ))
+	(text "P[2]" (rect 458 648 478 659)(font "Intel Clear" ))
 	(pt 496 664)
 	(pt 424 664)
 )
 (connector
-	(text "P[1]" (rect 457 664 477 681)(font "Intel Clear" ))
+	(text "P[1]" (rect 457 664 477 675)(font "Intel Clear" ))
 	(pt 496 680)
 	(pt 424 680)
 )
 (connector
-	(text "P[0]" (rect 458 680 478 697)(font "Intel Clear" ))
+	(text "P[0]" (rect 458 680 478 691)(font "Intel Clear" ))
 	(pt 496 696)
 	(pt 424 696)
 )
@@ -914,7 +914,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "P[3]" (rect 472 776 492 793)(font "Intel Clear" ))
+	(text "P[3]" (rect 472 776 492 787)(font "Intel Clear" ))
 	(pt 496 792)
 	(pt 424 792)
 )
@@ -924,7 +924,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "G[2]" (rect 466 792 486 809)(font "Intel Clear" ))
+	(text "G[2]" (rect 466 792 487 803)(font "Intel Clear" ))
 	(pt 496 808)
 	(pt 368 808)
 )
@@ -944,17 +944,17 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "P[3]" (rect 476 840 496 857)(font "Intel Clear" ))
+	(text "P[3]" (rect 476 840 496 851)(font "Intel Clear" ))
 	(pt 496 856)
 	(pt 424 856)
 )
 (connector
-	(text "P[2]" (rect 446 848 466 865)(font "Intel Clear" ))
+	(text "P[2]" (rect 446 848 466 859)(font "Intel Clear" ))
 	(pt 496 864)
 	(pt 424 864)
 )
 (connector
-	(text "G[1]" (rect 402 856 422 873)(font "Intel Clear" ))
+	(text "G[1]" (rect 402 856 423 867)(font "Intel Clear" ))
 	(pt 496 872)
 	(pt 368 872)
 )
@@ -974,22 +974,22 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "P[3]" (rect 470 904 490 921)(font "Intel Clear" ))
+	(text "P[3]" (rect 470 904 490 915)(font "Intel Clear" ))
 	(pt 496 920)
 	(pt 424 920)
 )
 (connector
-	(text "P[2]" (rect 471 920 491 937)(font "Intel Clear" ))
+	(text "P[2]" (rect 471 920 491 931)(font "Intel Clear" ))
 	(pt 424 936)
 	(pt 496 936)
 )
 (connector
-	(text "P[1]" (rect 468 936 488 953)(font "Intel Clear" ))
+	(text "P[1]" (rect 468 936 488 947)(font "Intel Clear" ))
 	(pt 496 952)
 	(pt 424 952)
 )
 (connector
-	(text "G[0]" (rect 454 952 474 969)(font "Intel Clear" ))
+	(text "G[0]" (rect 454 952 475 963)(font "Intel Clear" ))
 	(pt 496 968)
 	(pt 368 968)
 )
@@ -1026,22 +1026,22 @@ refer to the applicable agreement for further details.
 	(pt 304 1088)
 )
 (connector
-	(text "P[3]" (rect 459 1008 479 1025)(font "Intel Clear" ))
+	(text "P[3]" (rect 459 1008 479 1019)(font "Intel Clear" ))
 	(pt 496 1024)
 	(pt 424 1024)
 )
 (connector
-	(text "P[2]" (rect 464 1024 484 1041)(font "Intel Clear" ))
+	(text "P[2]" (rect 464 1024 484 1035)(font "Intel Clear" ))
 	(pt 496 1040)
 	(pt 424 1040)
 )
 (connector
-	(text "P[1]" (rect 455 1040 475 1057)(font "Intel Clear" ))
+	(text "P[1]" (rect 455 1040 475 1051)(font "Intel Clear" ))
 	(pt 496 1056)
 	(pt 424 1056)
 )
 (connector
-	(text "P[0]" (rect 464 1056 484 1073)(font "Intel Clear" ))
+	(text "P[0]" (rect 464 1056 484 1067)(font "Intel Clear" ))
 	(pt 496 1072)
 	(pt 424 1072)
 )
@@ -1104,7 +1104,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "G[3]" (rect 442 1144 462 1161)(font "Intel Clear" ))
+	(text "G[3]" (rect 442 1144 463 1155)(font "Intel Clear" ))
 	(pt 752 1160)
 	(pt 368 1160)
 )
@@ -1114,7 +1114,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "C[3]" (rect 864 1128 884 1145)(font "Intel Clear" ))
+	(text "C[3]" (rect 864 1128 885 1139)(font "Intel Clear" ))
 	(pt 856 1144)
 	(pt 904 1144)
 )
@@ -1124,7 +1124,7 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "C[2]" (rect 784 696 804 713)(font "Intel Clear" ))
+	(text "C[2]" (rect 784 696 805 707)(font "Intel Clear" ))
 	(pt 776 712)
 	(pt 904 712)
 )
@@ -1139,12 +1139,12 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "C[1]" (rect 768 480 788 497)(font "Intel Clear" ))
+	(text "C[1]" (rect 768 480 789 491)(font "Intel Clear" ))
 	(pt 760 496)
 	(pt 904 496)
 )
 (connector
-	(text "C[0]" (rect 867 312 887 329)(font "Intel Clear" ))
+	(text "C[0]" (rect 867 312 888 323)(font "Intel Clear" ))
 	(pt 752 328)
 	(pt 904 328)
 )
@@ -1182,6 +1182,6 @@ refer to the applicable agreement for further details.
 (junction (pt 904 712))
 (junction (pt 904 496))
 (junction (pt 904 328))
-(text "Gi = Ai AND Bi" (rect 504 144 664 173)(font "Intel Clear" (color 255 0 0)(font_size 16)(bold)))
-(text "Pi = Ai XOR Bi" (rect 504 120 660 149)(font "Intel Clear" (color 255 0 0)(font_size 16)(bold)))
-(rectangle (rect 488 112 664 184)(color 255 0 0))
+(text "Gi = Ai AND Bi" (rect 504 144 679 169)(font "Intel Clear" (color 255 0 0)(font_size 16)(bold)))
+(text "Pi = Ai XOR Bi" (rect 504 120 676 145)(font "Intel Clear" (color 255 0 0)(font_size 16)(bold)))
+(rectangle (rect 488 112 728 184)(color 255 0 0))
