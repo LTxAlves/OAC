@@ -1,0 +1,64 @@
+Quartus II Archive log --	C:/Users/leona/Documents/OAC/ULA.qarlog
+
+Archive:	C:/Users/leona/Documents/OAC/ULA.qar
+Date:		Wed Nov 20 22:41:30 2019
+Quartus II 64-Bit		13.1.0 Build 162 10/23/2013 SJ Web Edition
+
+	=========== Files Selected: ===========
+C:/Users/leona/Documents/OAC/Banco_Reg.bdf
+C:/Users/leona/Documents/OAC/Barramento_32x.bdf
+C:/Users/leona/Documents/OAC/Barramento_5x.bdf
+C:/Users/leona/Documents/OAC/Barrel_shifter.bdf
+C:/Users/leona/Documents/OAC/Barrel_shifter_right.bdf
+C:/Users/leona/Documents/OAC/CLA.bdf
+C:/Users/leona/Documents/OAC/CLO.bdf
+C:/Users/leona/Documents/OAC/CLZ.bdf
+C:/Users/leona/Documents/OAC/Controle.bdf
+C:/Users/leona/Documents/OAC/Data_Mem.bsf
+C:/Users/leona/Documents/OAC/Data_Mem.cmp
+C:/Users/leona/Documents/OAC/Data_Mem.qip
+C:/Users/leona/Documents/OAC/Data_Mem.vhd
+C:/Users/leona/Documents/OAC/Decoder.bdf
+C:/Users/leona/Documents/OAC/Detector_Overflow.bdf
+C:/Users/leona/Documents/OAC/Freq_div.bdf
+C:/Users/leona/Documents/OAC/FullAdder.bdf
+C:/Users/leona/Documents/OAC/Inst_Mem.bsf
+C:/Users/leona/Documents/OAC/Inst_Mem.cmp
+C:/Users/leona/Documents/OAC/Inst_Mem.qip
+C:/Users/leona/Documents/OAC/Inst_Mem.vhd
+C:/Users/leona/Documents/OAC/Mux2p1.bdf
+C:/Users/leona/Documents/OAC/Mux4p1.bdf
+C:/Users/leona/Documents/OAC/Pipeline.bdf
+C:/Users/leona/Documents/OAC/Reg32.bdf
+C:/Users/leona/Documents/OAC/Registradores.bdf
+C:/Users/leona/Documents/OAC/Shift_2bits.bdf
+C:/Users/leona/Documents/OAC/UES.bdf
+C:/Users/leona/Documents/OAC/UEZ.bdf
+C:/Users/leona/Documents/OAC/ULA.bdf
+C:/Users/leona/Documents/OAC/ULA.qpf
+C:/Users/leona/Documents/OAC/ULA.qsf
+C:/Users/leona/Documents/OAC/ULA32.bdf
+C:/Users/leona/Documents/OAC/Ultima_ULA.bdf
+C:/Users/leona/Documents/OAC/Verilog_CLO.v
+C:/Users/leona/Documents/OAC/Verilog_CLZ.v
+C:/Users/leona/Documents/OAC/Waveform.vwf
+C:/Users/leona/Documents/OAC/assignment_defaults.qdf
+C:/Users/leona/Documents/OAC/db/ULA.cmp.hdb
+C:/Users/leona/Documents/OAC/db/ULA.db_info
+C:/Users/leona/Documents/OAC/incremental_db/compiled_partitions/ULA.db_info
+C:/Users/leona/Documents/OAC/lpm_decode0.bsf
+C:/Users/leona/Documents/OAC/lpm_decode0.cmp
+C:/Users/leona/Documents/OAC/lpm_decode0.qip
+C:/Users/leona/Documents/OAC/lpm_decode0.vhd
+C:/Users/leona/Documents/OAC/lpm_mux0.bsf
+C:/Users/leona/Documents/OAC/lpm_mux0.cmp
+C:/Users/leona/Documents/OAC/lpm_mux0.qip
+C:/Users/leona/Documents/OAC/lpm_mux0.vhd
+C:/Users/leona/Documents/OAC/lpm_mux1.bsf
+C:/Users/leona/Documents/OAC/lpm_mux1.cmp
+C:/Users/leona/Documents/OAC/lpm_mux1.qip
+C:/Users/leona/Documents/OAC/lpm_mux1.vhd
+	======= Total: 53 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
