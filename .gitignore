@@ -1,12 +1,21 @@
-*.DS_Store
-c5_pin_model_dump.txt
+/*
 
 output_files/
-qdb/
-simulation/
 
-*.vwf
+qdb/
+
+simulation/
 
 db/
 
 incremental_db/
+
+.qsys_edit/
+
+greybox_tmp/
+
+
+#commit only .qar and .qarlog files
+!*.qar
+
+!*.qarlog
