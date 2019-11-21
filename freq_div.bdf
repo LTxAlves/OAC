@@ -23,7 +23,7 @@ applicable agreement for further details.
 	(input)
 	(rect 120 336 288 352)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "Clk" (rect 5 0 21 12)(font "Arial" ))
+	(text "clk" (rect 5 0 20 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -39,7 +39,7 @@ applicable agreement for further details.
 	(output)
 	(rect 1240 368 1416 384)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "Div[4..0]" (rect 90 0 133 12)(font "Arial" ))
+	(text "div[4..0]" (rect 90 0 131 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
