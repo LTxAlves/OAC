@@ -1,79 +1,95 @@
-Quartus II Archive log --	C:/Users/leona/Documents/OAC/ULA.qarlog
+Quartus II Archive log --	C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA.qarlog
 
-Archive:	C:/Users/leona/Documents/OAC/ULA.qar
-Date:		Fri Nov 22 10:16:33 2019
-Quartus II 64-Bit		13.1.0 Build 162 10/23/2013 SJ Web Edition
+Archive:	C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA.qar
+Date:		Fri Nov 22 18:01:54 2019
+Quartus II 64-Bit		13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
 
 	=========== Files Selected: ===========
-C:/Users/leona/Documents/OAC/Banco_Reg.bdf
-C:/Users/leona/Documents/OAC/Barramento_32x.bdf
-C:/Users/leona/Documents/OAC/Barramento_5x.bdf
-C:/Users/leona/Documents/OAC/Barrel_shifter.bdf
-C:/Users/leona/Documents/OAC/Barrel_shifter_right.bdf
-C:/Users/leona/Documents/OAC/Bound_Nibb_Enc.bdf
-C:/Users/leona/Documents/OAC/CLA.bdf
-C:/Users/leona/Documents/OAC/CLO.bdf
-C:/Users/leona/Documents/OAC/CLZ.bdf
-C:/Users/leona/Documents/OAC/Controle.bdf
-C:/Users/leona/Documents/OAC/Data_Mem.bsf
-C:/Users/leona/Documents/OAC/Data_Mem.cmp
-C:/Users/leona/Documents/OAC/Data_Mem.qip
-C:/Users/leona/Documents/OAC/Data_Mem.vhd
-C:/Users/leona/Documents/OAC/Decoder.bdf
-C:/Users/leona/Documents/OAC/Detector_Overflow.bdf
-C:/Users/leona/Documents/OAC/Freq_div.bdf
-C:/Users/leona/Documents/OAC/FullAdder.bdf
-C:/Users/leona/Documents/OAC/Inst_Mem.bsf
-C:/Users/leona/Documents/OAC/Inst_Mem.cmp
-C:/Users/leona/Documents/OAC/Inst_Mem.qip
-C:/Users/leona/Documents/OAC/Inst_Mem.vhd
-C:/Users/leona/Documents/OAC/Inv_Nib_Loc_Count.bdf
-C:/Users/leona/Documents/OAC/Mux2p1.bdf
-C:/Users/leona/Documents/OAC/Mux4p1.bdf
-C:/Users/leona/Documents/OAC/Nib_Loc_Count.bdf
-C:/Users/leona/Documents/OAC/Pipeline.bdf
-C:/Users/leona/Documents/OAC/Reg32.bdf
-C:/Users/leona/Documents/OAC/Registradores.bdf
-C:/Users/leona/Documents/OAC/Shift_2bits.bdf
-C:/Users/leona/Documents/OAC/UES.bdf
-C:/Users/leona/Documents/OAC/UEZ.bdf
-C:/Users/leona/Documents/OAC/ULA.bdf
-C:/Users/leona/Documents/OAC/ULA.qpf
-C:/Users/leona/Documents/OAC/ULA.qsf
-C:/Users/leona/Documents/OAC/ULA32.bdf
-C:/Users/leona/Documents/OAC/Ultima_ULA.bdf
-C:/Users/leona/Documents/OAC/Waveform.vwf
-C:/Users/leona/Documents/OAC/assignment_defaults.qdf
-C:/Users/leona/Documents/OAC/db/ULA.cmp.hdb
-C:/Users/leona/Documents/OAC/db/ULA.db_info
-C:/Users/leona/Documents/OAC/incremental_db/compiled_partitions/ULA.db_info
-C:/Users/leona/Documents/OAC/lpm_decode0.bsf
-C:/Users/leona/Documents/OAC/lpm_decode0.cmp
-C:/Users/leona/Documents/OAC/lpm_decode0.qip
-C:/Users/leona/Documents/OAC/lpm_decode0.vhd
-C:/Users/leona/Documents/OAC/lpm_mux0.bsf
-C:/Users/leona/Documents/OAC/lpm_mux0.cmp
-C:/Users/leona/Documents/OAC/lpm_mux0.qip
-C:/Users/leona/Documents/OAC/lpm_mux0.vhd
-C:/Users/leona/Documents/OAC/lpm_mux1.bsf
-C:/Users/leona/Documents/OAC/lpm_mux1.cmp
-C:/Users/leona/Documents/OAC/lpm_mux1.qip
-C:/Users/leona/Documents/OAC/lpm_mux1.vhd
-C:/Users/leona/Documents/OAC/lpm_mux2.bsf
-C:/Users/leona/Documents/OAC/lpm_mux2.cmp
-C:/Users/leona/Documents/OAC/lpm_mux2.qip
-C:/Users/leona/Documents/OAC/lpm_mux2.vhd
-C:/Users/leona/Documents/OAC/lpm_mux3.bsf
-C:/Users/leona/Documents/OAC/lpm_mux3.cmp
-C:/Users/leona/Documents/OAC/lpm_mux3.qip
-C:/Users/leona/Documents/OAC/lpm_mux3.vhd
-	======= Total: 62 files to archive =======
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Banco_Reg.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Barramento_32x.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Barramento_5x.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Barrel_shifter.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Barrel_shifter_right.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Barrel_shifter_right_1x.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Bound_Nibb_Enc.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/CLA.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/CLO.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/CLZ.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Controle.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Data_Mem.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Data_Mem.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Data_Mem.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Data_Mem.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Decoder.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Detector_Overflow.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Discard_Instr.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Divide.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Divide.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Divide.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Divide.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Forward.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Freq_div.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/FullAdder.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Inst_Mem.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Inst_Mem.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Inst_Mem.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Inst_Mem.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Inv_Nib_Loc_Count.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mult.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mult.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mult.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mult.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mux2p1.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Mux4p1.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Nib_Loc_Count.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Pipeline.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Reg32.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Registradores.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/SRA.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Shift_2bits.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Stall.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/UES.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/UEZ.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA.qpf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA.qsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULA32.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/ULONA.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Ultima_ULA.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/WB_Foward_Equal.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Waveform.vwf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/Xor32x.bdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/assignment_defaults.qdf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/incremental_db/compiled_partitions/ULA.db_info
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_compare0.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_compare0.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_compare0.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_compare0.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_decode0.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_decode0.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_decode0.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_decode0.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux0.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux0.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux0.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux0.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux1.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux1.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux1.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux1.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux2.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux2.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux2.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux2.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux3.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux3.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux3.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux3.vhd
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux4.bsf
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux4.cmp
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux4.qip
+C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/lpm_mux4.vhd
+	======= Total: 84 files to archive =======
 
 	================ Status: ===============
 All files archived successfully.
-
-
-******* Archived project restoration attempt on Fri Nov 22 10:23:29 2019
-Source archive file:	C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA.qar
-Archive was extracted into	C:/Users/Cliente/Desktop/posters/Nova pasta/OAC/ULA/
-		 - successfully.
