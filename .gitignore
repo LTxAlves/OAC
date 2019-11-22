@@ -15,7 +15,11 @@ incremental_db/
 greybox_tmp/
 
 
-#commit only .qar and .qarlog files
+#commit only .qar, .qarlog, .mif and .asm files
 !*.qar
 
 !*.qarlog
+
+!.mif
+
+!.asm
