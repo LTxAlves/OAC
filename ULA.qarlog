@@ -1,7 +1,7 @@
 Quartus II Archive log --	C:/Users/leona/Documents/OAC/ULA.qarlog
 
 Archive:	C:/Users/leona/Documents/OAC/ULA.qar
-Date:		Wed Nov 20 22:41:30 2019
+Date:		Fri Nov 22 10:16:33 2019
 Quartus II 64-Bit		13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 	=========== Files Selected: ===========
@@ -10,6 +10,7 @@ C:/Users/leona/Documents/OAC/Barramento_32x.bdf
 C:/Users/leona/Documents/OAC/Barramento_5x.bdf
 C:/Users/leona/Documents/OAC/Barrel_shifter.bdf
 C:/Users/leona/Documents/OAC/Barrel_shifter_right.bdf
+C:/Users/leona/Documents/OAC/Bound_Nibb_Enc.bdf
 C:/Users/leona/Documents/OAC/CLA.bdf
 C:/Users/leona/Documents/OAC/CLO.bdf
 C:/Users/leona/Documents/OAC/CLZ.bdf
@@ -26,8 +27,10 @@ C:/Users/leona/Documents/OAC/Inst_Mem.bsf
 C:/Users/leona/Documents/OAC/Inst_Mem.cmp
 C:/Users/leona/Documents/OAC/Inst_Mem.qip
 C:/Users/leona/Documents/OAC/Inst_Mem.vhd
+C:/Users/leona/Documents/OAC/Inv_Nib_Loc_Count.bdf
 C:/Users/leona/Documents/OAC/Mux2p1.bdf
 C:/Users/leona/Documents/OAC/Mux4p1.bdf
+C:/Users/leona/Documents/OAC/Nib_Loc_Count.bdf
 C:/Users/leona/Documents/OAC/Pipeline.bdf
 C:/Users/leona/Documents/OAC/Reg32.bdf
 C:/Users/leona/Documents/OAC/Registradores.bdf
@@ -39,8 +42,6 @@ C:/Users/leona/Documents/OAC/ULA.qpf
 C:/Users/leona/Documents/OAC/ULA.qsf
 C:/Users/leona/Documents/OAC/ULA32.bdf
 C:/Users/leona/Documents/OAC/Ultima_ULA.bdf
-C:/Users/leona/Documents/OAC/Verilog_CLO.v
-C:/Users/leona/Documents/OAC/Verilog_CLZ.v
 C:/Users/leona/Documents/OAC/Waveform.vwf
 C:/Users/leona/Documents/OAC/assignment_defaults.qdf
 C:/Users/leona/Documents/OAC/db/ULA.cmp.hdb
@@ -58,7 +59,15 @@ C:/Users/leona/Documents/OAC/lpm_mux1.bsf
 C:/Users/leona/Documents/OAC/lpm_mux1.cmp
 C:/Users/leona/Documents/OAC/lpm_mux1.qip
 C:/Users/leona/Documents/OAC/lpm_mux1.vhd
-	======= Total: 53 files to archive =======
+C:/Users/leona/Documents/OAC/lpm_mux2.bsf
+C:/Users/leona/Documents/OAC/lpm_mux2.cmp
+C:/Users/leona/Documents/OAC/lpm_mux2.qip
+C:/Users/leona/Documents/OAC/lpm_mux2.vhd
+C:/Users/leona/Documents/OAC/lpm_mux3.bsf
+C:/Users/leona/Documents/OAC/lpm_mux3.cmp
+C:/Users/leona/Documents/OAC/lpm_mux3.qip
+C:/Users/leona/Documents/OAC/lpm_mux3.vhd
+	======= Total: 62 files to archive =======
 
 	================ Status: ===============
 All files archived successfully.
