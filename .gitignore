@@ -16,13 +16,13 @@ greybox_tmp/
 
 
 #commit only relevant files
+!*.md
+
 !*.qpf
 
 !.qsf
 
 !*.qar
-
-!*.qarlog
 
 !*.mif
 
