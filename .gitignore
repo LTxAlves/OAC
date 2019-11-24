@@ -16,6 +16,10 @@ greybox_tmp/
 
 
 #commit only relevant files
+!*.qpf
+
+!.qsf
+
 !*.qar
 
 !*.qarlog
@@ -35,7 +39,5 @@ greybox_tmp/
 !*.qip
 
 !*.cmp
-
-!*.qpf
 
 !.qsf
