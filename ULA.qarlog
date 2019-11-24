@@ -1,7 +1,7 @@
 Quartus II Archive log --	C:/Users/leona/Documents/OAC/ULA.qarlog
 
 Archive:	C:/Users/leona/Documents/OAC/ULA.qar
-Date:		Sat Nov 23 18:37:58 2019
+Date:		Sun Nov 24 16:27:21 2019
 Quartus II 64-Bit		13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 	=========== Files Selected: ===========
@@ -35,6 +35,7 @@ C:/Users/leona/Documents/OAC/Inst_Mem.bsf
 C:/Users/leona/Documents/OAC/Inst_Mem.cmp
 C:/Users/leona/Documents/OAC/Inst_Mem.qip
 C:/Users/leona/Documents/OAC/Inst_Mem.vhd
+C:/Users/leona/Documents/OAC/Inv_Nib_Loc_Count.bdf
 C:/Users/leona/Documents/OAC/Mult.bsf
 C:/Users/leona/Documents/OAC/Mult.cmp
 C:/Users/leona/Documents/OAC/Mult.qip
@@ -44,7 +45,6 @@ C:/Users/leona/Documents/OAC/Mux4p1.bdf
 C:/Users/leona/Documents/OAC/Nib_Loc_Count.bdf
 C:/Users/leona/Documents/OAC/PC_Soma_4x.bdf
 C:/Users/leona/Documents/OAC/Pipeline.bdf
-C:/Users/leona/Documents/OAC/PipelineInst.mif
 C:/Users/leona/Documents/OAC/Reg32.bdf
 C:/Users/leona/Documents/OAC/Registradores.bdf
 C:/Users/leona/Documents/OAC/SRA.bdf
