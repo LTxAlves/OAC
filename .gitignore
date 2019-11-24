@@ -15,11 +15,27 @@ incremental_db/
 greybox_tmp/
 
 
-#commit only .qar, .qarlog, .mif and .asm files
+#commit only relevant files
 !*.qar
 
 !*.qarlog
 
-!.mif
+!*.mif
 
-!.asm
+!*.asm
+
+!*.bdf
+
+!*.bsf
+
+!*.hdl
+
+!*.v
+
+!*.qip
+
+!*.cmp
+
+!*.qpf
+
+!.qsf
