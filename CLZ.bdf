@@ -37,9 +37,9 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1336 904 1512 920)
+	(rect 1576 912 1752 928)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "Result[5..0]" (rect 90 0 147 12)(font "Arial" ))
+	(text "Res[31..0]" (rect 90 0 141 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -507,6 +507,23 @@ applicable agreement for further details.
 		(line (pt 0 0)(pt 0 0))
 	)
 )
+(symbol
+	(rect 1392 1016 1424 1048)
+	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
+	(text "inst8" (rect 3 21 26 33)(font "Arial" )(invisible))
+	(port
+		(pt 16 0)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(line (pt 16 8)(pt 16 0))
+	)
+	(drawing
+		(line (pt 8 8)(pt 16 16))
+		(line (pt 16 16)(pt 24 8))
+		(line (pt 8 8)(pt 24 8))
+	)
+)
 (connector
 	(text "Data[31..28]" (rect 472 172 484 233)(font "Arial" )(vertical))
 	(pt 488 152)
@@ -706,11 +723,6 @@ applicable agreement for further details.
 	(pt 1240 944)
 )
 (connector
-	(pt 1312 912)
-	(pt 1336 912)
-	(bus)
-)
-(connector
 	(text "All[5..0]" (rect 1128 888 1165 900)(font "Arial" ))
 	(pt 1128 904)
 	(pt 1168 904)
@@ -856,6 +868,24 @@ applicable agreement for further details.
 (connector
 	(pt 928 552)
 	(pt 928 576)
+	(bus)
+)
+(connector
+	(text "resultado[5..0]" (rect 1336 896 1406 908)(font "Arial" ))
+	(pt 1312 912)
+	(pt 1360 912)
+	(bus)
+)
+(connector
+	(text "resultado[31..6]" (rect 1392 998 1404 1074)(font "Arial" )(vertical))
+	(pt 1408 1016)
+	(pt 1408 992)
+	(bus)
+)
+(connector
+	(text "resultado[31..0]" (rect 1496 904 1572 916)(font "Arial" ))
+	(pt 1520 920)
+	(pt 1576 920)
 	(bus)
 )
 (junction (pt 488 152))
