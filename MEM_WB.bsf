@@ -1,0 +1,120 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2014 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.2"))
+(symbol
+	(rect 64 64 360 904)
+	(text "MEM_WB" (rect 5 0 58 14)(font "Arial" (font_size 8)))
+	(text "inst" (rect 8 824 25 836)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "MEM_EscreveReg" (rect 0 0 102 14)(font "Arial" (font_size 8)))
+		(text "MEM_EscreveReg" (rect 21 27 123 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "MEM_MemparaReg" (rect 0 0 107 14)(font "Arial" (font_size 8)))
+		(text "MEM_MemparaReg" (rect 21 43 128 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 360)
+		(input)
+		(text "MEM_PC[31..0]" (rect 0 0 83 14)(font "Arial" (font_size 8)))
+		(text "MEM_PC[31..0]" (rect 21 355 104 369)(font "Arial" (font_size 8)))
+		(line (pt 0 360)(pt 16 360)(line_width 3))
+	)
+	(port
+		(pt 0 376)
+		(input)
+		(text "MEM_ReadData[31..0]" (rect 0 0 123 14)(font "Arial" (font_size 8)))
+		(text "MEM_ReadData[31..0]" (rect 21 371 144 385)(font "Arial" (font_size 8)))
+		(line (pt 0 376)(pt 16 376)(line_width 3))
+	)
+	(port
+		(pt 0 392)
+		(input)
+		(text "MEM_SaidaULA[31..0]" (rect 0 0 125 14)(font "Arial" (font_size 8)))
+		(text "MEM_SaidaULA[31..0]" (rect 21 387 146 401)(font "Arial" (font_size 8)))
+		(line (pt 0 392)(pt 16 392)(line_width 3))
+	)
+	(port
+		(pt 0 704)
+		(input)
+		(text "MEM_Dado[4..0]" (rect 0 0 90 14)(font "Arial" (font_size 8)))
+		(text "MEM_Dado[4..0]" (rect 21 699 111 713)(font "Arial" (font_size 8)))
+		(line (pt 0 704)(pt 16 704)(line_width 3))
+	)
+	(port
+		(pt 144 840)
+		(input)
+		(text "clock" (rect 0 0 29 14)(font "Arial" (font_size 8)))
+		(text "clock" (rect 136 785 150 814)(font "Arial" (font_size 8))(vertical))
+		(line (pt 144 840)(pt 144 823))
+	)
+	(port
+		(pt 296 32)
+		(output)
+		(text "WB_EscreveRg" (rect 0 0 89 14)(font "Arial" (font_size 8)))
+		(text "WB_EscreveRg" (rect 186 27 275 41)(font "Arial" (font_size 8)))
+		(line (pt 296 32)(pt 280 32))
+	)
+	(port
+		(pt 296 48)
+		(output)
+		(text "WB_MemparaReg" (rect 0 0 101 14)(font "Arial" (font_size 8)))
+		(text "WB_MemparaReg" (rect 174 43 275 57)(font "Arial" (font_size 8)))
+		(line (pt 296 48)(pt 280 48))
+	)
+	(port
+		(pt 296 360)
+		(output)
+		(text "WB_PC[31..0]" (rect 0 0 77 14)(font "Arial" (font_size 8)))
+		(text "WB_PC[31..0]" (rect 198 355 275 369)(font "Arial" (font_size 8)))
+		(line (pt 296 360)(pt 280 360)(line_width 3))
+	)
+	(port
+		(pt 296 376)
+		(output)
+		(text "WB_ReadData[31..0]" (rect 0 0 118 14)(font "Arial" (font_size 8)))
+		(text "WB_ReadData[31..0]" (rect 157 371 275 385)(font "Arial" (font_size 8)))
+		(line (pt 296 376)(pt 280 376)(line_width 3))
+	)
+	(port
+		(pt 296 392)
+		(output)
+		(text "WB_SaidaULA[31..0]" (rect 0 0 119 14)(font "Arial" (font_size 8)))
+		(text "WB_SaidaULA[31..0]" (rect 156 387 275 401)(font "Arial" (font_size 8)))
+		(line (pt 296 392)(pt 280 392)(line_width 3))
+	)
+	(port
+		(pt 296 704)
+		(output)
+		(text "WB_Dado[4..0]" (rect 0 0 84 14)(font "Arial" (font_size 8)))
+		(text "WB_Dado[4..0]" (rect 191 699 275 713)(font "Arial" (font_size 8)))
+		(line (pt 296 704)(pt 280 704)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 24 280 816))
+	)
+)

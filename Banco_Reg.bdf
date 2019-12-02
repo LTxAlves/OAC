@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -85,9 +85,9 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 1784 304 1800 472)
+	(rect 1784 344 1800 512)
 	(text "INPUT" (rect 6 125 16 153)(font "Arial" (font_size 6))(vertical))
-	(text "Rt[4..0]" (rect 4 5 16 43)(font "Arial" )(vertical))
+	(text "Rt[4..0]" (rect 4 5 16 42)(font "Arial" )(vertical))
 	(pt 8 168)
 	(drawing
 		(line (pt 4 84)(pt 4 109))
@@ -102,9 +102,9 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 1824 304 1840 472)
+	(rect 1952 296 1968 464)
 	(text "INPUT" (rect 6 125 16 153)(font "Arial" (font_size 6))(vertical))
-	(text "Rs[4..0]" (rect 4 5 16 46)(font "Arial" )(vertical))
+	(text "Rs[4..0]" (rect 4 5 16 45)(font "Arial" )(vertical))
 	(pt 8 168)
 	(drawing
 		(line (pt 4 84)(pt 4 109))
@@ -2168,11 +2168,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1960 560)
-	(pt 1960 528)
-	(bus)
-)
-(connector
 	(pt 1952 1304)
 	(pt 1952 1248)
 	(bus)
@@ -2210,23 +2205,18 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
+	(pt 1960 464)
+	(pt 1960 560)
+	(bus)
+)
+(connector
 	(pt 1952 1248)
 	(pt 1792 1248)
 	(bus)
 )
 (connector
 	(pt 1792 1248)
-	(pt 1792 472)
-	(bus)
-)
-(connector
-	(pt 1960 528)
-	(pt 1832 528)
-	(bus)
-)
-(connector
-	(pt 1832 528)
-	(pt 1832 472)
+	(pt 1792 512)
 	(bus)
 )
 (junction (pt 1224 1080))
