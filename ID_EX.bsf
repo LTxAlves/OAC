@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -22,7 +22,7 @@ applicable agreement for further details.
 (symbol
 	(rect 64 64 304 936)
 	(text "ID_EX" (rect 5 0 38 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 848 25 860)(font "Arial" ))
+	(text "inst" (rect 8 856 25 868)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -122,18 +122,18 @@ applicable agreement for further details.
 		(line (pt 0 400)(pt 16 400)(line_width 3))
 	)
 	(port
-		(pt 0 696)
+		(pt 0 552)
 		(input)
 		(text "Dado1ID[31..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
-		(text "Dado1ID[31..0]" (rect 21 691 103 705)(font "Arial" (font_size 8)))
-		(line (pt 0 696)(pt 16 696)(line_width 3))
+		(text "Dado1ID[31..0]" (rect 21 547 103 561)(font "Arial" (font_size 8)))
+		(line (pt 0 552)(pt 16 552)(line_width 3))
 	)
 	(port
-		(pt 0 720)
+		(pt 0 568)
 		(input)
 		(text "Dado2ID[31..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
-		(text "Dado2ID[31..0]" (rect 21 715 103 729)(font "Arial" (font_size 8)))
-		(line (pt 0 720)(pt 16 720)(line_width 3))
+		(text "Dado2ID[31..0]" (rect 21 563 103 577)(font "Arial" (font_size 8)))
+		(line (pt 0 568)(pt 16 568)(line_width 3))
 	)
 	(port
 		(pt 0 752)
@@ -150,18 +150,18 @@ applicable agreement for further details.
 		(line (pt 0 776)(pt 16 776)(line_width 3))
 	)
 	(port
-		(pt 0 800)
-		(input)
-		(text "Rs_ID[4..0]" (rect 0 0 61 14)(font "Arial" (font_size 8)))
-		(text "Rs_ID[4..0]" (rect 21 795 82 809)(font "Arial" (font_size 8)))
-		(line (pt 0 800)(pt 16 800)(line_width 3))
-	)
-	(port
 		(pt 0 824)
 		(input)
-		(text "Rt_ID[4..0]" (rect 0 0 57 14)(font "Arial" (font_size 8)))
-		(text "Rt_ID[4..0]" (rect 21 819 78 833)(font "Arial" (font_size 8)))
+		(text "Rs_ID[4..0]" (rect 0 0 61 14)(font "Arial" (font_size 8)))
+		(text "Rs_ID[4..0]" (rect 21 819 82 833)(font "Arial" (font_size 8)))
 		(line (pt 0 824)(pt 16 824)(line_width 3))
+	)
+	(port
+		(pt 0 840)
+		(input)
+		(text "Rt_ID[4..0]" (rect 0 0 57 14)(font "Arial" (font_size 8)))
+		(text "Rt_ID[4..0]" (rect 21 835 78 849)(font "Arial" (font_size 8)))
+		(line (pt 0 840)(pt 16 840)(line_width 3))
 	)
 	(port
 		(pt 120 872)
@@ -262,25 +262,25 @@ applicable agreement for further details.
 		(line (pt 240 224)(pt 224 224))
 	)
 	(port
-		(pt 240 672)
+		(pt 240 400)
 		(output)
 		(text "PC_EX[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
-		(text "PC_EX[31..0]" (rect 146 667 219 681)(font "Arial" (font_size 8)))
-		(line (pt 240 672)(pt 224 672)(line_width 3))
+		(text "PC_EX[31..0]" (rect 146 395 219 409)(font "Arial" (font_size 8)))
+		(line (pt 240 400)(pt 224 400)(line_width 3))
 	)
 	(port
-		(pt 240 696)
+		(pt 240 472)
 		(output)
 		(text "Dado1EX[31..0]" (rect 0 0 87 14)(font "Arial" (font_size 8)))
-		(text "Dado1EX[31..0]" (rect 132 691 219 705)(font "Arial" (font_size 8)))
-		(line (pt 240 696)(pt 224 696)(line_width 3))
+		(text "Dado1EX[31..0]" (rect 132 467 219 481)(font "Arial" (font_size 8)))
+		(line (pt 240 472)(pt 224 472)(line_width 3))
 	)
 	(port
-		(pt 240 720)
+		(pt 240 608)
 		(output)
 		(text "Dado2EX[31..0]" (rect 0 0 87 14)(font "Arial" (font_size 8)))
-		(text "Dado2EX[31..0]" (rect 132 715 219 729)(font "Arial" (font_size 8)))
-		(line (pt 240 720)(pt 224 720)(line_width 3))
+		(text "Dado2EX[31..0]" (rect 132 603 219 617)(font "Arial" (font_size 8)))
+		(line (pt 240 608)(pt 224 608)(line_width 3))
 	)
 	(port
 		(pt 240 752)
@@ -297,18 +297,18 @@ applicable agreement for further details.
 		(line (pt 240 736)(pt 224 736)(line_width 3))
 	)
 	(port
-		(pt 240 800)
-		(output)
-		(text "Rs_EX[4..0]" (rect 0 0 66 14)(font "Arial" (font_size 8)))
-		(text "Rs_EX[4..0]" (rect 153 795 219 809)(font "Arial" (font_size 8)))
-		(line (pt 240 800)(pt 224 800)(line_width 3))
-	)
-	(port
 		(pt 240 824)
 		(output)
-		(text "Rt_EX[4..0]" (rect 0 0 62 14)(font "Arial" (font_size 8)))
-		(text "Rt_EX[4..0]" (rect 157 819 219 833)(font "Arial" (font_size 8)))
+		(text "Rs_EX[4..0]" (rect 0 0 66 14)(font "Arial" (font_size 8)))
+		(text "Rs_EX[4..0]" (rect 153 819 219 833)(font "Arial" (font_size 8)))
 		(line (pt 240 824)(pt 224 824)(line_width 3))
+	)
+	(port
+		(pt 240 840)
+		(output)
+		(text "Rt_EX[4..0]" (rect 0 0 62 14)(font "Arial" (font_size 8)))
+		(text "Rt_EX[4..0]" (rect 157 835 219 849)(font "Arial" (font_size 8)))
+		(line (pt 240 840)(pt 224 840)(line_width 3))
 	)
 	(drawing
 		(rectangle (rect 16 16 224 856))

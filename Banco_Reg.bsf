@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -20,7 +20,7 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 304 176)
+	(rect 64 64 352 224)
 	(text "Banco_Reg" (rect 5 0 71 14)(font "Arial" (font_size 8)))
 	(text "inst" (rect 8 144 25 156)(font "Arial" ))
 	(port
@@ -38,25 +38,25 @@ applicable agreement for further details.
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
-		(pt 0 64)
+		(pt 0 136)
 		(input)
 		(text "Dado_escrita[31..0]" (rect 0 0 110 14)(font "Arial" (font_size 8)))
-		(text "Dado_escrita[31..0]" (rect 21 59 131 73)(font "Arial" (font_size 8)))
-		(line (pt 0 64)(pt 16 64)(line_width 3))
+		(text "Dado_escrita[31..0]" (rect 21 131 131 145)(font "Arial" (font_size 8)))
+		(line (pt 0 136)(pt 16 136)(line_width 3))
 	)
 	(port
-		(pt 0 80)
+		(pt 152 160)
 		(input)
 		(text "clock" (rect 0 0 29 14)(font "Arial" (font_size 8)))
-		(text "clock" (rect 21 75 50 89)(font "Arial" (font_size 8)))
-		(line (pt 0 80)(pt 16 80))
+		(text "clock" (rect 144 105 158 134)(font "Arial" (font_size 8))(vertical))
+		(line (pt 152 160)(pt 152 143))
 	)
 	(port
-		(pt 0 96)
+		(pt 0 88)
 		(input)
 		(text "Write" (rect 0 0 29 14)(font "Arial" (font_size 8)))
-		(text "Write" (rect 21 91 50 105)(font "Arial" (font_size 8)))
-		(line (pt 0 96)(pt 16 96))
+		(text "Write" (rect 21 83 50 97)(font "Arial" (font_size 8)))
+		(line (pt 0 88)(pt 16 88))
 	)
 	(port
 		(pt 0 112)

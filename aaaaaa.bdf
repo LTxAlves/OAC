@@ -18,11 +18,59 @@ programming logic devices manufactured by Altera and sold by
 Altera or its authorized distributors.  Please refer to the 
 applicable agreement for further details.
 */
-(header "symbol" (version "1.2"))
+(header "graphic" (version "1.4"))
+(pin
+	(input)
+	(rect 128 504 296 520)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "In[31..0]" (rect 5 0 47 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 192 816 360 832)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "clk" (rect 5 0 20 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(output)
+	(rect 632 504 808 520)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "Out[31..0]" (rect 90 0 139 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
 (symbol
-	(rect 64 64 336 968)
+	(rect 320 -120 592 784)
 	(text "EX_MEM" (rect 5 0 53 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 888 25 900)(font "Arial" ))
+	(text "inst1" (rect 8 888 31 900)(font "Arial" ))
 	(port
 		(pt 136 904)
 		(input)
@@ -173,4 +221,22 @@ applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 256 888))
 	)
+)
+(connector
+	(pt 592 512)
+	(pt 632 512)
+	(bus)
+)
+(connector
+	(pt 296 512)
+	(pt 320 512)
+	(bus)
+)
+(connector
+	(pt 456 824)
+	(pt 360 824)
+)
+(connector
+	(pt 456 784)
+	(pt 456 824)
 )

@@ -26,8 +26,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 32)
 		(input)
-		(text "Shamt[4..0]" (rect 0 0 63 14)(font "Arial" (font_size 8)))
-		(text "Shamt[4..0]" (rect 21 27 84 41)(font "Arial" (font_size 8)))
+		(text "A[31..0]" (rect 0 0 44 14)(font "Arial" (font_size 8)))
+		(text "A[31..0]" (rect 21 27 65 41)(font "Arial" (font_size 8)))
 		(line (pt 0 32)(pt 16 32)(line_width 3))
 	)
 	(port
@@ -40,8 +40,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 64)
 		(input)
-		(text "A[31..0]" (rect 0 0 44 14)(font "Arial" (font_size 8)))
-		(text "A[31..0]" (rect 21 59 65 73)(font "Arial" (font_size 8)))
+		(text "Shamt[4..0]" (rect 0 0 63 14)(font "Arial" (font_size 8)))
+		(text "Shamt[4..0]" (rect 21 59 84 73)(font "Arial" (font_size 8)))
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
