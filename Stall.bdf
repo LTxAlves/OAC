@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2014 Altera Corporation
+Copyright (C) 1991-2013 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -134,7 +134,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1552 392 1728 408)
+	(rect 1552 216 1728 232)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "IFID_WriteEN" (rect 90 0 159 12)(font "Arial" ))
 	(pt 0 8)
@@ -704,10 +704,6 @@ applicable agreement for further details.
 	(pt 1432 280)
 )
 (connector
-	(pt 1528 272)
-	(pt 1528 296)
-)
-(connector
 	(pt 1328 312)
 	(pt 1352 312)
 )
@@ -716,16 +712,8 @@ applicable agreement for further details.
 	(pt 1552 360)
 )
 (connector
-	(pt 1528 400)
-	(pt 1552 400)
-)
-(connector
 	(pt 1528 344)
 	(pt 1528 360)
-)
-(connector
-	(pt 1528 360)
-	(pt 1528 400)
 )
 (connector
 	(pt 1528 272)
@@ -933,6 +921,17 @@ applicable agreement for further details.
 	(pt 496 296)
 	(pt 496 448)
 )
+(connector
+	(pt 1528 272)
+	(pt 1528 296)
+)
+(connector
+	(pt 1552 224)
+	(pt 1528 224)
+)
+(connector
+	(pt 1528 224)
+	(pt 1528 272)
+)
 (junction (pt 264 208))
-(junction (pt 1528 360))
 (junction (pt 1528 272))

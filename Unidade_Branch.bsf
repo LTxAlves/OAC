@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2014 Altera Corporation
+Copyright (C) 1991-2013 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -26,8 +26,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 32)
 		(input)
-		(text "PC_ID[31..0]" (rect 0 0 68 14)(font "Arial" (font_size 8)))
-		(text "PC_ID[31..0]" (rect 21 27 89 41)(font "Arial" (font_size 8)))
+		(text "PC_EX[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
+		(text "PC_EX[31..0]" (rect 21 27 94 41)(font "Arial" (font_size 8)))
 		(line (pt 0 32)(pt 16 32)(line_width 3))
 	)
 	(port

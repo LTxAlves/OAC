@@ -21,23 +21,7 @@ applicable agreement for further details.
 (header "graphic" (version "1.4"))
 (pin
 	(input)
-	(rect 280 912 448 928)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "EX_PC[31..0]" (rect 5 0 71 12)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
-	(rect 280 192 448 208)
+	(rect 288 136 456 152)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "clock" (rect 5 0 30 12)(font "Arial" ))
 	(pt 168 8)
@@ -199,7 +183,7 @@ applicable agreement for further details.
 	(input)
 	(rect 280 1616 448 1632)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "EX_MSB_A" (rect 5 0 61 12)(font "Arial" ))
+	(text "EX_MSB_A" (rect 5 0 60 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -215,7 +199,7 @@ applicable agreement for further details.
 	(input)
 	(rect 280 1728 448 1744)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "EX_beq" (rect 5 0 42 12)(font "Arial" ))
+	(text "EX_beq" (rect 5 0 41 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -231,7 +215,7 @@ applicable agreement for further details.
 	(input)
 	(rect 272 1832 440 1848)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "EX_bne" (rect 5 0 42 12)(font "Arial" ))
+	(text "EX_bne" (rect 5 0 41 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -247,7 +231,7 @@ applicable agreement for further details.
 	(input)
 	(rect 264 1944 432 1960)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "EX_bgez" (rect 5 0 47 12)(font "Arial" ))
+	(text "EX_bgez" (rect 5 0 46 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -261,9 +245,57 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 280 304 456 320)
+	(rect 272 304 456 320)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "EX_MemPraReg1" (rect 5 0 89 12)(font "Arial" ))
+	(pt 184 8)
+	(drawing
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
+	)
+	(text "GND" (rect 144 7 165 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 272 192 456 208)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "EX_MemPraReg0" (rect 5 0 89 12)(font "Arial" ))
+	(pt 184 8)
+	(drawing
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
+	)
+	(text "GND" (rect 144 7 165 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 272 2304 440 2320)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "EX_PC[31..0]" (rect 5 0 71 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 272 912 448 928)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "EX_MemPraReg" (rect 5 0 85 12)(font "Arial" ))
+	(text "EX_PC_Br[31..0]" (rect 5 0 87 12)(font "Arial" ))
 	(pt 176 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
@@ -276,20 +308,36 @@ applicable agreement for further details.
 	(text "GND" (rect 136 7 157 17)(font "Arial" (font_size 6)))
 )
 (pin
-	(output)
-	(rect 736 912 912 928)
-	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "MEM_PC[31..0]" (rect 90 0 166 12)(font "Arial" ))
-	(pt 0 8)
+	(input)
+	(rect 256 2064 440 2080)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "EX_madd_multdiv" (rect 5 0 94 12)(font "Arial" ))
+	(pt 184 8)
 	(drawing
-		(line (pt 0 8)(pt 52 8))
-		(line (pt 52 4)(pt 78 4))
-		(line (pt 52 12)(pt 78 12))
-		(line (pt 52 12)(pt 52 4))
-		(line (pt 78 4)(pt 82 8))
-		(line (pt 82 8)(pt 78 12))
-		(line (pt 78 12)(pt 82 8))
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
 	)
+	(text "GND" (rect 144 7 165 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 264 2184 432 2200)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "EX_dmm" (rect 5 0 49 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -501,9 +549,89 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 720 304 905 320)
+	(rect 720 192 911 208)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "MEM_MemPraReg" (rect 90 0 179 12)(font "Arial" ))
+	(text "MEM_MemPraReg0" (rect 90 0 185 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 720 304 911 320)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "MEM_MemPraReg1" (rect 90 0 185 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 768 2304 944 2320)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "MEM_PC[31..0]" (rect 90 0 166 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 736 912 925 928)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "MEM_PC[_Br31..0]" (rect 90 0 183 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 736 2064 931 2080)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "MEM_madd_multdiv" (rect 90 0 189 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 760 2184 936 2200)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "MEM_dmm" (rect 90 0 144 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -922,9 +1050,125 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 552 280 704 376)
+	(rect 552 168 704 264)
 	(text "Barramento_1x" (rect 5 0 92 14)(font "Arial" (font_size 8)))
 	(text "inst13" (rect 8 80 37 92)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "entrada" (rect 0 0 43 14)(font "Arial" (font_size 8)))
+		(text "entrada" (rect 21 27 64 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "saida" (rect 0 0 30 14)(font "Arial" (font_size 8)))
+		(text "saida" (rect 101 27 131 41)(font "Arial" (font_size 8)))
+		(line (pt 152 32)(pt 136 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 80))
+	)
+)
+(symbol
+	(rect 552 280 704 376)
+	(text "Barramento_1x" (rect 5 0 92 14)(font "Arial" (font_size 8)))
+	(text "inst14" (rect 8 80 37 92)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "entrada" (rect 0 0 43 14)(font "Arial" (font_size 8)))
+		(text "entrada" (rect 21 27 64 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "saida" (rect 0 0 30 14)(font "Arial" (font_size 8)))
+		(text "saida" (rect 101 27 131 41)(font "Arial" (font_size 8)))
+		(line (pt 152 32)(pt 136 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 80))
+	)
+)
+(symbol
+	(rect 520 2280 728 2376)
+	(text "Barramento_32x" (rect 5 0 99 14)(font "Arial" (font_size 8)))
+	(text "inst15" (rect 8 80 37 92)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "entrada[31..0]" (rect 0 0 79 14)(font "Arial" (font_size 8)))
+		(text "entrada[31..0]" (rect 21 27 100 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 208 32)
+		(output)
+		(text "saidas[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
+		(text "saidas[31..0]" (rect 114 27 187 41)(font "Arial" (font_size 8)))
+		(line (pt 208 32)(pt 192 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 192 80))
+	)
+)
+(symbol
+	(rect 528 2040 680 2136)
+	(text "Barramento_1x" (rect 5 0 92 14)(font "Arial" (font_size 8)))
+	(text "inst16" (rect 8 80 37 92)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "entrada" (rect 0 0 43 14)(font "Arial" (font_size 8)))
+		(text "entrada" (rect 21 27 64 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "saida" (rect 0 0 30 14)(font "Arial" (font_size 8)))
+		(text "saida" (rect 101 27 131 41)(font "Arial" (font_size 8)))
+		(line (pt 152 32)(pt 136 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 80))
+	)
+)
+(symbol
+	(rect 528 2160 680 2256)
+	(text "Barramento_1x" (rect 5 0 92 14)(font "Arial" (font_size 8)))
+	(text "inst17" (rect 8 80 37 92)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -979,24 +1223,12 @@ applicable agreement for further details.
 	(pt 472 680)
 )
 (connector
-	(pt 472 560)
-	(pt 472 680)
-)
-(connector
 	(pt 472 808)
 	(pt 536 808)
 )
 (connector
-	(pt 472 680)
-	(pt 472 808)
-)
-(connector
 	(pt 472 936)
 	(pt 512 936)
-)
-(connector
-	(pt 472 808)
-	(pt 472 936)
 )
 (connector
 	(pt 512 1064)
@@ -1005,10 +1237,6 @@ applicable agreement for further details.
 (connector
 	(pt 472 1184)
 	(pt 520 1184)
-)
-(connector
-	(pt 472 936)
-	(pt 472 1064)
 )
 (connector
 	(pt 552 432)
@@ -1049,14 +1277,6 @@ applicable agreement for further details.
 )
 (connector
 	(pt 520 1304)
-	(pt 472 1304)
-)
-(connector
-	(pt 472 1064)
-	(pt 472 1184)
-)
-(connector
-	(pt 472 1184)
 	(pt 472 1304)
 )
 (connector
@@ -1103,20 +1323,12 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 472 1304)
-	(pt 472 1424)
-)
-(connector
 	(pt 448 1624)
 	(pt 528 1624)
 )
 (connector
 	(pt 528 1640)
 	(pt 472 1640)
-)
-(connector
-	(pt 472 1424)
-	(pt 472 1528)
 )
 (connector
 	(pt 680 1624)
@@ -1127,28 +1339,8 @@ applicable agreement for further details.
 	(pt 472 1752)
 )
 (connector
-	(pt 472 1528)
-	(pt 472 1640)
-)
-(connector
 	(pt 528 1856)
 	(pt 472 1856)
-)
-(connector
-	(pt 472 1640)
-	(pt 472 1752)
-)
-(connector
-	(pt 528 1968)
-	(pt 472 1968)
-)
-(connector
-	(pt 472 1752)
-	(pt 472 1856)
-)
-(connector
-	(pt 472 1856)
-	(pt 472 1968)
 )
 (connector
 	(pt 448 1736)
@@ -1175,24 +1367,12 @@ applicable agreement for further details.
 	(pt 760 1952)
 )
 (connector
-	(pt 472 200)
-	(pt 448 200)
-)
-(connector
-	(pt 472 448)
-	(pt 472 560)
+	(pt 528 1968)
+	(pt 472 1968)
 )
 (connector
 	(pt 552 328)
 	(pt 472 328)
-)
-(connector
-	(pt 472 200)
-	(pt 472 328)
-)
-(connector
-	(pt 472 328)
-	(pt 472 448)
 )
 (connector
 	(pt 552 312)
@@ -1201,6 +1381,136 @@ applicable agreement for further details.
 (connector
 	(pt 704 312)
 	(pt 720 312)
+)
+(connector
+	(pt 552 216)
+	(pt 472 216)
+)
+(connector
+	(pt 552 200)
+	(pt 456 200)
+)
+(connector
+	(pt 704 200)
+	(pt 720 200)
+)
+(connector
+	(pt 456 144)
+	(pt 472 144)
+)
+(connector
+	(pt 472 144)
+	(pt 472 216)
+)
+(connector
+	(pt 472 216)
+	(pt 472 328)
+)
+(connector
+	(pt 472 328)
+	(pt 472 448)
+)
+(connector
+	(pt 472 448)
+	(pt 472 560)
+)
+(connector
+	(pt 472 560)
+	(pt 472 680)
+)
+(connector
+	(pt 472 680)
+	(pt 472 808)
+)
+(connector
+	(pt 472 808)
+	(pt 472 936)
+)
+(connector
+	(pt 472 936)
+	(pt 472 1064)
+)
+(connector
+	(pt 472 1064)
+	(pt 472 1184)
+)
+(connector
+	(pt 472 1184)
+	(pt 472 1304)
+)
+(connector
+	(pt 472 1304)
+	(pt 472 1424)
+)
+(connector
+	(pt 472 1424)
+	(pt 472 1528)
+)
+(connector
+	(pt 472 1528)
+	(pt 472 1640)
+)
+(connector
+	(pt 472 1640)
+	(pt 472 1752)
+)
+(connector
+	(pt 472 1752)
+	(pt 472 1856)
+)
+(connector
+	(pt 528 2088)
+	(pt 472 2088)
+)
+(connector
+	(pt 528 2072)
+	(pt 440 2072)
+)
+(connector
+	(pt 680 2072)
+	(pt 736 2072)
+)
+(connector
+	(pt 728 2312)
+	(pt 768 2312)
+	(bus)
+)
+(connector
+	(pt 440 2312)
+	(pt 520 2312)
+	(bus)
+)
+(connector
+	(pt 528 2192)
+	(pt 432 2192)
+)
+(connector
+	(pt 680 2192)
+	(pt 760 2192)
+)
+(connector
+	(pt 528 2208)
+	(pt 472 2208)
+)
+(connector
+	(pt 520 2328)
+	(pt 472 2328)
+)
+(connector
+	(pt 472 1856)
+	(pt 472 1968)
+)
+(connector
+	(pt 472 1968)
+	(pt 472 2088)
+)
+(connector
+	(pt 472 2088)
+	(pt 472 2208)
+)
+(connector
+	(pt 472 2208)
+	(pt 472 2328)
 )
 (junction (pt 472 448))
 (junction (pt 472 560))
@@ -1216,3 +1526,7 @@ applicable agreement for further details.
 (junction (pt 472 1752))
 (junction (pt 472 1856))
 (junction (pt 472 328))
+(junction (pt 472 1968))
+(junction (pt 472 216))
+(junction (pt 472 2088))
+(junction (pt 472 2208))
