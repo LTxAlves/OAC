@@ -87,11 +87,11 @@ applicable agreement for further details.
 		(line (pt 0 328)(pt 16 328)(line_width 3))
 	)
 	(port
-		(pt 0 840)
+		(pt 0 864)
 		(input)
 		(text "EX_Dado[4..0]" (rect 0 0 80 14)(font "Arial" (font_size 8)))
-		(text "EX_Dado[4..0]" (rect 21 835 101 849)(font "Arial" (font_size 8)))
-		(line (pt 0 840)(pt 16 840)(line_width 3))
+		(text "EX_Dado[4..0]" (rect 21 859 101 873)(font "Arial" (font_size 8)))
+		(line (pt 0 864)(pt 16 864)(line_width 3))
 	)
 	(port
 		(pt 0 344)
@@ -208,8 +208,8 @@ applicable agreement for further details.
 	(port
 		(pt 272 192)
 		(output)
-		(text "MEM_PC[_Br31..0]" (rect 0 0 103 14)(font "Arial" (font_size 8)))
-		(text "MEM_PC[_Br31..0]" (rect 148 187 251 201)(font "Arial" (font_size 8)))
+		(text "MEM_PC_Br[31..0]" (rect 0 0 103 14)(font "Arial" (font_size 8)))
+		(text "MEM_PC_Br[31..0]" (rect 148 187 251 201)(font "Arial" (font_size 8)))
 		(line (pt 272 192)(pt 256 192)(line_width 3))
 	)
 	(port

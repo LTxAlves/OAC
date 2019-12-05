@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2014 Altera Corporation
+Copyright (C) 1991-2013 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -290,6 +290,91 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+)
+(pin
+	(output)
+	(rect 920 160 936 336)
+	(text "OUTPUT" (rect 0 137 10 175)(font "Arial" (font_size 6))(vertical))
+	(text "Addi" (rect 2 5 14 27)(font "Arial" )(vertical))
+	(pt 8 176)
+	(drawing
+		(line (pt 8 176)(pt 8 124))
+		(line (pt 4 124)(pt 4 98))
+		(line (pt 12 124)(pt 12 98))
+		(line (pt 12 124)(pt 4 124))
+		(line (pt 4 98)(pt 8 94))
+		(line (pt 8 94)(pt 12 98))
+		(line (pt 12 98)(pt 8 94))
+	)
+	(rotate90)
+)
+(pin
+	(output)
+	(rect 1040 176 1056 352)
+	(text "OUTPUT" (rect 0 137 10 175)(font "Arial" (font_size 6))(vertical))
+	(text "Andi" (rect 1 5 13 27)(font "Arial" )(vertical))
+	(pt 8 176)
+	(drawing
+		(line (pt 8 176)(pt 8 124))
+		(line (pt 4 124)(pt 4 98))
+		(line (pt 12 124)(pt 12 98))
+		(line (pt 12 124)(pt 4 124))
+		(line (pt 4 98)(pt 8 94))
+		(line (pt 8 94)(pt 12 98))
+		(line (pt 12 98)(pt 8 94))
+	)
+	(rotate90)
+)
+(pin
+	(output)
+	(rect 1400 224 1416 400)
+	(text "OUTPUT" (rect 0 137 10 175)(font "Arial" (font_size 6))(vertical))
+	(text "Lui" (rect 3 5 15 20)(font "Arial" )(vertical))
+	(pt 8 176)
+	(drawing
+		(line (pt 8 176)(pt 8 124))
+		(line (pt 4 124)(pt 4 98))
+		(line (pt 12 124)(pt 12 98))
+		(line (pt 12 124)(pt 4 124))
+		(line (pt 4 98)(pt 8 94))
+		(line (pt 8 94)(pt 12 98))
+		(line (pt 12 98)(pt 8 94))
+	)
+	(rotate90)
+)
+(pin
+	(output)
+	(rect 1520 240 1536 416)
+	(text "OUTPUT" (rect 0 137 10 175)(font "Arial" (font_size 6))(vertical))
+	(text "Ori" (rect 1 5 13 20)(font "Arial" )(vertical))
+	(pt 8 176)
+	(drawing
+		(line (pt 8 176)(pt 8 124))
+		(line (pt 4 124)(pt 4 98))
+		(line (pt 12 124)(pt 12 98))
+		(line (pt 12 124)(pt 4 124))
+		(line (pt 4 98)(pt 8 94))
+		(line (pt 8 94)(pt 12 98))
+		(line (pt 12 98)(pt 8 94))
+	)
+	(rotate90)
+)
+(pin
+	(output)
+	(rect 1760 272 1776 448)
+	(text "OUTPUT" (rect 0 137 10 175)(font "Arial" (font_size 6))(vertical))
+	(text "Xori" (rect 2 5 14 23)(font "Arial" )(vertical))
+	(pt 8 176)
+	(drawing
+		(line (pt 8 176)(pt 8 124))
+		(line (pt 4 124)(pt 4 98))
+		(line (pt 12 124)(pt 12 98))
+		(line (pt 12 124)(pt 4 124))
+		(line (pt 4 98)(pt 8 94))
+		(line (pt 8 94)(pt 12 98))
+		(line (pt 12 98)(pt 8 94))
+	)
+	(rotate90)
 )
 (symbol
 	(rect 2264 688 2328 832)
@@ -855,46 +940,7 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 2216 1944 2336 2000)
-	(text "LPM_OR" (rect 35 0 97 16)(font "Arial" (font_size 10)))
-	(text "inst1" (rect 3 45 26 57)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "data[LPM_SIZE-1..0][LPM_WIDTH-1..0]" (rect 5 19 220 33)(font "Arial" (font_size 8)))
-		(text "data[][]" (rect 5 19 43 33)(font "Arial" (font_size 8)))
-		(line (pt 0 32)(pt 49 32)(line_width 3))
-	)
-	(port
-		(pt 120 32)
-		(output)
-		(text "result[LPM_WIDTH-1..0]" (rect 83 19 216 33)(font "Arial" (font_size 8)))
-		(text "result[]" (rect 83 19 121 33)(font "Arial" (font_size 8)))
-		(line (pt 80 32)(pt 120 32)(line_width 3))
-	)
-	(parameter
-		"LPM_WIDTH"
-		"1"
-		"Number of gates, any integer > 0"
-		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" "40" "48" "56" "64" 
-	)
-	(parameter
-		"LPM_SIZE"
-		"13"
-		"Number of inputs per gate, any integer > 0"
-		" 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" "40" "48" "56" "64" 
-	)
-	(drawing
-		(line (pt 46 21)(pt 57 21))
-		(line (pt 46 43)(pt 57 43))
-		(arc (pt 81 32)(pt 57 21)(rect 26 21 89 84))
-		(arc (pt 57 43)(pt 81 32)(rect 26 -19 89 44))
-		(arc (pt 39 37)(pt 39 27)(rect 18 16 51 49))
-	)
-	(annotation_block (parameter)(rect 2336 1896 2470 1938))
-)
-(symbol
-	(rect 2376 1960 2424 1992)
+	(rect 2160 1960 2208 1992)
 	(text "NOT" (rect 1 0 21 10)(font "Arial" (font_size 6)))
 	(text "inst3" (rect 3 21 26 33)(font "Arial" ))
 	(port
@@ -917,6 +963,44 @@ applicable agreement for further details.
 		(line (pt 13 25)(pt 31 16))
 		(circle (rect 31 12 39 20))
 	)
+)
+(symbol
+	(rect 2216 1944 2336 2000)
+	(text "LPM_AND" (rect 25 0 96 16)(font "Arial" (font_size 10)))
+	(text "inst5" (rect 3 45 26 57)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "data[LPM_SIZE-1..0][LPM_WIDTH-1..0]" (rect 6 19 221 33)(font "Arial" (font_size 8)))
+		(text "data[][]" (rect 6 19 44 33)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 46 32)(line_width 3))
+	)
+	(port
+		(pt 120 32)
+		(output)
+		(text "result[LPM_WIDTH-1..0]" (rect 83 19 216 33)(font "Arial" (font_size 8)))
+		(text "result[]" (rect 83 19 121 33)(font "Arial" (font_size 8)))
+		(line (pt 74 32)(pt 120 32)(line_width 3))
+	)
+	(parameter
+		"LPM_SIZE"
+		"15"
+		"Number of inputs per gate, any integer > 0"
+		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" "40" "48" "56" "64" 
+	)
+	(parameter
+		"LPM_WIDTH"
+		"1"
+		"Number of gates, any integer > 0"
+		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" "40" "48" "56" "64" 
+	)
+	(drawing
+		(line (pt 46 44)(pt 63 44))
+		(line (pt 46 20)(pt 64 20))
+		(line (pt 46 44)(pt 46 20))
+		(arc (pt 63 45)(pt 62 20)(rect 50 20 75 45))
+	)
+	(annotation_block (parameter)(rect 2336 1896 2470 1938))
 )
 (connector
 	(pt 2328 760)
@@ -947,14 +1031,6 @@ applicable agreement for further details.
 	(pt 2264 720)
 )
 (connector
-	(pt 928 752)
-	(pt 2264 752)
-)
-(connector
-	(pt 1408 736)
-	(pt 2264 736)
-)
-(connector
 	(pt 1048 768)
 	(pt 2264 768)
 )
@@ -977,10 +1053,6 @@ applicable agreement for further details.
 (connector
 	(pt 448 928)
 	(pt 448 1160)
-)
-(connector
-	(pt 928 1024)
-	(pt 928 1392)
 )
 (connector
 	(text "OpALU[1]" (rect 2333 1384 2381 1396)(font "Arial" ))
@@ -1007,14 +1079,6 @@ applicable agreement for further details.
 	(pt 2448 1584)
 )
 (connector
-	(pt 1408 1008)
-	(pt 1408 1376)
-)
-(connector
-	(pt 1408 1376)
-	(pt 1408 1576)
-)
-(connector
 	(pt 2256 1160)
 	(pt 448 1160)
 )
@@ -1035,20 +1099,8 @@ applicable agreement for further details.
 	(pt 2256 1288)
 )
 (connector
-	(pt 328 1344)
-	(pt 2240 1344)
-)
-(connector
 	(pt 808 1360)
 	(pt 2240 1360)
-)
-(connector
-	(pt 1408 1376)
-	(pt 2240 1376)
-)
-(connector
-	(pt 928 1392)
-	(pt 2240 1392)
 )
 (connector
 	(pt 1048 1408)
@@ -1063,18 +1115,6 @@ applicable agreement for further details.
 	(pt 1768 1440)
 )
 (connector
-	(pt 2240 1424)
-	(pt 1528 1424)
-)
-(connector
-	(pt 1528 976)
-	(pt 1528 1424)
-)
-(connector
-	(pt 1528 1424)
-	(pt 1528 1640)
-)
-(connector
 	(pt 1768 1440)
 	(pt 2240 1440)
 )
@@ -1085,22 +1125,6 @@ applicable agreement for further details.
 (connector
 	(pt 688 1528)
 	(pt 2240 1528)
-)
-(connector
-	(pt 1408 1576)
-	(pt 2240 1576)
-)
-(connector
-	(pt 1048 1592)
-	(pt 2240 1592)
-)
-(connector
-	(pt 808 1608)
-	(pt 2240 1608)
-)
-(connector
-	(pt 1768 1624)
-	(pt 2240 1624)
 )
 (connector
 	(pt 1528 1640)
@@ -1143,14 +1167,6 @@ applicable agreement for further details.
 	(pt 2248 992)
 )
 (connector
-	(pt 1408 1008)
-	(pt 2248 1008)
-)
-(connector
-	(pt 928 1024)
-	(pt 2248 1024)
-)
-(connector
 	(pt 1888 1704)
 	(pt 1888 464)
 )
@@ -1172,28 +1188,12 @@ applicable agreement for further details.
 	(pt 688 1528)
 )
 (connector
-	(pt 928 336)
-	(pt 928 752)
-)
-(connector
-	(pt 928 752)
-	(pt 928 1024)
-)
-(connector
 	(pt 1048 352)
 	(pt 1048 768)
 )
 (connector
 	(pt 1048 768)
 	(pt 1048 960)
-)
-(connector
-	(pt 1408 400)
-	(pt 1408 736)
-)
-(connector
-	(pt 1408 736)
-	(pt 1408 1008)
 )
 (connector
 	(pt 2192 1056)
@@ -1323,11 +1323,6 @@ applicable agreement for further details.
 	(pt 808 320)
 )
 (connector
-	(text "addi" (rect 858 320 878 332)(font "Arial" ))
-	(pt 248 336)
-	(pt 928 336)
-)
-(connector
 	(text "andi" (rect 992 336 1012 348)(font "Arial" ))
 	(pt 248 352)
 	(pt 1048 352)
@@ -1336,11 +1331,6 @@ applicable agreement for further details.
 	(text "bgez" (rect 1091 352 1113 364)(font "Arial" ))
 	(pt 248 368)
 	(pt 1168 368)
-)
-(connector
-	(text "lui" (rect 1341 384 1351 396)(font "Arial" ))
-	(pt 248 400)
-	(pt 1408 400)
 )
 (connector
 	(text "ori" (rect 1444 400 1455 412)(font "Arial" ))
@@ -1391,14 +1381,6 @@ applicable agreement for further details.
 	(pt 2248 1800)
 )
 (connector
-	(pt 1048 1408)
-	(pt 1048 1592)
-)
-(connector
-	(pt 1048 1592)
-	(pt 1048 1800)
-)
-(connector
 	(pt 2312 1712)
 	(pt 2336 1712)
 )
@@ -1435,22 +1417,45 @@ applicable agreement for further details.
 	(pt 2056 480)
 )
 (connector
-	(text "lw,sw,andi,addi,addiu,ori,xori,j,jal,lui,bgez,bne,beq" (rect 1829 1960 2070 1972)(font "Arial" ))
-	(pt 2216 1976)
-	(pt 1816 1976)
-	(bus)
-)
-(connector
-	(pt 2336 1976)
-	(pt 2376 1976)
-)
-(connector
-	(pt 2424 1976)
-	(pt 2456 1976)
-)
-(connector
 	(pt 328 1848)
 	(pt 2336 1848)
+)
+(connector
+	(pt 808 1872)
+	(pt 2336 1872)
+)
+(connector
+	(pt 808 1360)
+	(pt 808 1872)
+)
+(connector
+	(pt 2264 736)
+	(pt 1408 736)
+)
+(connector
+	(pt 2248 1008)
+	(pt 1408 1008)
+)
+(connector
+	(text "lui" (rect 1341 384 1351 396)(font "Arial" ))
+	(pt 248 400)
+	(pt 1408 400)
+)
+(connector
+	(pt 2240 1376)
+	(pt 1408 1376)
+)
+(connector
+	(pt 1408 400)
+	(pt 1408 736)
+)
+(connector
+	(pt 1408 736)
+	(pt 1408 1008)
+)
+(connector
+	(pt 328 1344)
+	(pt 2240 1344)
 )
 (connector
 	(pt 328 912)
@@ -1461,16 +1466,96 @@ applicable agreement for further details.
 	(pt 328 1848)
 )
 (connector
-	(pt 808 1872)
-	(pt 2336 1872)
+	(pt 2240 1424)
+	(pt 1528 1424)
 )
 (connector
-	(pt 808 1360)
-	(pt 808 1608)
+	(pt 1528 976)
+	(pt 1528 1424)
 )
 (connector
-	(pt 808 1608)
-	(pt 808 1872)
+	(pt 1528 1424)
+	(pt 1528 1640)
+)
+(connector
+	(pt 1768 1624)
+	(pt 2240 1624)
+)
+(connector
+	(pt 2264 752)
+	(pt 928 752)
+)
+(connector
+	(pt 2248 1024)
+	(pt 928 1024)
+)
+(connector
+	(pt 2240 1392)
+	(pt 928 1392)
+)
+(connector
+	(text "addi" (rect 858 320 878 332)(font "Arial" ))
+	(pt 248 336)
+	(pt 928 336)
+)
+(connector
+	(pt 928 336)
+	(pt 928 752)
+)
+(connector
+	(pt 928 752)
+	(pt 928 1024)
+)
+(connector
+	(pt 2240 1576)
+	(pt 1408 1576)
+)
+(connector
+	(pt 1408 1008)
+	(pt 1408 1376)
+)
+(connector
+	(pt 1408 1376)
+	(pt 1408 1576)
+)
+(connector
+	(pt 1048 1592)
+	(pt 2240 1592)
+)
+(connector
+	(pt 1048 1408)
+	(pt 1048 1592)
+)
+(connector
+	(pt 1048 1592)
+	(pt 1048 1800)
+)
+(connector
+	(pt 2240 1608)
+	(pt 928 1608)
+)
+(connector
+	(pt 928 1024)
+	(pt 928 1392)
+)
+(connector
+	(pt 928 1392)
+	(pt 928 1608)
+)
+(connector
+	(pt 2208 1976)
+	(pt 2216 1976)
+	(bus)
+)
+(connector
+	(pt 2456 1976)
+	(pt 2336 1976)
+)
+(connector
+	(text "lw,sw,andi,addi,addiu,ori,xori,j,jal,lui,bgez,bne,beq,Rtype,ccm" (rect 1829 1960 2129 1972)(font "Arial" ))
+	(pt 2160 1976)
+	(pt 1816 1976)
+	(bus)
 )
 (junction (pt 2192 1072))
 (junction (pt 448 704))
@@ -1509,4 +1594,4 @@ applicable agreement for further details.
 (junction (pt 1768 1624))
 (junction (pt 2008 480))
 (junction (pt 328 1344))
-(junction (pt 808 1608))
+(junction (pt 928 1392))

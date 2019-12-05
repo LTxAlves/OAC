@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -20,24 +20,37 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 64 64 272 144)
-	(text "PC_Soma_4x" (rect 5 0 80 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 64 25 76)(font "Arial" ))
+	(rect 0 0 128 96)
+	(text "lpm_compare2" (rect 11 0 111 16)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 80 25 92)(font "Arial" ))
 	(port
 		(pt 0 48)
 		(input)
-		(text "PC[31..0]" (rect 0 0 50 14)(font "Arial" (font_size 8)))
-		(text "PC[31..0]" (rect 21 43 71 57)(font "Arial" (font_size 8)))
+		(text "dataa[1..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "dataa[1..0]" (rect 20 40 80 55)(font "Arial" (font_size 8)))
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
-		(pt 208 48)
+		(pt 128 56)
 		(output)
-		(text "PC_mais_4x[31..0]" (rect 0 0 105 14)(font "Arial" (font_size 8)))
-		(text "PC_mais_4x[31..0]" (rect 82 43 187 57)(font "Arial" (font_size 8)))
-		(line (pt 208 48)(pt 192 48)(line_width 3))
+		(text "aeb" (rect 0 0 21 14)(font "Arial" (font_size 8)))
+		(text "aeb" (rect 88 48 107 63)(font "Arial" (font_size 8)))
+		(line (pt 128 56)(pt 112 56))
 	)
 	(drawing
-		(rectangle (rect 16 16 192 64))
+		(text "datab[]=3" (rect 20 56 93 127)(font "Arial" (font_size 8)))
+		(text "compare" (rect 63 25 173 64)(font "Arial" ))
+		(line (pt 16 16)(pt 16 80))
+		(line (pt 16 16)(pt 112 16))
+		(line (pt 16 80)(pt 112 80))
+		(line (pt 112 16)(pt 112 80))
+		(line (pt 0 0)(pt 129 0))
+		(line (pt 129 0)(pt 129 98))
+		(line (pt 0 98)(pt 129 98))
+		(line (pt 0 0)(pt 0 98))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
 	)
 )

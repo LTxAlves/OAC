@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -20,45 +20,66 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 64 64 264 840)
-	(text "IF_ID" (rect 88 0 115 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 9 752 26 764)(font "Arial" ))
+	(rect 64 64 304 864)
+	(text "IF_ID" (rect 5 0 25 14)(font "Arial" (font_size 8)))
+	(text "inst" (rect 8 776 25 788)(font "Arial" ))
 	(port
-		(pt 0 360)
+		(pt 0 32)
 		(input)
-		(text "PC_IF[31..0]" (rect 0 0 67 14)(font "Arial" (font_size 8)))
-		(text "PC_IF[31..0]" (rect 21 355 88 369)(font "Arial" (font_size 8)))
-		(line (pt 0 360)(pt 16 360)(line_width 3))
+		(text "IF_flush" (rect 0 0 44 14)(font "Arial" (font_size 8)))
+		(text "IF_flush" (rect 21 27 65 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
 	)
 	(port
-		(pt 96 776)
+		(pt 0 320)
 		(input)
-		(text "clk" (rect 0 0 15 14)(font "Arial" (font_size 8)))
-		(text "clk" (rect 88 735 102 750)(font "Arial" (font_size 8))(vertical))
-		(line (pt 96 776)(pt 96 759))
+		(text "PC[31..0]" (rect 0 0 50 14)(font "Arial" (font_size 8)))
+		(text "PC[31..0]" (rect 21 315 71 329)(font "Arial" (font_size 8)))
+		(line (pt 0 320)(pt 16 320)(line_width 3))
 	)
 	(port
-		(pt 0 576)
+		(pt 120 800)
 		(input)
-		(text "Inst_IF[31..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
-		(text "Inst_IF[31..0]" (rect 21 571 92 585)(font "Arial" (font_size 8)))
-		(line (pt 0 576)(pt 16 576)(line_width 3))
+		(text "clock" (rect 0 0 29 14)(font "Arial" (font_size 8)))
+		(text "clock" (rect 112 745 126 774)(font "Arial" (font_size 8))(vertical))
+		(line (pt 120 800)(pt 120 783))
 	)
 	(port
-		(pt 200 360)
+		(pt 0 536)
+		(input)
+		(text "Instrucao[31..0]" (rect 0 0 88 14)(font "Arial" (font_size 8)))
+		(text "Instrucao[31..0]" (rect 21 531 109 545)(font "Arial" (font_size 8)))
+		(line (pt 0 536)(pt 16 536)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "IFID_WriteEn" (rect 0 0 70 14)(font "Arial" (font_size 8)))
+		(text "IFID_WriteEn" (rect 21 91 91 105)(font "Arial" (font_size 8)))
+		(line (pt 0 96)(pt 16 96))
+	)
+	(port
+		(pt 240 32)
 		(output)
-		(text "PC_ID[31..0]" (rect 0 0 68 14)(font "Arial" (font_size 8)))
-		(text "PC_ID[31..0]" (rect 111 355 179 369)(font "Arial" (font_size 8)))
-		(line (pt 200 360)(pt 184 360)(line_width 3))
+		(text "IFID_flush" (rect -16 0 39 14)(font "Arial" (font_size 8)))
+		(text "IFID_flush" (rect 164 27 219 41)(font "Arial" (font_size 8)))
+		(line (pt 240 32)(pt 224 32))
 	)
 	(port
-		(pt 200 576)
+		(pt 240 248)
 		(output)
-		(text "Inst_ID[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
-		(text "Inst_ID[31..0]" (rect 106 571 179 585)(font "Arial" (font_size 8)))
-		(line (pt 200 576)(pt 184 576)(line_width 3))
+		(text "IDIF_PC[31..0]" (rect -16 0 61 14)(font "Arial" (font_size 8)))
+		(text "IDIF_PC[31..0]" (rect 142 243 219 257)(font "Arial" (font_size 8)))
+		(line (pt 240 248)(pt 224 248)(line_width 3))
+	)
+	(port
+		(pt 240 536)
+		(output)
+		(text "IDIF_Instrucao[31..0]" (rect -16 0 99 14)(font "Arial" (font_size 8)))
+		(text "IDIF_Instrucao[31..0]" (rect 104 531 219 545)(font "Arial" (font_size 8)))
+		(line (pt 240 536)(pt 224 536)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 184 760))
+		(rectangle (rect 16 16 224 768))
 	)
 )
