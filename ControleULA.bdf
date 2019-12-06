@@ -229,7 +229,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 856 56 1032 72)
+	(rect 864 56 1040 72)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "ehdivmultmadd" (rect 90 0 165 12)(font "Arial" ))
 	(pt 0 8)
@@ -245,7 +245,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 856 -56 1032 -40)
+	(rect 864 -56 1040 -40)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "madd_multdiv" (rect 90 0 159 12)(font "Arial" ))
 	(pt 0 8)
@@ -2153,10 +2153,6 @@ applicable agreement for further details.
 	(pt 2352 768)
 )
 (connector
-	(pt 1568 336)
-	(pt 1568 808)
-)
-(connector
 	(text "Op[1]" (rect 2442 1152 2469 1164)(font "Arial" ))
 	(pt 2416 1168)
 	(pt 2464 1168)
@@ -2330,48 +2326,6 @@ applicable agreement for further details.
 	(pt 2352 952)
 )
 (connector
-	(pt 1696 992)
-	(pt 1696 336)
-)
-(connector
-	(text "data[0][8]" (rect 1160 320 1207 332)(font "Arial" ))
-	(pt 1144 336)
-	(pt 1568 336)
-)
-(connector
-	(pt 1568 336)
-	(pt 1696 336)
-)
-(connector
-	(pt 1584 320)
-	(pt 1584 792)
-)
-(connector
-	(pt 2240 792)
-	(pt 1584 792)
-)
-(connector
-	(pt 1712 976)
-	(pt 1712 320)
-)
-(connector
-	(pt 2240 976)
-	(pt 1712 976)
-)
-(connector
-	(text "data[0][7]" (rect 1160 304 1207 316)(font "Arial" ))
-	(pt 1144 320)
-	(pt 1584 320)
-)
-(connector
-	(pt 1584 320)
-	(pt 1712 320)
-)
-(connector
-	(pt 1712 320)
-	(pt 1864 320)
-)
-(connector
 	(text "Op[0]" (rect 2440 1336 2467 1348)(font "Arial" ))
 	(pt 2416 1352)
 	(pt 2464 1352)
@@ -2431,10 +2385,6 @@ applicable agreement for further details.
 (connector
 	(pt 2304 1360)
 	(pt 2352 1360)
-)
-(connector
-	(pt 1864 320)
-	(pt 1864 1400)
 )
 (connector
 	(pt 2024 1216)
@@ -2498,14 +2448,6 @@ applicable agreement for further details.
 	(pt 2216 824)
 )
 (connector
-	(pt 1568 808)
-	(pt 2240 808)
-)
-(connector
-	(pt 1696 992)
-	(pt 2240 992)
-)
-(connector
 	(pt 1880 1232)
 	(pt 2240 1232)
 )
@@ -2530,28 +2472,8 @@ applicable agreement for further details.
 	(pt 2216 1040)
 )
 (connector
-	(pt 2216 1248)
-	(pt 2240 1248)
-)
-(connector
-	(pt 2216 1040)
-	(pt 2216 1248)
-)
-(connector
-	(pt 1864 1400)
-	(pt 2240 1400)
-)
-(connector
 	(pt 2216 1416)
 	(pt 2240 1416)
-)
-(connector
-	(pt 2216 1248)
-	(pt 2216 1264)
-)
-(connector
-	(pt 2216 1264)
-	(pt 2216 1416)
 )
 (connector
 	(pt 1264 24)
@@ -2767,6 +2689,92 @@ applicable agreement for further details.
 	(pt 1536 360)
 	(pt 1536 384)
 )
+(connector
+	(pt 856 64)
+	(pt 864 64)
+)
+(connector
+	(pt 856 -48)
+	(pt 864 -48)
+)
+(connector
+	(pt 1584 320)
+	(pt 1584 792)
+)
+(connector
+	(pt 2240 792)
+	(pt 1584 792)
+)
+(connector
+	(pt 1712 976)
+	(pt 1712 320)
+)
+(connector
+	(pt 2240 976)
+	(pt 1712 976)
+)
+(connector
+	(text "data[0][7]" (rect 1160 304 1207 316)(font "Arial" ))
+	(pt 1144 320)
+	(pt 1584 320)
+)
+(connector
+	(pt 1584 320)
+	(pt 1712 320)
+)
+(connector
+	(pt 1712 320)
+	(pt 1864 320)
+)
+(connector
+	(pt 2216 1264)
+	(pt 2216 1416)
+)
+(connector
+	(pt 1568 336)
+	(pt 1568 808)
+)
+(connector
+	(pt 2240 808)
+	(pt 1568 808)
+)
+(connector
+	(pt 2240 992)
+	(pt 1696 992)
+)
+(connector
+	(text "data[0][8]" (rect 1160 320 1207 332)(font "Arial" ))
+	(pt 1144 336)
+	(pt 1568 336)
+)
+(connector
+	(pt 1568 336)
+	(pt 1696 336)
+)
+(connector
+	(pt 2240 1400)
+	(pt 1696 1400)
+)
+(connector
+	(pt 1696 336)
+	(pt 1696 992)
+)
+(connector
+	(pt 1696 992)
+	(pt 1696 1400)
+)
+(connector
+	(pt 2216 1040)
+	(pt 2216 1264)
+)
+(connector
+	(pt 1864 1248)
+	(pt 1864 320)
+)
+(connector
+	(pt 1864 1248)
+	(pt 2240 1248)
+)
 (junction (pt 576 224))
 (junction (pt 576 240))
 (junction (pt 576 256))
@@ -2809,11 +2817,11 @@ applicable agreement for further details.
 (junction (pt 2216 1008))
 (junction (pt 2216 1024))
 (junction (pt 2216 1040))
-(junction (pt 2216 1248))
 (junction (pt 2216 1264))
 (junction (pt 1416 -24))
 (junction (pt 1296 8))
 (junction (pt 1296 72))
+(junction (pt 1696 992))
 (text "add" (rect 656 360 677 374)(font "Arial" (font_size 8)))
 (text "sub" (rect 656 408 677 422)(font "Arial" (font_size 8)))
 (text "slt" (rect 656 384 668 398)(font "Arial" (font_size 8)))

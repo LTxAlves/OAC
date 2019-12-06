@@ -115,11 +115,11 @@ applicable agreement for further details.
 		(line (pt 0 544)(pt 16 544)(line_width 3))
 	)
 	(port
-		(pt 0 280)
+		(pt 0 264)
 		(input)
 		(text "EX_MSB_A" (rect 0 0 64 14)(font "Arial" (font_size 8)))
-		(text "EX_MSB_A" (rect 21 275 85 289)(font "Arial" (font_size 8)))
-		(line (pt 0 280)(pt 16 280))
+		(text "EX_MSB_A" (rect 21 259 85 273)(font "Arial" (font_size 8)))
+		(line (pt 0 264)(pt 16 264))
 	)
 	(port
 		(pt 0 680)

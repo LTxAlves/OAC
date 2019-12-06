@@ -21,7 +21,7 @@ applicable agreement for further details.
 (header "symbol" (version "1.2"))
 (symbol
 	(rect 64 64 304 864)
-	(text "IF_ID" (rect 5 0 25 14)(font "Arial" (font_size 8)))
+	(text "IF_ID" (rect 5 0 32 14)(font "Arial" (font_size 8)))
 	(text "inst" (rect 8 776 25 788)(font "Arial" ))
 	(port
 		(pt 0 32)
@@ -66,11 +66,11 @@ applicable agreement for further details.
 		(line (pt 240 32)(pt 224 32))
 	)
 	(port
-		(pt 240 248)
+		(pt 240 360)
 		(output)
 		(text "IDIF_PC[31..0]" (rect -16 0 61 14)(font "Arial" (font_size 8)))
-		(text "IDIF_PC[31..0]" (rect 142 243 219 257)(font "Arial" (font_size 8)))
-		(line (pt 240 248)(pt 224 248)(line_width 3))
+		(text "IDIF_PC[31..0]" (rect 142 355 219 369)(font "Arial" (font_size 8)))
+		(line (pt 240 360)(pt 224 360)(line_width 3))
 	)
 	(port
 		(pt 240 536)
