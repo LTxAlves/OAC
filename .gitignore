@@ -36,6 +36,8 @@ greybox_tmp/
 
 !*.v
 
+!*.vhd
+
 !*.qip
 
 !*.cmp
