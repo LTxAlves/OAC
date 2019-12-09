@@ -1,4 +1,4 @@
-# Laboratório 1 - Organização e Arquitetura de Computadores
+# Laboratório 2 - Organização e Arquitetura de Computadores
 
 ## Começando
 
