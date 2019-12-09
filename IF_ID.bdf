@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2013 Altera Corporation
+Copyright (C) 1991-2014 Altera Corporation
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -117,7 +117,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 648 128 824 144)
+	(rect 680 128 856 144)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "IDIF_PC[31..0]" (rect 90 0 165 12)(font "Arial" ))
 	(pt 0 8)
@@ -133,7 +133,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 648 304 850 320)
+	(rect 680 304 882 320)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "IDIF_Instrucao[31..0]" (rect 90 0 196 12)(font "Arial" ))
 	(pt 0 8)
@@ -221,42 +221,6 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 432 280 648 376)
-	(text "Barramento_32xIFID" (rect 5 0 119 14)(font "Arial" (font_size 8)))
-	(text "inst11" (rect 8 80 37 92)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "entrada3[31..0]" (rect 0 0 86 14)(font "Arial" (font_size 8)))
-		(text "entrada3[31..0]" (rect 21 27 107 41)(font "Arial" (font_size 8)))
-		(line (pt 0 32)(pt 16 32)(line_width 3))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "enable_latch2" (rect 0 0 79 14)(font "Arial" (font_size 8)))
-		(text "enable_latch2" (rect 21 43 100 57)(font "Arial" (font_size 8)))
-		(line (pt 0 48)(pt 16 48))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "enable_d" (rect 0 0 51 14)(font "Arial" (font_size 8)))
-		(text "enable_d" (rect 21 59 72 73)(font "Arial" (font_size 8)))
-		(line (pt 0 64)(pt 16 64))
-	)
-	(port
-		(pt 216 32)
-		(output)
-		(text "saidas[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
-		(text "saidas[31..0]" (rect 122 27 195 41)(font "Arial" (font_size 8)))
-		(line (pt 216 32)(pt 200 32)(line_width 3))
-	)
-	(drawing
-		(rectangle (rect 16 16 200 80))
-	)
-)
-(symbol
 	(rect 440 72 488 104)
 	(text "NOT" (rect 1 0 21 10)(font "Arial" (font_size 6)))
 	(text "inst12" (rect 3 21 32 33)(font "Arial" ))
@@ -339,21 +303,21 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 432 104 648 200)
+	(rect 432 280 640 376)
 	(text "Barramento_32xIFID" (rect 5 0 119 14)(font "Arial" (font_size 8)))
-	(text "instbc" (rect 8 80 37 92)(font "Arial" ))
+	(text "inst11" (rect 8 80 37 92)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "entrada3[31..0]" (rect 0 0 86 14)(font "Arial" (font_size 8)))
-		(text "entrada3[31..0]" (rect 21 27 107 41)(font "Arial" (font_size 8)))
+		(text "entrada[31..0]" (rect 0 0 79 14)(font "Arial" (font_size 8)))
+		(text "entrada[31..0]" (rect 21 27 100 41)(font "Arial" (font_size 8)))
 		(line (pt 0 32)(pt 16 32)(line_width 3))
 	)
 	(port
 		(pt 0 48)
 		(input)
-		(text "enable_latch2" (rect 0 0 79 14)(font "Arial" (font_size 8)))
-		(text "enable_latch2" (rect 21 43 100 57)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
 		(line (pt 0 48)(pt 16 48))
 	)
 	(port
@@ -364,14 +328,50 @@ applicable agreement for further details.
 		(line (pt 0 64)(pt 16 64))
 	)
 	(port
-		(pt 216 32)
+		(pt 208 32)
 		(output)
 		(text "saidas[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
-		(text "saidas[31..0]" (rect 122 27 195 41)(font "Arial" (font_size 8)))
-		(line (pt 216 32)(pt 200 32)(line_width 3))
+		(text "saidas[31..0]" (rect 114 27 187 41)(font "Arial" (font_size 8)))
+		(line (pt 208 32)(pt 192 32)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 200 80))
+		(rectangle (rect 16 16 192 80))
+	)
+)
+(symbol
+	(rect 432 104 640 200)
+	(text "Barramento_32xIFID" (rect 5 0 119 14)(font "Arial" (font_size 8)))
+	(text "instbc" (rect 8 80 37 92)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "entrada[31..0]" (rect 0 0 79 14)(font "Arial" (font_size 8)))
+		(text "entrada[31..0]" (rect 21 27 100 41)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "enable_latch" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "enable_latch" (rect 21 43 92 57)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "enable_d" (rect 0 0 51 14)(font "Arial" (font_size 8)))
+		(text "enable_d" (rect 21 59 72 73)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 208 32)
+		(output)
+		(text "saidas[31..0]" (rect 0 0 73 14)(font "Arial" (font_size 8)))
+		(text "saidas[31..0]" (rect 114 27 187 41)(font "Arial" (font_size 8)))
+		(line (pt 208 32)(pt 192 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 192 80))
 	)
 )
 (connector
@@ -385,10 +385,6 @@ applicable agreement for further details.
 (connector
 	(pt 520 16)
 	(pt 472 16)
-)
-(connector
-	(pt 280 8)
-	(pt 400 8)
 )
 (connector
 	(pt 384 232)
@@ -483,6 +479,20 @@ applicable agreement for further details.
 (connector
 	(pt 408 168)
 	(pt 408 344)
+)
+(connector
+	(pt 640 136)
+	(pt 680 136)
+	(bus)
+)
+(connector
+	(pt 640 312)
+	(pt 680 312)
+	(bus)
+)
+(connector
+	(pt 280 8)
+	(pt 400 8)
 )
 (junction (pt 384 232))
 (junction (pt 312 232))

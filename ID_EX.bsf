@@ -157,11 +157,11 @@ applicable agreement for further details.
 		(line (pt 0 464)(pt 16 464)(line_width 3))
 	)
 	(port
-		(pt 0 600)
+		(pt 0 480)
 		(input)
 		(text "Dado2ID[31..0]" (rect 0 8 82 22)(font "Arial" (font_size 8)))
-		(text "Dado2ID[31..0]" (rect 21 595 103 609)(font "Arial" (font_size 8)))
-		(line (pt 0 600)(pt 16 600)(line_width 3))
+		(text "Dado2ID[31..0]" (rect 21 475 103 489)(font "Arial" (font_size 8)))
+		(line (pt 0 480)(pt 16 480)(line_width 3))
 	)
 	(port
 		(pt 0 672)

@@ -8,7 +8,7 @@ res:    .word    0x00
         la      $s1, B  
         lw      $s1, 0($s1)     
         xor     $s2, $s2, $s2   
-	   srav 	 $t1, $s0, $s1 
+	srav 	$t1, $s0, $s1
         addi    $t0, $zero, 1          
 loop:   beq     $s1,$zero, fim  
         and     $t1,$s1,$t0 

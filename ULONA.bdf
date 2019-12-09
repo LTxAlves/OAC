@@ -872,16 +872,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 368 576)
-	(pt 288 576)
-	(bus)
-)
-(connector
-	(pt 368 696)
-	(pt 288 696)
-	(bus)
-)
-(connector
 	(pt 824 216)
 	(pt 544 216)
 	(bus)
@@ -1108,23 +1098,8 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 288 456)
-	(pt 288 576)
-	(bus)
-)
-(connector
-	(pt 288 576)
-	(pt 288 696)
-	(bus)
-)
-(connector
 	(pt 312 88)
 	(pt 312 232)
-	(bus)
-)
-(connector
-	(pt 312 232)
-	(pt 312 1080)
 	(bus)
 )
 (connector
@@ -1257,11 +1232,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 288 816)
-	(pt 368 816)
-	(bus)
-)
-(connector
 	(pt 336 832)
 	(pt 368 832)
 	(bus)
@@ -1277,11 +1247,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 288 696)
-	(pt 288 816)
-	(bus)
-)
-(connector
 	(pt 336 592)
 	(pt 336 712)
 	(bus)
@@ -1292,17 +1257,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 288 944)
-	(pt 368 944)
-	(bus)
-)
-(connector
-	(text "B[4..0]" (rect 336 944 369 956)(font "Arial" ))
-	(pt 328 960)
-	(pt 368 960)
-	(bus)
-)
-(connector
 	(pt 592 944)
 	(pt 544 944)
 	(bus)
@@ -1310,16 +1264,6 @@ applicable agreement for further details.
 (connector
 	(pt 592 1048)
 	(pt 592 944)
-	(bus)
-)
-(connector
-	(pt 288 816)
-	(pt 288 944)
-	(bus)
-)
-(connector
-	(pt 288 944)
-	(pt 288 1064)
 	(bus)
 )
 (connector
@@ -1353,14 +1297,66 @@ applicable agreement for further details.
 	(pt 312 1408)
 	(bus)
 )
+(connector
+	(text "A[4..0]" (rect 336 944 369 956)(font "Arial" ))
+	(pt 328 960)
+	(pt 368 960)
+	(bus)
+)
+(connector
+	(pt 368 944)
+	(pt 312 944)
+	(bus)
+)
+(connector
+	(pt 312 944)
+	(pt 312 1080)
+	(bus)
+)
+(connector
+	(pt 368 696)
+	(pt 312 696)
+	(bus)
+)
+(connector
+	(pt 368 576)
+	(pt 312 576)
+	(bus)
+)
+(connector
+	(pt 312 232)
+	(pt 312 576)
+	(bus)
+)
+(connector
+	(pt 312 576)
+	(pt 312 696)
+	(bus)
+)
+(connector
+	(pt 288 456)
+	(pt 288 1064)
+	(bus)
+)
+(connector
+	(pt 368 816)
+	(pt 312 816)
+	(bus)
+)
+(connector
+	(pt 312 696)
+	(pt 312 816)
+	(bus)
+)
+(connector
+	(pt 312 816)
+	(pt 312 944)
+	(bus)
+)
 (junction (pt 288 216))
 (junction (pt 312 232))
 (junction (pt 288 336))
 (junction (pt 288 456))
-(junction (pt 288 576))
-(junction (pt 288 696))
-(junction (pt 288 816))
-(junction (pt 288 944))
 (junction (pt 824 888))
 (junction (pt 824 904))
 (junction (pt 824 920))
@@ -1374,6 +1370,10 @@ applicable agreement for further details.
 (junction (pt 288 1392))
 (junction (pt 312 1408))
 (junction (pt 312 1200))
+(junction (pt 312 944))
+(junction (pt 312 696))
+(junction (pt 312 576))
+(junction (pt 312 816))
 (text "SLL" (rect 448 648 470 662)(font "Arial" (font_size 8)))
 (text "SRL" (rect 456 528 479 542)(font "Arial" (font_size 8)))
 (text "SRA" (rect 448 768 473 782)(font "Arial" (font_size 8)))
